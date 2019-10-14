@@ -1,0 +1,119 @@
+Sample output for CIS451/551 Assignment 1
+
+1.
++---------+--------+----------------------+
+| fname   | lname  | company              |
++---------+--------+----------------------+
+| Philip  | Currie | Phil's Sports        |
+| Raymond | Vector | Los Altos Sports     |
+| Donald  | Quinn  | Quinn's Sports       |
+| Alfred  | Grant  | Gold Medal Sports    |
+| Dick    | Baxter | Blue Ribbon Sports   |
+| Marvin  | Hanlon | Bay Sports           |
+| James   | Henry  | Total Fitness Sports |
++---------+--------+----------------------+
+7 rows in set
+
+2.
++---------------+-------------+-------+-----------------+------------+
+| customer_name | city        | state | description     | order_date |
++---------------+-------------+-------+-----------------+------------+
+| Eileen Neelie | Denver      | CO    | socks           | 1998-07-24 |
+| Kim Satifer   | Blue Island | NY    | frnt derailleur | 1998-07-24 |
+| Kim Satifer   | Blue Island | NY    | rear derailleur | 1998-07-24 |
++---------------+-------------+-------+-----------------+------------+
+3 rows in set (0.00 sec)
+
+3.
++-----------+-----------+-----------------+------------+
+| manu_code | manu_name | description     | unit_price |
++-----------+-----------+-----------------+------------+
+| HRO       | Hero      | baseball gloves |     250.00 |
+| HRO       | Hero      | football        |     480.00 |
+| HRO       | Hero      | basketball      |     600.00 |
+| HRO       | Hero      | helmet          |     260.00 |
+| HRO       | Hero      | 3 golf balls    |     312.00 |
+| HRO       | Hero      | watch           |     280.00 |
++-----------+-----------+-----------------+------------+
+6 rows in set (0.00 sec)
+
+4.
++----------+-------+
+| fname    | lname |
++----------+-------+
+| John     | Smith |
+| Franklin | Wong  |
++----------+-------+
+2 rows in set
+
+5.
++----------------+----------------+
+| dname          | dependent_name |
++----------------+----------------+
+| Research       | Alice          |
+| Research       | Elizabeth      |
+| Research       | Michael        |
+| Research       | Alice          |
+| Research       | Joy            |
+| Research       | Theodore       |
+| Headquarters   | NULL           |
+| Administration | Abner          |
++----------------+----------------+
+8 rows in set
+
+6.
++---------------+----------------+
+| supervisor    | supervisee     |
++---------------+----------------+
+| Franklin Wong | Joyce English  |
+| Franklin Wong | Ramesh Narayan |
+| Franklin Wong | John Smith     |
++---------------+----------------+
+
+7.
++-----------------------+-----------------------------+---------------------+
+| customername          | title                       | rental_date         |
++-----------------------+-----------------------------+---------------------+
+| JOEL FRANCISCO        | ACADEMY DINOSAUR            | 2005-07-08 19:03:15 |
+| GERALDINE PERKINS     | ACADEMY DINOSAUR            | 2005-07-07 10:41:31 |
+| VIRGIL WOFFORD        | ACADEMY DINOSAUR            | 2005-07-30 22:02:34 |
+|......                 |                             |                     |
+6709 rows in set
+
+8.
+Three answers are acceptable:
+
++-------------+--------------+------------------------------------------+--------+
+| first_name  | last_name    | email                                    | amount |
++-------------+--------------+------------------------------------------+--------+
+| RAFAEL      | ABNEY        | RAFAEL.ABNEY@sakilacustomer.org          |   3.99 |
+| RAFAEL      | ABNEY        | RAFAEL.ABNEY@sakilacustomer.org          |   4.99 |
+| NATHANIEL   | ADAM         | NATHANIEL.ADAM@sakilacustomer.org        |   2.99 |
+|......       |              |                                          |        |
+795 rows in set
+
++-------------+--------------+------------------------------------------+
+| first_name  | last_name    | email                                    |
++-------------+--------------+------------------------------------------+
+| RAFAEL      | ABNEY        | RAFAEL.ABNEY@sakilacustomer.org          |
+| NATHANIEL   | ADAM         | NATHANIEL.ADAM@sakilacustomer.org        |
+| KATHLEEN    | ADAMS        | KATHLEEN.ADAMS@sakilacustomer.org        |
+|......       |              |                                          |
+451 rows in set
+
++-------------+--------------+------------------------------------------+-------------+
+| first_name  | last_name    | email                                    | rental_rate |
++-------------+--------------+------------------------------------------+-------------+
+| RAFAEL      | ABNEY        | RAFAEL.ABNEY@sakilacustomer.org          |        4.99 |
+| NATHANIEL   | ADAM         | NATHANIEL.ADAM@sakilacustomer.org        |        2.99 |
+| NATHANIEL   | ADAM         | NATHANIEL.ADAM@sakilacustomer.org        |        4.99 |
+|......       |              |                                          |             |
+663 rows in set
+
+9.
++------------------+
+| COUNT(rental_id) |
++------------------+
+|               83 |
++------------------+
+1 row in set
