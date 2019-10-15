@@ -1,0 +1,67 @@
+/*
+   Assignment 1 -- Steven Walton
+ */
+
+USE stores7;
+# Question 1
+/*
+   List all customers who represent a company which contains the word Sport{,s}
+   as the last word in the company name. 
+   +-------+-------+---------+
+   | fname | lname | company |
+   +-------+-------+---------+
+ */
+SELECT fname, lname, company FROM customer
+WHERE company LIKE "%Sport" OR company LIKE "%Sports";
+
+# Question 2
+/*
+   Give first and last names, city, and state of everyone that has ordered from
+   ProCycle on 1998-07-24
+   +---------------+------+-------+-------------+------------+
+   | customer_name | city | state | description | order_date |
+   +---------------+------+-------+-------------+------------+
+ */
+SELECT
+DISTINCT(CONCAT(customer.fname," ", customer.lname)) as "customer_name",
+customer.city,
+customer.state
+catalog.cat_descr AS "description"
+FROM manufact
+INNER JOIN customer
+INNER JOIN catalog
+INNER JOIN orders
+WHERE manu_code = (SELECT manu_code FROM manufact 
+                   WHERE manu_name = "ProCycle")
+AND order_date = "1997-07-24"
+;
+
+# Question 3
+/*
+   Give manufacturer code for all items from manufacturer Hero that has a price
+   > $200
+   +-----------+-----------+-------------+------------+
+   | manu_code | manu_name | description | unit_price |
+   +-----------+-----------+-------------+------------+
+ */
+SELECT
+manufact.manu_code,
+manufact.manu_name,
+catalog.cat_descr as "description",
+stock.unit_price
+FROM manufact
+INNER JOIN catalog
+INNER JOIN stock
+where manufact.manu_code = (SELECT manu_code FROM manufact
+                            WHERE manu_name = "Hero")
+AND stock.unit_price > 200
+;
+
+
+USE company;
+# Question 4
+/*
+   Retrieve distinct names of all employees working <= 10hrs on any project that
+   starts with "Product"
+ */
+
