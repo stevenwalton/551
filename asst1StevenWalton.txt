@@ -12,10 +12,10 @@ USE stores7;
 #    | fname | lname | company |
 #    +-------+-------+---------+
 #  */
-# SELECT fname, lname, company FROM customer
-# WHERE company LIKE "%Sport" OR company LIKE "%Sports"
-# AND customer.address1 REGEXP "[0-9]"
-# ;
+#SELECT fname, lname, company FROM customer
+#WHERE company LIKE "%Sport" OR company LIKE "%Sports"
+#AND customer.address1 REGEXP "[0-9]"
+#;
 
 # Question 2
 /*
@@ -26,43 +26,21 @@ USE stores7;
    | customer_name | city | state | description | order_date |
    +---------------+------+-------+-------------+------------+
  */
-#SELECT 
-#CONCAT(c.fname, ' ', c.lname) as customer_name, 
-#c.city, 
-#c.state,
-#s.description, 
-#o.order_date
-#FROM customer as c
-#JOIN orders as o ON c.customer_num=o.customer_num
-#LEFT JOIN items as i ON o.order_num=i.order_num
-#JOIN stock as s ON i.stock_num=s.stock_num
-#WHERE i.manu_code='PRC' AND o.order_date='1998-07-24'
-#;
-SELECT
-CONCAT(customer.fname," ", customer.lname) as "customer_name",
-customer.city,
-customer.state,
-stock.description,
-orders.order_date
-FROM customer
-INNER JOIN orders ON orders.customer_num = customer.customer_num
-LEFT JOIN items ON items.order_num = orders.order_num
-#INNER JOIN manufact
-#INNER JOIN stock on manufact.manu_code = stock.manu_code
-INNER JOIN stock ON items.stock_num = stock.stock_num
-INNER JOIN manufact ON stock.manu_code = manufact.manu_code
-WHERE manufact.manu_code = (SELECT manu_code FROM manufact WHERE manu_name =
-        "ProCycle")
-AND orders.order_date = "1998-07-24"
-;
-#FROM manufact
-#INNER JOIN items ON manufact.manu_code = items.manu_code
-#INNER JOIN orders ON items.order_num = orders.order_num 
-#INNER JOIN customer ON orders.customer_num = customer.customer_num
-#INNER JOIN stock ON manufact.manu_code = stock.manu_code
-#WHERE manufact.manu_code = (SELECT manu_code FROM manufact WHERE manu_name = "ProCycle")
-#AND orders.order_date = "1998-07-24"
-#;
+#   SELECT
+#   CONCAT(customer.fname," ", customer.lname) as "customer_name",
+#   customer.city,
+#   customer.state,
+#   stock.description,
+#   orders.order_date
+#   FROM customer
+#   INNER JOIN orders ON orders.customer_num = customer.customer_num
+#   LEFT JOIN items ON items.order_num = orders.order_num
+#   INNER JOIN stock ON items.stock_num = stock.stock_num
+#   INNER JOIN manufact ON stock.manu_code = manufact.manu_code
+#   WHERE manufact.manu_code = (SELECT manu_code FROM manufact 
+#                               WHERE manu_name = "ProCycle")
+#   AND orders.order_date = "1998-07-24"
+#   ;
 
 # # Question 3
 # /*
@@ -73,56 +51,58 @@ AND orders.order_date = "1998-07-24"
 #    | manu_code | manu_name | description | unit_price |
 #    +-----------+-----------+-------------+------------+
 #  */
-# SELECT
-# manufact.manu_code,
-# manufact.manu_name,
-# stock.description,
-# stock.unit_price
-# FROM manufact
-# INNER JOIN stock on manufact.manu_code = stock.manu_code
-# WHERE manufact.manu_code = (SELECT manu_code FROM manufact
-#                             WHERE manu_name = "Hero")
-# AND stock.unit_price > 200
-# ;
+#   SELECT
+#   manufact.manu_code,
+#   manufact.manu_name,
+#   stock.description,
+#   stock.unit_price
+#   FROM manufact
+#   INNER JOIN stock on manufact.manu_code = stock.manu_code
+#   WHERE manufact.manu_code = (SELECT manu_code FROM manufact
+#                               WHERE manu_name = "Hero")
+#   AND stock.unit_price > 200
+#   ;
 
-#USE company;
-###     # Question 4
-###     /*
-###        WORKING?: Double of Franklin
-###        Retrieve distinct names of all employees working <= 10hrs on any project that
-###        starts with "Product"
-###        +-------+-------+
-###        | fname | lname |
-###        +-------+-------+
-###      */
-###     SELECT
-###     employee.fname,
-###     employee.lname,
-###     works_on.hours,
-###     project.pname
-###     FROM employee
-###     INNER JOIN works_on ON employee.ssn = works_on.essn
-###     INNER JOIN project ON works_on.pno = project.pnumber
-###     WHERE works_on.hours <= 10
-###     AND project.pname LIKE "Product%"
-###     ;
+select "Switching to company" as "";
+USE company;
+# Question 4
+/*
+   WORKING?: Matches 
+   Retrieve distinct names of all employees working <= 10hrs on any project that
+   starts with "Product"
+   +-------+-------+
+   | fname | lname |
+   +-------+-------+
+ */
+#   SELECT
+#   employee.fname,
+#   employee.lname
+#   #works_on.hours,
+#   #project.pname
+#   FROM employee
+#   INNER JOIN works_on ON employee.ssn = works_on.essn
+#   INNER JOIN project ON works_on.pno = project.pnumber
+#   WHERE works_on.hours <= 10
+#   AND project.pname LIKE "Product%"
+#   GROUP BY employee.ssn
+#   ;
 
-###     # Question 5
-###     /*
-###        Working?: Needs Null
-###        List department names and names of dependents.
-###        +-------+----------------+
-###        | dname | dependent_name |
-###        +-------+----------------+
-###      */
-###     SELECT
-###     department.dname,
-###     dependent.dependent_name
-###     FROM department
-###     INNER JOIN employee ON department.dnumber = employee.dno
-###     INNER JOIN dependent ON employee.ssn = dependent.essn
-###     ORDER BY dependent.dependent_name DESC
-###     ;
+# Question 5
+/*
+   Working?: Needs Null
+   List department names and names of dependents.
+   +-------+----------------+
+   | dname | dependent_name |
+   +-------+----------------+
+ */
+#   SELECT
+#   department.dname,
+#   dependent.dependent_name
+#   FROM employee
+#   LEFT JOIN department ON department.dnumber = employee.dno
+#   RIGHT JOIN dependent ON employee.ssn = dependent.essn
+#   ORDER BY dependent.dependent_name DESC
+#   ;
 
 #   # Question 6
 #   /*
@@ -145,10 +125,11 @@ AND orders.order_date = "1998-07-24"
 #   ;
 
 
-#USE sakila;
+SELECT "switching to Sakila" as "";
+USE sakila;
 # Question 7
 #   /*
-#      Working?: unimplemented
+#      Working?: Matches
 #      List customers and names of movies rented in July 2005. Use functions month,
 #      monthname, year, etc
 #      +--------------+-------+-------------+
@@ -156,5 +137,69 @@ AND orders.order_date = "1998-07-24"
 #      +--------------+-------+-------------+
 #    */
 #   SELECT
-#   CONCAT(customer.first_name, " ", customer.last_name),
-#   
+#   CONCAT(customer.first_name, " ", customer.last_name) as "customername",
+#   film.title,
+#   rental.rental_date
+#   FROM customer
+#   INNER JOIN rental ON customer.customer_id = rental.customer_id
+#   INNER JOIN inventory ON inventory.inventory_id = rental.inventory_id
+#   INNER JOIN film ON film.film_id = inventory.film_id
+#   WHERE MONTHNAME(rental.rental_date) = "July" 
+#   AND YEAR(rental.rental_date) = 2005
+#   #LIMIT 10
+#   ;
+
+
+# Question 8
+/*
+    Working?: Unimplemented
+    Show first and last names and emails of customers who spend more than $2 on
+    any rental of a Family film (single rental, not sum)
+    +------------+-----------+-------+--------+
+    | first_name | last_name | email | amount |
+    +------------+-----------+-------+--------+
+    795 entries
+    OR
+    +------------+-----------+-------+
+    | first_name | last_name | email |
+    +------------+-----------+-------+
+    451
+    OR
+    +------------+-----------+-------+-------------+
+    | first_name | last_name | email | rental_rate |
+    +------------+-----------+-------+-------------+
+    663
+ */
+#SELECT
+#customer.first_name,
+#customer.last_name,
+#customer.email,
+#payment.amount
+#FROM customer
+#INNER JOIN rental ON rental.customer_id = customer.customer_id
+#INNER JOIN inventory ON rental.inventory_id = inventory.inventory_id
+#INNER JOIN film_list ON film_list.FID = inventory.film_id
+#INNER JOIN category ON category.category_id = film_list.category
+#INNER JOIN payment ON payment.rental_id = rental.rental_id
+#WHERE payment.amount > 2
+#AND category.name= "Family"
+#;
+
+
+# Question 9
+/*
+   Working?: Matches
+   Count number of times any movie with "MOTHER" is in title (Use COUNT(*))
+   +------------------+
+   | COUNT(rental_id) |
+   +------------------+
+   |               83 |
+   +------------------+
+ */
+SELECT 
+COUNT(rental.rental_id)
+FROM rental
+INNER JOIN inventory on inventory.inventory_id = rental.inventory_id
+INNER JOIN film ON film.film_id = inventory.film_id
+WHERE film.title LIKE "%MOTHER%"
+;
