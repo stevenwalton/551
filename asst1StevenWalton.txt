@@ -3,65 +3,158 @@
  */
 
 USE stores7;
-# Question 1
-/*
-   List all customers who represent a company which contains the word Sport{,s}
-   as the last word in the company name. 
-   +-------+-------+---------+
-   | fname | lname | company |
-   +-------+-------+---------+
- */
-SELECT fname, lname, company FROM customer
-WHERE company LIKE "%Sport" OR company LIKE "%Sports";
+# # Question 1
+# /*
+#    Woring?: Match
+#    List all customers who represent a company which contains the word Sport{,s}
+#    as the last word in the company name. 
+#    +-------+-------+---------+
+#    | fname | lname | company |
+#    +-------+-------+---------+
+#  */
+# SELECT fname, lname, company FROM customer
+# WHERE company LIKE "%Sport" OR company LIKE "%Sports"
+# AND customer.address1 REGEXP "[0-9]"
+# ;
 
 # Question 2
 /*
+   WORKING?: NOT RIGHT - Too many entries
    Give first and last names, city, and state of everyone that has ordered from
    ProCycle on 1998-07-24
    +---------------+------+-------+-------------+------------+
    | customer_name | city | state | description | order_date |
    +---------------+------+-------+-------------+------------+
  */
+#SELECT 
+#CONCAT(c.fname, ' ', c.lname) as customer_name, 
+#c.city, 
+#c.state,
+#s.description, 
+#o.order_date
+#FROM customer as c
+#JOIN orders as o ON c.customer_num=o.customer_num
+#LEFT JOIN items as i ON o.order_num=i.order_num
+#JOIN stock as s ON i.stock_num=s.stock_num
+#WHERE i.manu_code='PRC' AND o.order_date='1998-07-24'
+#;
 SELECT
-DISTINCT(CONCAT(customer.fname," ", customer.lname)) as "customer_name",
+CONCAT(customer.fname," ", customer.lname) as "customer_name",
 customer.city,
-customer.state
-catalog.cat_descr AS "description"
-FROM manufact
-INNER JOIN customer
-INNER JOIN catalog
-INNER JOIN orders
-WHERE manu_code = (SELECT manu_code FROM manufact 
-                   WHERE manu_name = "ProCycle")
-AND order_date = "1997-07-24"
+customer.state,
+stock.description,
+orders.order_date
+FROM customer
+INNER JOIN orders ON orders.customer_num = customer.customer_num
+LEFT JOIN items ON items.order_num = orders.order_num
+#INNER JOIN manufact
+#INNER JOIN stock on manufact.manu_code = stock.manu_code
+INNER JOIN stock ON items.stock_num = stock.stock_num
+INNER JOIN manufact ON stock.manu_code = manufact.manu_code
+WHERE manufact.manu_code = (SELECT manu_code FROM manufact WHERE manu_name =
+        "ProCycle")
+AND orders.order_date = "1998-07-24"
 ;
+#FROM manufact
+#INNER JOIN items ON manufact.manu_code = items.manu_code
+#INNER JOIN orders ON items.order_num = orders.order_num 
+#INNER JOIN customer ON orders.customer_num = customer.customer_num
+#INNER JOIN stock ON manufact.manu_code = stock.manu_code
+#WHERE manufact.manu_code = (SELECT manu_code FROM manufact WHERE manu_name = "ProCycle")
+#AND orders.order_date = "1998-07-24"
+#;
 
-# Question 3
-/*
-   Give manufacturer code for all items from manufacturer Hero that has a price
-   > $200
-   +-----------+-----------+-------------+------------+
-   | manu_code | manu_name | description | unit_price |
-   +-----------+-----------+-------------+------------+
- */
-SELECT
-manufact.manu_code,
-manufact.manu_name,
-catalog.cat_descr as "description",
-stock.unit_price
-FROM manufact
-INNER JOIN catalog
-INNER JOIN stock
-where manufact.manu_code = (SELECT manu_code FROM manufact
-                            WHERE manu_name = "Hero")
-AND stock.unit_price > 200
-;
+# # Question 3
+# /*
+#    Working?: Match
+#    Give manufacturer code for all items from manufacturer Hero that has a price
+#    > $200
+#    +-----------+-----------+-------------+------------+
+#    | manu_code | manu_name | description | unit_price |
+#    +-----------+-----------+-------------+------------+
+#  */
+# SELECT
+# manufact.manu_code,
+# manufact.manu_name,
+# stock.description,
+# stock.unit_price
+# FROM manufact
+# INNER JOIN stock on manufact.manu_code = stock.manu_code
+# WHERE manufact.manu_code = (SELECT manu_code FROM manufact
+#                             WHERE manu_name = "Hero")
+# AND stock.unit_price > 200
+# ;
+
+#USE company;
+###     # Question 4
+###     /*
+###        WORKING?: Double of Franklin
+###        Retrieve distinct names of all employees working <= 10hrs on any project that
+###        starts with "Product"
+###        +-------+-------+
+###        | fname | lname |
+###        +-------+-------+
+###      */
+###     SELECT
+###     employee.fname,
+###     employee.lname,
+###     works_on.hours,
+###     project.pname
+###     FROM employee
+###     INNER JOIN works_on ON employee.ssn = works_on.essn
+###     INNER JOIN project ON works_on.pno = project.pnumber
+###     WHERE works_on.hours <= 10
+###     AND project.pname LIKE "Product%"
+###     ;
+
+###     # Question 5
+###     /*
+###        Working?: Needs Null
+###        List department names and names of dependents.
+###        +-------+----------------+
+###        | dname | dependent_name |
+###        +-------+----------------+
+###      */
+###     SELECT
+###     department.dname,
+###     dependent.dependent_name
+###     FROM department
+###     INNER JOIN employee ON department.dnumber = employee.dno
+###     INNER JOIN dependent ON employee.ssn = dependent.essn
+###     ORDER BY dependent.dependent_name DESC
+###     ;
+
+#   # Question 6
+#   /*
+#      Working?: Match (different order)
+#      List male employees who work in research and names of supervisors 
+#      Write to sakila database
+#      +------------+------------+
+#      | Supervisor | supervisee |
+#      +------------+------------+
+#    */
+#   SELECT 
+#   CONCAT(e1.fname, " ", e1.lname) as "Supervisor",
+#   CONCAT(e2.fname, " ", e2.lname) as "Supervisee"
+#   FROM employee as e1
+#   INNER JOIN employee as e2 ON e1.ssn = e2.superssn
+#   INNER JOIN department ON e1.dno = department.dnumber
+#   WHERE department.dnumber = (SELECT dnumber FROM department WHERE dname =
+#           "Research")
+#   AND e1.sex = "M"
+#   ;
 
 
-USE company;
-# Question 4
-/*
-   Retrieve distinct names of all employees working <= 10hrs on any project that
-   starts with "Product"
- */
-
+#USE sakila;
+# Question 7
+#   /*
+#      Working?: unimplemented
+#      List customers and names of movies rented in July 2005. Use functions month,
+#      monthname, year, etc
+#      +--------------+-------+-------------+
+#      | customername | title | rental_date |
+#      +--------------+-------+-------------+
+#    */
+#   SELECT
+#   CONCAT(customer.first_name, " ", customer.last_name),
+#   
