@@ -19,7 +19,4 @@ __*__
 *.out
 .python-version
 
-# ML
-*.pth
-*.jpg
-*.png
+Book*
