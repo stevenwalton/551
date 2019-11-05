@@ -24,7 +24,7 @@ USE stores7;
 
 # Question 2
 /*
-   Working:
+   Working: NO
 
    For each customer that has bought items from "Anza" (including $0), add up
    the total amount spent (don't include shipping). Give customer number, first
@@ -42,19 +42,25 @@ c.lname,
 c.city,
 c.state,
 m.manu_code,
-i.total_price
-#SUM(i.total_price)
+i.total_price,
+tot
 FROM customer as c
-INNER JOIN orders as o ON o.customer_num = c.customer_num
-INNER JOIN items as i ON i.order_num = o.order_num
-INNER JOIN manufact as m ON m.manu_code = i.manu_code
-WHERE m.manu_code = (SELECT manu_code FROM manufact WHERE manu_name = "Anza")
+LEFT JOIN orders as o ON o.customer_num = c.customer_num
+LEFT JOIN items as i ON i.order_num = o.order_num
+LEFT JOIN manufact as m ON m.manu_code = i.manu_code
+WHERE tot = (SELECT IFNULL(i.total_price, 0.0))
+#WHERE m.manu_code = (SELECT manu_code FROM manufact WHERE manu_name = "Anza")
+#AND tot = (SELECT...)
 GROUP BY c.lname, c.fname
 ;
 
 
 # Question 3
 /*
+   Working: 
+
+   For each customer sum the total amount they spent, including shipping. Do not
+   include those that ordered nothing.
    +-------+-------+------------+
    | fname | lname | totalSpent |
    +-------+-------+------------+
@@ -63,11 +69,27 @@ GROUP BY c.lname, c.fname
 
 # Question 4
 /*
+   Working: Almost
+   
+   List all items from stock table that have never been ordered
    +-----------+-----------+-------------+------------+------+------------+
    | stock_num | manu_code | description | unit_price | unit | unit_descr |
    +-----------+-----------+-------------+------------+------+------------+
    35 rows
  */
+#SELECT
+#s.stock_num,
+#s.manu_code, 
+#s.description,
+#s.unit_price,
+#s.unit,
+#s.unit_descr
+#FROM stock as s
+#WHERE s.stock_num NOT IN (SELECT i.stock_num
+#                                 FROM items AS i
+#                                 INNER JOIN orders AS o ON o.order_num =
+#                                 i.order_num)
+#;
 
 # Question 5
 /*
