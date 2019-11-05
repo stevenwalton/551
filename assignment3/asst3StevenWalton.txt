@@ -1,0 +1,129 @@
+/*
+   Steven Walton - 551 Databases
+   Assignment 3
+ */
+
+USE stores7;
+# Question 1
+/*
+   Working?: Kinda. 
+   State is abbreviation and order (of names) is different. Question leaves this
+   ambiguous.
+
+   Show all customers that live in California, Arizona, and Colorado -- in that
+   order. Show first/last names, city, and name of state
+   +-------+-------+------+-------+
+   | fname | lname | city | sname |
+   +-------+-------+------+-------+
+   21 rows
+ */
+#SELECT fname, lname, city, state FROM customer
+#WHERE state = "CA" or state = "AZ" or state = "CO"
+#ORDER BY FIELD(state, "CA", "AZ", "CO")
+#;
+
+# Question 2
+/*
+   Working:
+
+   For each customer that has bought items from "Anza" (including $0), add up
+   the total amount spent (don't include shipping). Give customer number, first
+   name, last name, city, state, and amount spent. Orders need not be shipped,
+   just made. Order by last name then first name
+   +--------------+-------+-------+------+-------+---------+
+   | customer_num | fname | lname | city | state | totHero |
+   +--------------+-------+-------+------+-------+---------+
+   28 rows
+ */
+SELECT 
+c.customer_num,
+c.fname,
+c.lname,
+c.city,
+c.state,
+m.manu_code,
+i.total_price
+#SUM(i.total_price)
+FROM customer as c
+INNER JOIN orders as o ON o.customer_num = c.customer_num
+INNER JOIN items as i ON i.order_num = o.order_num
+INNER JOIN manufact as m ON m.manu_code = i.manu_code
+WHERE m.manu_code = (SELECT manu_code FROM manufact WHERE manu_name = "Anza")
+GROUP BY c.lname, c.fname
+;
+
+
+# Question 3
+/*
+   +-------+-------+------------+
+   | fname | lname | totalSpent |
+   +-------+-------+------------+
+   17 rows
+ */
+
+# Question 4
+/*
+   +-----------+-----------+-------------+------------+------+------------+
+   | stock_num | manu_code | description | unit_price | unit | unit_descr |
+   +-----------+-----------+-------------+------------+------+------------+
+   35 rows
+ */
+
+# Question 5
+/*
+   +-----------+--------------+-------------+
+   | order_num | customer_num | ship_weight |
+   +-----------+--------------+-------------+
+   |      1007 |          117 |      125.90 |
+   +-----------+--------------+-------------+
+   1 row
+ */
+
+# Question 6
+/*
+   13 rows
+ */
+
+# Question 7
+/*
+   0 rows if run on "company" database
+   if on "badcompany"
+   +----------+----------+-----------+
+   | dname    | pname    | plocation |
+   +----------+----------+-----------+
+   | Research | Crabbing |  Coos Bay |
+   +----------+----------+-----------+
+ */
+
+# Question 8
+/*
+   +-----------------+----------+
+   | pname           | totHours |
+   +-----------------+----------+
+   | Computerization |    55.00 |
+   | Newbenefits     |    55.00 |
+   +-----------------+----------+
+   2 rows
+ */
+
+# Question 9
+/*
+   +-------+-------+-------+
+   | fname | lname | pname |
+   +-------+-------+-------+
+   8 rows
+ */
+
+# Question 10
+/*
+   +-------+----------+
+   | title | amtspent |
+   +-------+----------+
+   46 rows
+ */ 
+
+# Question 11
+/*
+   106 rows (other reasonable answers have 105 or 99 rows by dupe elimination
+   and/or including film title)
+ */
