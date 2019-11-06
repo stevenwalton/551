@@ -24,7 +24,7 @@ USE stores7;
 
 # Question 2
 /*
-   Working: NO
+   Working: Matches
 
    For each customer that has bought items from "Anza" (including $0), add up
    the total amount spent (don't include shipping). Give customer number, first
@@ -41,16 +41,12 @@ c.fname,
 c.lname,
 c.city,
 c.state,
-m.manu_code,
-i.total_price,
-tot
+#i.manu_code,
+SUM(IF(m.manu_code = "ANZ", i.total_price, 0.0)) as totHero
 FROM customer as c
 LEFT JOIN orders as o ON o.customer_num = c.customer_num
 LEFT JOIN items as i ON i.order_num = o.order_num
 LEFT JOIN manufact as m ON m.manu_code = i.manu_code
-WHERE tot = (SELECT IFNULL(i.total_price, 0.0))
-#WHERE m.manu_code = (SELECT manu_code FROM manufact WHERE manu_name = "Anza")
-#AND tot = (SELECT...)
 GROUP BY c.lname, c.fname
 ;
 
