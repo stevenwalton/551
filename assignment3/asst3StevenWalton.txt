@@ -17,10 +17,10 @@ USE stores7;
    +-------+-------+------+-------+
    21 rows
  */
-#SELECT fname, lname, city, state FROM customer
-#WHERE state = "CA" or state = "AZ" or state = "CO"
-#ORDER BY FIELD(state, "CA", "AZ", "CO")
-#;
+SELECT fname, lname, city, state FROM customer
+WHERE state = "CA" or state = "AZ" or state = "CO"
+ORDER BY FIELD(state, "CA", "AZ", "CO")
+;
 
 # Question 2
 /*
@@ -50,10 +50,9 @@ LEFT JOIN manufact as m ON m.manu_code = i.manu_code
 GROUP BY c.lname, c.fname
 ;
 
-
 # Question 3
 /*
-   Working: 
+   Working: Match but order off (no order specified)
 
    For each customer sum the total amount they spent, including shipping. Do not
    include those that ordered nothing.
@@ -62,10 +61,29 @@ GROUP BY c.lname, c.fname
    +-------+-------+------------+
    17 rows
  */
+SELECT
+c.fname,
+c.lname,
+(d0.price + d1.ship) as totalSpent
+FROM customer as c
+JOIN (SELECT c.customer_num, SUM(o.ship_charge) as ship
+      FROM customer as c
+      JOIN orders as o ON c.customer_num = o.customer_num
+      GROUP BY c.customer_num
+     ) as d1
+ON d1.customer_num = c.customer_num
+JOIN (SELECT c.customer_num, SUM(i.total_price) as price
+        FROM customer as c
+        LEFT JOIN orders as o ON c.customer_num = o.customer_num
+        JOIN items as i ON i.order_num = o.order_num
+        GROUP BY c.customer_num
+     ) as d0
+ON d0.customer_num = d1.customer_num
+;
 
 # Question 4
 /*
-   Working: Almost
+   Working: Match
    
    List all items from stock table that have never been ordered
    +-----------+-----------+-------------+------------+------+------------+
@@ -73,22 +91,25 @@ GROUP BY c.lname, c.fname
    +-----------+-----------+-------------+------------+------+------------+
    35 rows
  */
-#SELECT
-#s.stock_num,
-#s.manu_code, 
-#s.description,
-#s.unit_price,
-#s.unit,
-#s.unit_descr
-#FROM stock as s
-#WHERE s.stock_num NOT IN (SELECT i.stock_num
-#                                 FROM items AS i
-#                                 INNER JOIN orders AS o ON o.order_num =
-#                                 i.order_num)
-#;
+SELECT
+DISTINCT(s.stock_num),
+s.manu_code, 
+s.description,
+s.unit_price,
+s.unit,
+s.unit_descr
+FROM stock as s
+NATURAL LEFT JOIN items as i
+WHERE i.stock_num is NULL
+;
+
 
 # Question 5
 /*
+   Working: Matches. Think the >= is a sigfig issue?
+
+   Find order numbers, customer numbers, and shipping weight of orders that has
+   the largest difference from the average shipping weight
    +-----------+--------------+-------------+
    | order_num | customer_num | ship_weight |
    +-----------+--------------+-------------+
@@ -96,14 +117,82 @@ GROUP BY c.lname, c.fname
    +-----------+--------------+-------------+
    1 row
  */
+SELECT
+order_num,
+customer_num,
+ship_weight
+FROM orders
+JOIN (SELECT MAX(ABS(ship_weight - a.average)) maxdist FROM orders
+      JOIN (SELECT AVG(ship_weight) average FROM orders) a) d
+WHERE ABS(ship_weight - (SELECT AVG(ship_weight) FROM orders))
+      >= d.maxdist
+;
+
 
 # Question 6
 /*
+   Working: Yes. Spent way too long on this trying to find an elegant solution
+   so just brute forced it with lots of copy paste :/
+
+   Consider total spent by each customer (exclude shipping). Find customers
+   whose total is within one standard deviation of the average amount.
    13 rows
  */
+SELECT 
+s.customer_num, 
+CONCAT(s.fname, " ", s.lname) name, 
+s.total
+FROM
+(
+    SELECT c.fname, c.lname, c.customer_num, SUM(i.total_price) total
+    FROM customer as c
+    JOIN orders as o
+    USING(customer_num)
+    JOIN items as i
+    USING(order_num)
+    GROUP BY c.customer_num
+) s
+# One std above
+WHERE(s.total <
+    (
+    SELECT AVG(a.st) + STD(a.st) as above
+    FROM
+    (
+        SELECT c.customer_num, SUM(i.total_price) as st
+        FROM customer as c
+        JOIN orders as o
+        ON c.customer_num= o.customer_num
+        JOIN items as i
+        ON o.order_num=i.order_num
+        GROUP BY c.customer_num
+    ) a
+    )
+# One std below
+AND s.total >
+    (
+    SELECT AVG(b.st) - STD(b.st) as below
+    FROM
+    (
+        SELECT c.customer_num, SUM(i.total_price) as st
+        FROM customer as c
+        JOIN orders as o
+        ON c.customer_num= o.customer_num
+        JOIN items as i
+        ON o.order_num=i.order_num
+        GROUP BY c.customer_num
+    ) b
+    )
+)
+;
 
+USE company
 # Question 7
 /*
+   Working: Match
+
+   Return list of projects that are located in a location not owned by a
+   department.
+
    0 rows if run on "company" database
    if on "badcompany"
    +----------+----------+-----------+
@@ -112,9 +201,22 @@ GROUP BY c.lname, c.fname
    | Research | Crabbing |  Coos Bay |
    +----------+----------+-----------+
  */
+SELECT 
+d.dname,
+p.pname,
+p.plocation
+FROM project p
+INNER JOIN department d ON d.dnumber = p.dnum
+WHERE p.plocation NOT IN (SELECT loc.dlocation FROM dept_locations as loc
+                          INNER JOIN department d on d.dnumber = loc.dnumber)
+;
 
 # Question 8
 /*
+   Working: Match
+
+   Determine which project(s) has the maximal number of allocated hours
+
    +-----------------+----------+
    | pname           | totHours |
    +-----------------+----------+
@@ -123,25 +225,112 @@ GROUP BY c.lname, c.fname
    +-----------------+----------+
    2 rows
  */
+SELECT * 
+FROM (SELECT p.pname, SUM(w.hours) as totHours
+      FROM project p 
+      JOIN works_on w ON w.pno = p.pnumber 
+      GROUP BY p.pnumber ) d0
+WHERE d0.totHours = (SELECT MAX(d1.wh) 
+                     FROM (SELECT SUM(wo.hours) wh
+                           FROM project p 
+                           JOIN works_on wo ON wo.pno = p.pnumber
+                           GROUP BY p.pnumber) d1
+        )
+;
 
 # Question 9
 /*
+   Working: Matches
+
+   List names of employees and project for top 3 projects with most allocated
+   hours. Order by last name
+
    +-------+-------+-------+
    | fname | lname | pname |
    +-------+-------+-------+
    8 rows
  */
+SELECT
+e.fname,
+e.lname,
+t3.pname as pname
+FROM works_on w
+JOIN (SELECT
+      p.pnumber,
+      p.pname,
+      SUM(w.hours)
+      FROM project p
+      JOIN works_on w ON w.pno = p.pnumber
+      GROUP BY p.pnumber
+      ORDER BY SUM(w.hours) DESC
+      LIMIT 3
+     ) t3
+ON t3.pnumber = w.pno 
+JOIN employee e ON e.ssn = w.essn
+ORDER BY e.lname
+;
 
+USE sakila
 # Question 10
 /*
+   Working: Matches
+
+   List the amount of money spent on films that start with the letter R (include
+   $0)
    +-------+----------+
    | title | amtspent |
    +-------+----------+
    46 rows
  */ 
+SELECT
+d.title,
+CONCAT("$", (COALESCE(SUM(p.amount), 0))) as amount 
+FROM (SELECT
+      f.title,
+      f.film_id,
+      i.inventory_id
+      FROM film f
+      LEFT JOIN inventory i ON i.film_id = f.film_id
+      WHERE f.title LIKE "R%" ) d
+LEFT JOIN rental r ON r.inventory_id = d.inventory_id
+LEFT JOIN payment p ON p.rental_id = r.rental_id
+GROUP BY d.film_id
+;
 
 # Question 11
 /*
+   Working: Match number of rows
+
+   Using the last table, show all customers (name, city, state, country) who
+   have rented any of the top 4 grossing films
+
    106 rows (other reasonable answers have 105 or 99 rows by dupe elimination
    and/or including film title)
  */
+
+SELECT
+CONCAT(cu.first_name, " ", cu.last_name) as name,
+a.district,
+cl.country
+FROM customer cu
+JOIN customer_list cl ON cl.ID = cu.customer_id
+JOIN address a on a.address_id = cu.address_id
+JOIN rental r ON r.customer_id = cu.customer_id
+JOIN inventory i ON i.inventory_id = r.inventory_id
+JOIN (SELECT
+      d.film_id,
+      COALESCE(SUM(p.amount), 0) as amount 
+      FROM (SELECT
+            f.title,
+            f.film_id,
+            i.inventory_id
+            FROM film f
+            LEFT JOIN inventory i ON i.film_id = f.film_id
+            WHERE f.title LIKE "R%" ) d
+      LEFT JOIN rental r ON r.inventory_id = d.inventory_id
+      LEFT JOIN payment p ON p.rental_id = r.rental_id
+      GROUP BY d.film_id
+      ORDER BY amount DESC
+      LIMIT 4) d1
+ON d1.film_id = i.film_id
+;
