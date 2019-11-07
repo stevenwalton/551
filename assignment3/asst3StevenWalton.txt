@@ -132,7 +132,7 @@ WHERE ABS(ship_weight - (SELECT AVG(ship_weight) FROM orders))
 # Question 6
 /*
    Working: Yes. Spent way too long on this trying to find an elegant solution
-   so just brute forced it with lots of copy paste :/
+   so just brute forced it with lots of redundant blocks :/
 
    Consider total spent by each customer (exclude shipping). Find customers
    whose total is within one standard deviation of the average amount.
@@ -145,24 +145,24 @@ s.total
 FROM
 (
     SELECT c.fname, c.lname, c.customer_num, SUM(i.total_price) total
-    FROM customer as c
-    JOIN orders as o
+    FROM customer c
+    JOIN orders o
     USING(customer_num)
-    JOIN items as i
+    JOIN items i
     USING(order_num)
     GROUP BY c.customer_num
 ) s
 # One std above
 WHERE(s.total <
     (
-    SELECT AVG(a.st) + STD(a.st) as above
+    SELECT AVG(a.st) + STD(a.st) above
     FROM
     (
-        SELECT c.customer_num, SUM(i.total_price) as st
-        FROM customer as c
-        JOIN orders as o
+        SELECT c.customer_num, SUM(i.total_price) st
+        FROM customer c
+        JOIN orders o
         ON c.customer_num= o.customer_num
-        JOIN items as i
+        JOIN items i
         ON o.order_num=i.order_num
         GROUP BY c.customer_num
     ) a
@@ -170,14 +170,14 @@ WHERE(s.total <
 # One std below
 AND s.total >
     (
-    SELECT AVG(b.st) - STD(b.st) as below
+    SELECT AVG(b.st) - STD(b.st) below
     FROM
     (
-        SELECT c.customer_num, SUM(i.total_price) as st
-        FROM customer as c
-        JOIN orders as o
+        SELECT c.customer_num, SUM(i.total_price) st
+        FROM customer c
+        JOIN orders o
         ON c.customer_num= o.customer_num
-        JOIN items as i
+        JOIN items i
         ON o.order_num=i.order_num
         GROUP BY c.customer_num
     ) b
