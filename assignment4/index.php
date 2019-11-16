@@ -1,5 +1,5 @@
 <?php
-include_once 'asst4.php';
+include_once 'connect.php';
 ?>
 
 <!DOCTYPE html>
@@ -8,22 +8,17 @@ include_once 'asst4.php';
         <meta charset="utf-8">
         <title>Assignment 4</title>
     </head>
-    <!--Please enter a company name-->
     <body>
-        <?php
-              echo("Hello from php");
-              ?>
-        <?php
-        $object = new Dbh;
-        $object->connect();
-        ?>
-    </body>
-    <!--
-    <input type="text" name="company">
+    Please select a company
+    <?php
+    $object = new Dbh;
+    $object->connect();
+    ?>
+    <br>
+    <input type="text" name="state"> 
     <input type="submit" value="submit">
-    -->
+    </body>
 
-    <!--
     <footer><font size="1">
         This webpage is for 
         <a href="https://classes.cs.uoregon.edu/19F/cis451/assts/asst4/asst4.html">
@@ -34,5 +29,4 @@ include_once 'asst4.php';
         Work performed by: Steven Walton
     </font>
     </footer>
-    -->
 </html>
