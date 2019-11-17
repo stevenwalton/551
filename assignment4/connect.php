@@ -6,6 +6,7 @@ class Dbh
     private $username;
     private $passwd;
     private $charset;
+    private $pdo;
 
     public function connect()
     {
@@ -20,11 +21,11 @@ class Dbh
             $dsn = "mysql:host=".$this->servername.
                    ";dbname=".$this->dbname.
                    ";charset=".$this->charset;
-            $pdo = new PDO($dsn, 
+            $this->pdo = new PDO($dsn, 
                            $this->username, 
                            $this->passwd);
-            $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $pdo;
+            $this->pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $this->pdo;
         }
         catch (PDOException $e)
         {

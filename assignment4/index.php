@@ -1,7 +1,3 @@
-<?php
-include_once 'connect.php';
-?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,13 +6,12 @@ include_once 'connect.php';
     </head>
     <body>
     Please select a company
-    <?php
-    $object = new Dbh;
-    $object->connect();
-    ?>
     <br>
-    <input type="text" name="state"> 
+    <form action="getCust.php" method="POST">
+    <input type="text" name="manu"> 
     <input type="submit" value="submit">
+    </form>
+    <br>
     </body>
 
     <footer><font size="1">
