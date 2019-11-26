@@ -10,6 +10,8 @@
 \usepackage{pgfplots}   % Other plotting
 \usepgfplotslibrary{colormaps,fillbetween}
 \usepackage{placeins}   % Float barrier
+\usepackage{listings}
+\usepackage{enumitem}
 
 % Don't indent
 \setlength{\parindent}{0pt}
@@ -99,25 +101,134 @@ $ACD$, $BCD$, $CDE$
 \ppart{2}
 Is R in 3NF?
 
-\part{3}
+Yes. B,E,A (the right sides from the FDs) are all part of keys.
+
+\ppart{3}
 Is R in BCNF?
+
+No. None of the left sides of the FDs contain a key and there is no super key.
 
 \problem{2: 19.6}
 Suppose that we have the following three tuples in a legal instance of a
 relation scheme $S$ with three attributes ABC (listed in order): $(1,2,3),
 (4,2,3), \text{ and } (5,3,3)$.
 
+\begin{figure}[ht!]
+    \center
+    \begin{tikzpicture}
+        \node (A) at (0,0) {A};
+        \node (B) at (1,0) {B};
+        \node (C) at (2,0) {C};
+
+        % A -> B
+        \draw[-] (A) -- (0,0.5);
+        \draw[-] (0,0.5) -- (0.9, 0.5);
+        \draw[->] (0.9, 0.5) -- (0.9, 0.25);
+
+        % B -> C
+        \draw[-] (1.1, 0.25) -- (1.1, 0.5);
+        \draw[-] (1.1, 0.5) -- (2, 0.5);
+        \draw[-] (2, 0.5) -- (C);
+
+        % BC -> A
+        \draw[-] (B) -- (1, -0.5);
+        \draw[-] (C) -- (2, -0.5);
+        \draw[-] (2, -0.5) -- (0, -0.5);
+        \draw[->] (0, -0.5) -- (A);
+    \end{tikzpicture}
+\end{figure}
+\FloatBarrier
 \ppart{1}
 Which of the following dependencies can you infer does \textit{not} hold over
 scheme $S$?
 
 (a) $A \rightarrow B$, (b) $BC \rightarrow A$, (c) $B \rightarrow C$
 
+We'll look at the following three pictures
+\begin{figure}[ht!]
+    \center
+    \begin{tikzpicture}
+        \node (A) at (0,0) {A};
+        \node (B) at (1,0) {B};
+        \node (C) at (2,0) {C};
+
+        %% A -> B
+        %\draw[-] (A) -- (0,0.5);
+        %\draw[-] (0,0.5) -- (0.9, 0.5);
+        %\draw[->] (0.9, 0.5) -- (0.9, 0.25);
+
+        % B -> C
+        \draw[-] (1.1, 0.25) -- (1.1, 0.5);
+        \draw[-] (1.1, 0.5) -- (2, 0.5);
+        \draw[-] (2, 0.5) -- (C);
+
+        % BC -> A
+        \draw[-] (B) -- (1, -0.5);
+        \draw[-] (C) -- (2, -0.5);
+        \draw[-] (2, -0.5) -- (0, -0.5);
+        \draw[->] (0, -0.5) -- (A);
+    \end{tikzpicture}
+\end{figure}
+
+\begin{figure}[ht!]
+    \center
+    \begin{tikzpicture}
+        \node (A) at (0,0) {A};
+        \node (B) at (1,0) {B};
+        \node (C) at (2,0) {C};
+
+        % A -> B
+        \draw[-] (A) -- (0,0.5);
+        \draw[-] (0,0.5) -- (0.9, 0.5);
+        \draw[->] (0.9, 0.5) -- (0.9, 0.25);
+
+        %% B -> C
+        %\draw[-] (1.1, 0.25) -- (1.1, 0.5);
+        %\draw[-] (1.1, 0.5) -- (2, 0.5);
+        %\draw[-] (2, 0.5) -- (C);
+
+        % BC -> A
+        \draw[-] (B) -- (1, -0.5);
+        \draw[-] (C) -- (2, -0.5);
+        \draw[-] (2, -0.5) -- (0, -0.5);
+        \draw[->] (0, -0.5) -- (A);
+    \end{tikzpicture}
+\end{figure}
+\begin{figure}[ht!]
+    \center
+    \begin{tikzpicture}
+        \node (A) at (0,0) {A};
+        \node (B) at (1,0) {B};
+        \node (C) at (2,0) {C};
+
+        % A -> B
+        \draw[-] (A) -- (0,0.5);
+        \draw[-] (0,0.5) -- (0.9, 0.5);
+        \draw[->] (0.9, 0.5) -- (0.9, 0.25);
+
+        % B -> C
+        \draw[-] (1.1, 0.25) -- (1.1, 0.5);
+        \draw[-] (1.1, 0.5) -- (2, 0.5);
+        \draw[-] (2, 0.5) -- (C);
+
+        %% BC -> A
+        %\draw[-] (B) -- (1, -0.5);
+        %\draw[-] (C) -- (2, -0.5);
+        %\draw[-] (2, -0.5) -- (0, -0.5);
+        %\draw[->] (0, -0.5) -- (A);
+    \end{tikzpicture}
+\end{figure}
+
+We see that the third diagram is the only legal dependency, which is where the
+dependency $BC \rightarrow A$ is removed. $\therefore$ (b) does \textbf{not}
+hold.
+
+
 \ppart{2}
 Can you identify any dependencies that hold over $S$?
 
 We are only given an instance of $S$ and can't determine what relationships hold
-for all instances of $S$.
+for \textbf{all} instances of $S$.
 
 \problem{3}
 Removed from assignment
@@ -151,7 +262,76 @@ Consider relation $R = ABCDE$ with the below relationships. Convert to BCNF.
 \end{tikzpicture}
 \end{figure}
 
+\begin{figure}[ht!]
+    \center
+\begin{tikzpicture}
+    \node (A) at (0,0) {A};
+    \node (B) at (1,0) {B};
+    \node (D) at (2,0) {D};
+    \node (E) at (3,0) {E};
+
+    \draw[-] (A) -- (0,0.5);
+    \draw[-] (B) -- (1,0.5);
+    \draw[-] (D) -- (2,0.5);
+    \draw[-] (0,0.5) -- (3, 0.5);
+    \draw[->] (3,0.5) -- (E);
+
+    \draw[-] (E) -- (3, -0.5);
+    \draw[-] (D) -- (2, -0.5);
+    \draw[-] (3, -0.5) -- (0, -0.5);
+    \draw[->] (0, -0.5) -- (A);
+
+\end{tikzpicture}
+\end{figure}
+
+\begin{figure}[ht!]
+    \center
+\begin{tikzpicture}
+    \node (A) at (0,0) {A};
+    \node (B) at (1,0) {B};
+    \node (D) at (2,0) {D};
+
+\end{tikzpicture}
+\end{figure}
+\FloatBarrier
+
 \problem{5: 19.13}
+Consider a relation $R$ with five attributes $ABCDE$
+
+\ppart{1}
+For each of the following instances of R, state whether it violates (a) the FD
+$BC\rightarrow D$ and (b) the MVD $BC\rightarrow\rightarrow D$
+\begin{enumerate}[label=(\alph*)]
+    \item \{\}  
+        No. 
+    \item \{($a,2,3,4,5),(2,a,3,5,5)$\} 
+        $BC\rightarrow D$ is violated if $a=2$
+    \item \{$(a,2,3,4,5),(2,a,3,5,5),(a,2,3,4,6)$\} $BC\rightarrow D$ and
+        $BC\rightarrow\rightarrow D$ are both violated if $a=2$. We need another
+        tuple that ends in $5,6$.
+    \item \{$(a,2,3,4,5),(2,a,3,4,5),(a,2,3,6,5)$\}
+        $BC\rightarrow D$ is violated because if $a=2$ then there is a duplicate
+        row.
+    \item \{$(a,2,3,4,5), (2,a,3,7,5), (a,2,3,4,6)$\}
+        Both $BC\rightarrow D$ and $BC\rightarrow\rightarrow D$ are violated.
+        $BC\rightarrow D$ is violated because of the second tuple.
+        $BC\rightarrow\rightarrow D$ is violated because we must have another
+        tuple that pairs with the second tuple.
+    \item \{$(a,2,3,4,5),(2,a,3,4,5), (a,2,3,6,5), (a,2,3,6,6)$\}
+        $BC\rightarrow D$ is violated because there is not a unique value
+        defined by $BC$. $BC\rightarrow\rightarrow D$ is violated because the
+        entry for the $D$th column in the $4^{th}$ tuple isn't the same as in
+        the $1^{st}$ tuple.
+    \item \{$(a,2,3,4,5),(a,2,3,6,5),(a,2,3,6,6),(a,2,3,4,6)$\}
+        Just $BC\rightarrow D$ is violated because the third tuple's last entry
+        isn't also a 5.
+\end{enumerate}
+
+\ppart{2}
+If each instance for $R$ listed above is legal, what can you say about the DF $A
+\rightarrow B$?
+
+We cannot say anything, because there are not unique relationships.
 
 \problem{6}
 Let $R$ be a relation, $X$ a set of attributes of $R$, and $A$ an attribute of
@@ -159,6 +339,35 @@ $R$. (Also denote that $XA$ the result of adding $A$ to $X$) Define the support
 of $X$, written as $\#X$, as the number of distinct tuples in $R|X$ ($R$
 restricted to, or projected onto, the attributes of $X$). Prove that if $X
 \rightarrow A$, then $\#X = \#XA$.
+
+Proof by contradiction:
+
+Let $X = BC$ such that $BC\rightarrow A$.
+
+\FloatBarrier
+\begin{figure}[ht]
+    \center
+\begin{tabular}{|c|c|c|}
+    \hline
+    A & B & C \\
+    \hline
+    1 & 2 & 3 \\
+    \hline
+    4 & 5 & 6 \\
+    \hline
+    7 & 2 & 3 \\
+    \hline
+\end{tabular}
+\end{figure}
+\FloatBarrier
+
+We see here that there is a violation in the third row because $\#X = 2$ and
+$\#XA = 3$. This is not a legal relationship.  We note that we only have legal
+schemas if there is an injective relationship. If we have an injective
+relationship (onto) then we would have the relationship $\#X \leq \#XA$ (allows
+for surjection). For strict equality to hold, there needs to be a bijective
+relationship.
+
 
 \problem{7}
 Prove that if $R$ is in 3NF and has only one candidate key, then $R$ is in BCNF.
