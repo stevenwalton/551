@@ -377,6 +377,91 @@ relationship.
 \problem{7}
 Prove that if $R$ is in 3NF and has only one candidate key, then $R$ is in BCNF.
 
+\textit{I'm pretty sure 3NF $\wedge$ one candidate $\leftrightarrow$ BCNF}, so we
+have to use something false to solve our proof. To solve this we will use a
+contrapositive proof. We have to break the \textbf{AND} condition. If we say
+that our above condition is $(A\wedge B) \leftrightarrow C$ then we have to show
+that $\neg(\neg (A \vee B) \leftrightarrow C)$.
+
+\ppart{$\neg B \leftrightarrow C$}
+We will use a contrapositive proof where we will show that BCNF cannot exist if
+a table contains more than one key.
+Let's suppose that $R$ has two candidate keys and is in 3NF. Suppose we have the
+two dependencies $AB \rightarrow CD$ and $C\rightarrow B$
+
+\begin{figure}[ht]
+    \center
+    \begin{tikzpicture}
+        \node (A) at (0,0) {A};
+        \node (B) at (1,0) {B};
+        \node (C) at (2,0) {C};
+        \node (D) at (3,0) {D};
+
+        \draw[-] (A) -- (0,0.5);
+        \draw[-] (B) -- (1,0.5);
+        \draw[-] (0,0.5) -- (3,0.5);
+        \draw[->] (2,0.5) -- (C);
+        \draw[->] (3,0.5) -- (D);
+
+        \draw[-] (C) -- (2, -0.5);
+        \draw[-] (2,-0.5) -- (1,-0.5);
+        \draw[->] (1,-0.5) -- (B);
+
+    \end{tikzpicture}
+\end{figure}
+
+We have the two candidate keys $AB$ and $AC$ and there are no partial
+dependences nor does it contain any transitive dependencies, and the dependent
+is a prime attribute. $\therefore$ 3NF but not BCNF.
+
+\ppart{$\neg A \leftrightarrow C$}
+Consider the following relationship where $R$ has a single candidate key and is
+not 3NF
+\begin{figure}[ht]
+    \center
+    \begin{tikzpicture}
+        \node (A) at (0,0) {A};
+        \node (B) at (1,0) {B};
+        \node (C) at (2,0) {C};
+
+        \draw[-] (B) -- (1,0.5);
+        \draw[-] (1,0.5) -- (2,0.5);
+        \draw[->] (2,0.5) -- (C);
+    \end{tikzpicture}
+\end{figure}
+We can see that this has a single candidate key $AB$ and is not in BCNF.
+
+$\therefore$ is we are in 3NF and have one candidate key then we are necessiarly
+in BCNF.
+
+\textbf{Note to self so I can re-solve this}\\
+We can make this BCNF by splitting into two tables, each of which will have a
+candidate key.
+
+\begin{figure}[ht]
+    \center
+    \begin{tikzpicture}
+        \node (A) at (0,0) {A};
+        \node (C) at (1,0) {C};
+        \node (D) at (2,0) {D};
+
+        \node (C1) at (4,0) {C};
+        \node (B1) at (5,0) {B};
+
+        \draw[-] (A) -- (0,0.5);
+        \draw[-] (C) -- (1,0.5);
+        \draw[-] (0,0.5) -- (2,0.5);
+        \draw[->] (2,0.5) -- (D);
+
+        \draw[-] (C1) -- (4,0.5);
+        \draw[-] (4,0.5) -- (5,0.5);
+        \draw[->] (5,0.5) -- (B1);
+    \end{tikzpicture}
+\end{figure}
+
+Each of these have a single candidate key and are BCNF.
+
+\FloatBarrier
 \problem{8}
 Insert the following values into an initially empty B+ tree with parameter $d=2$
 and values $17, 11, 50, 22, 5, 35, 42, 60, 15, 30, 25, 27, 37, 40, 20$.
