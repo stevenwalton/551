@@ -36,13 +36,13 @@ class State extends Dbh
         return $stmt->fetch()['name'];
     }
 
-    public function addState($name,$country)
+    public function addState($name,$country="Test")
     {
         $id = 0;
         # Check if country exists
         $cnt = new Country;
         $idCountry = $cnt->getCountryID($country);
-        echo("CountryID: ".$idCountry."<br>");
+        echo("Country: ".$country." CountryID: ".$idCountry."<br>");
         $stmt = $this->connect()->query("SELECT * FROM State;");
         if(!(in_array($name,$stmt->fetch(),true)))
         {

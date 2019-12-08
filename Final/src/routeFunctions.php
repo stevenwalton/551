@@ -23,7 +23,7 @@ class Route extends Dbh
                                          LEFT JOIN Area a
                                          LEFT JOIN Site si
                                          LEFT JOIN State s
-                                         WHERE s.idState = ".$stateID.";")
+                                         WHERE s.idState = ".$stateID.";");
         while($row = $stmt->fetch())
         {
            $name = $row['name'];
@@ -40,7 +40,7 @@ class Route extends Dbh
         $stmt = $this->connect()->query("SELECT name FROM Routes r
                                          LEFT JOIN Area a
                                          LEFT JOIN Site s
-                                         WHERE s.idSite = ".$siteID.";")
+                                         WHERE s.idSite = ".$siteID.";");
         while($row = $stmt->fetch())
         {
            $name = $row['name'];
@@ -56,7 +56,7 @@ class Route extends Dbh
         $areaID = getAreaID($area);
         $stmt = $this->connect()->query("SELECT name FROM Routes r
                                          LEFT JOIN Area a
-                                         WHERE a.idArea = ".$areaID.";")
+                                         WHERE a.idArea = ".$areaID.";");
         while($row = $stmt->fetch())
         {
            $name = $row['name'];
@@ -64,6 +64,53 @@ class Route extends Dbh
            echo("<br>");
         }
         return 0; 
+    }
+
+    public function addRoute($name, 
+                             $site=NULL,
+                             $area=NULL,
+                             $numPitches=1, 
+                             $approach=NULL, 
+                             $description=NULL,
+                             $likability=0,
+                             $difficulty=0.0)
+    {
+        // Check that route name isn't used in the area or site
+        if ($site == NULL and $area == NULL)
+        {
+            return 1;
+        }
+        elseif ($site == NULL)
+        {
+            // Does name exist in area already?
+            $stmt = $this->connect()->query("SELECT COUNT(idArea) c FROM Area
+                                             WHERE name = ".$name.";");
+            $check = $stmt->fetch()['c'];
+            if ($check > 0)
+            {
+                return 1;
+            }
+             
+            // TODO: 
+            // Handle no return
+            
+        }
+        else if ($area == NULL)
+        {
+            // Get Area
+        }
+        else // We just require Area, could reorder ifs
+        {
+            $area = new Area;
+            $stmt = $this->connect()-query("SELECT idSite, idArea FROM Area a
+                                            WHERE a.name = ".$name.";");
+            $row = $stmt->fetch();
+            $siteID = $row['idSite'];
+            $areaID = $row['idArea'];
+        }
+        // Get number of routes 
+        $stmt = $this->connect()->query("SELECT COUNT(idRoute) FROM Route;")
+
     }
 }
 ?>

@@ -15,6 +15,20 @@ class Area extends Dbh
 
     public function getAreaID($name)
     {
+        $stmt = $this->connect()->query("SELECT idArea FROM Area
+                                         WHERE name = ".$name.";");
+        return $stmt->fetch()['idArea'];
+    }
+
+    public function getSite($name)
+    {
+        $stmt = $this->connect()->query("SELECT idSite,s.name FROM Area
+                                         LEFT JOIN Site
+                                         WHERE name = ".$name.";");
+        $row = $stmt->fetch();
+        $idSite = $row['idSite'];
+        $siteName = $row['name'];
+        return array("id"=>$idSite, "name"=>$siteName);
     }
 }
 ?>
