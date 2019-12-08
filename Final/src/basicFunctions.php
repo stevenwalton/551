@@ -1,5 +1,5 @@
 <?php
-class BF extends Dbh
+class Basic extends Dbh
 {
     public function getTables()
     {

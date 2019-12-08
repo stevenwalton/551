@@ -15,9 +15,12 @@ include_once 'src/stateFunctions.php';
     
     <?php
     $name= $_POST['name'];
-    $object = new State;
+    #$object = new State;
     #$object->setCountry($name);
-    $object->addState($name,"USA");
+    #$object->addState($name,"Test");
+    $object = new Country;
+    $name = $object->getCountryName($name);
+    echo($name);
     ?>
     </body>
     <footer><font size="1">

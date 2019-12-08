@@ -1,6 +1,7 @@
 <?php
 include_once 'src/connect.php';
 include_once 'src/basicFunctions.php';
+include_once 'src/countryFunctions.php';
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +19,7 @@ include_once 'src/basicFunctions.php';
     Available Countries
     <br>
     <?php
-    $object = new Databases;
+    $object = new Country;
     $object->listCountries();
     ?>
     <!--
