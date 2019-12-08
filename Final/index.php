@@ -1,3 +1,8 @@
+<?php
+include_once 'src/connect.php';
+include_once 'src/basicFunctions.php';
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,11 +15,21 @@
     Welcome to Climbing Project. Here you may explore and search for different 
     climbing routes. Remember to climb safe!
     <br>
+    Available Countries
+    <br>
+    <?php
+    $object = new Databases;
+    $object->listCountries();
+    ?>
     <!--
-    <form action="getCust.php" method="POST">
+    <form action="USA/index.php" method="POST">
     <input type="text" name="manu"> 
     <input type="submit" value="submit">
     -->
+    <br>
+    <form action="test.php" method="POST">
+    <input type="text" name="name">
+    <input type="submit" value="submit">
     </form>
     <br>
     </body>
