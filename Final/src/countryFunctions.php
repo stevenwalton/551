@@ -61,11 +61,71 @@ class Country extends Dbh
             //echo("<br>Adding ".$name." with id ".$id." and hemisphere ".$hem);
             //echo("<br>");
             
+            echo("before insert<br>");
             # UNCOMMENT WHEN NOT TESTING
+            if ($hem == NULL)
+            {
+                $sql = "INSERT INTO Country (idCountry, hemisphere, name)
+                        VALUES ('".$id."',NULL, '".$name."');";
+            }
+            else
+            {
+                $sql = "INSERT INTO Country (idCountry, hemisphere, name)
+                        VALUES ('".$id."','".$hem."', '".$name."');";
+            }
+            try
+            {
+                echo("inserting: ".$sql." <br>");
+                $stmt = $this->connect()->prepare($sql);
+                echo("prepared<br>");
+                $stmt->execute();
+                echo("executed<br>");
+                return 0;
+            }
+            catch(PDOException $e)
+            {
+                echo($sql."<br>".$e->getMessage());
+                return 1;
+            }
             #$inst = $this->connect()->query("INSERT INTO Country (idCountry, hemisphere, name) VALUES ('".$id."','".$hem."','".$name."');");
-            return array("id"=>$id, "hemisphere"=>$hem, "name"=>$name);
+            #return array("id"=>$id, "hemisphere"=>$hem, "name"=>$name);
+            return 0;
         }
+        echo("Country: ".$name." already exists.");
+        return 1;
 
+    }
+
+    public function deleteByName($name)
+    {
+        try
+        {
+            $sql = "DELETE FROM Country WHERE name = ".$name.";";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute();
+            return 0;
+        }
+        catch(PDOException $e)
+        {
+            echo($sql."<br>".$e->getMessage());
+            return 1;
+        }
+    }
+
+    public function deleteByID($id)
+    {
+        try
+        {
+            $sql = "DELETE FROM Country WHERE idCountry = ".$id.";";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute();
+            return 0;
+        }
+        catch(PDOException $e)
+        {
+            echo($sql."<br>".$e->getMessage());
+            return 1;
+        }
     }
 }
 ?>
