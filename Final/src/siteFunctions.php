@@ -37,10 +37,13 @@ class Site extends Dbh
 
     public function addSite($name,$state)
     {
+        #echo("<fetching site with ".$name." ".$state);
+        echo("In addSite");
         $id = 0;
         # Check if state exists
-        $state = new State;
-        $idState = $state->getStateID($state);
+        $s = new State;
+        #echo("<br>Fetching state ID for ".$state);
+        $idState = $s->getStateID($state);
 
         $stmt = $this->connect()->query("SELECT * FROM site;");
         # Only do if site doesn't already exist
@@ -53,6 +56,21 @@ class Site extends Dbh
                 {
                     $id++;
                 }
+            }
+            $sql = "INSERT INTO site (idSite, idState, name)
+                    VALUES ('".$id."', '".$idState."', '".$name."');";
+            echo("Running: ".$sql."<br>");
+            try
+            {
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute();
+                echo("<br>Success");
+                return 0;
+            }
+            catch(PDOException $e)
+            {
+                echo($sql."<br>".$e->getMessage());
+                return 1;
             }
             return array("id"=>$id, "state"=>$idState, "name"=>$name);
         }

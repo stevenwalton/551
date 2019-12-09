@@ -2,6 +2,7 @@
 include_once 'src/connect.php';
 include_once 'src/basicFunctions.php';
 include_once 'src/countryFunctions.php';
+include_once 'src/stateFunctions.php';
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +41,22 @@ include_once 'src/countryFunctions.php';
         <?php endforeach; ?>
     </select>
     <input type="text" name="stateName">
+    <input type="submit" value="submit">
+    </form>
+    <br>
+    Add a site
+    <br>
+    <?php
+    $s = new State;
+    $states = $s->getAllStates();
+    ?>
+    <form action="scripts/addSite.php" method="POST">
+    <select name="state">
+        <?php foreach($states as $state): ?>
+            <option value="<?php echo($state);?>"><?php echo($state);?></option>
+        <?php endforeach; ?>
+    </select>
+    <input type="text" name="siteName">
     <input type="submit" value="submit">
     </form>
     <br>

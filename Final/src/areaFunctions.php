@@ -46,5 +46,27 @@ class Area extends Dbh
         $siteName = $row['name'];
         return array("id"=>$idSite, "name"=>$siteName);
     }
+
+    public function addArea($name, $site)
+    {
+        $id = 0;
+        # Check for matching site
+        $_site = new Site;
+        $idSite = $_site->getSiteID($site);
+
+        $stmt = $this->connect()->query("SELECT * FROM area;");
+        # only if area doesn't exist
+        if(!(in_array($name, $stmt->fetch(),true)))
+        {
+            $stmt = $this->connect()->query("SELECT * FROM area;");
+            while ($row = $stmt->fetch())
+            {
+                if ($id == $row['idArea'])
+                {
+                    $id++;
+                }
+            }
+        }
+    }
 }
 ?>

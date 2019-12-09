@@ -33,7 +33,9 @@ class State extends Dbh
 
     public function getStateID($name)
     {
+        echo("<br>Inside state: ".$name);
         $stmt = $this->connect()->query("SELECT * FROM state;");
+        echo("<br>looking for ".$name);
         while ($row = $stmt->fetch())
         {
             if($name == $row['name'])

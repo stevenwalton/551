@@ -4,8 +4,8 @@ This is intended for testing.
 -->
 <?php
 include_once '../src/connect.php';
-include_once '../src/countryFunctions.php';
-include_once '../src/stateFunctions.php';
+#include_once '../src/countryFunctions.php';
+#include_once '../src/stateFunctions.php';
 include_once '../src/siteFunctions.php';
 ?>
 
@@ -21,9 +21,11 @@ include_once '../src/siteFunctions.php';
     <body>
     <?php
     $name= $_POST['siteName'];
-    $country = $_POST['country'];
+    $state= $_POST['state'];
+    echo("Got site name: ".$name." and state ".$state."<br>");
     $object = new Site;
-    $object->addState($name,$country);
+    echo("Created site object<br>");
+    $object->addSite($name,$state);
     ?>
     </body>
 </html>
