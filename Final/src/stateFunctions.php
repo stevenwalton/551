@@ -5,7 +5,7 @@ class State extends Dbh
 {
     public function listStates()
     {
-        $stmt = $this->connect()->query("SELECT * FROM State;");
+        $stmt = $this->connect()->query("SELECT * FROM state;");
         while ($row = $stmt->fetch())
         {
             $name = $row['name'];
@@ -17,7 +17,7 @@ class State extends Dbh
 
     public function getStateID($name)
     {
-        $stmt = $this->connect()->query("SELECT * FROM State;");
+        $stmt = $this->connect()->query("SELECT * FROM state;");
         while ($row = $stmt->fetch())
         {
             if($name == $row['name'])
@@ -31,7 +31,7 @@ class State extends Dbh
 
     public function getStateName($id)
     {
-        $stmt = $this->connect()->query("SELECT name FROM State
+        $stmt = $this->connect()->query("SELECT name FROM state
                                          WHERE idState = ".$id.";");
         return $stmt->fetch()['name'];
     }
@@ -42,11 +42,11 @@ class State extends Dbh
         # Check if country exists
         $cnt = new Country;
         $idCountry = $cnt->getCountryID($country);
-        echo("Country: ".$country." CountryID: ".$idCountry."<br>");
-        $stmt = $this->connect()->query("SELECT * FROM State;");
+        #echo("Country: ".$country." CountryID: ".$idCountry."<br>");
+        $stmt = $this->connect()->query("SELECT * FROM state;");
         if(!(in_array($name,$stmt->fetch(),true)))
         {
-            $stmt = $this->connect()->query("SELECT * FROM State;");
+            $stmt = $this->connect()->query("SELECT * FROM state;");
             while ($row = $stmt->fetch())
             {
                 if($id == $row['idState'])
@@ -54,10 +54,21 @@ class State extends Dbh
                     $id++;
                 }
             }
-            echo("Adding state ".$name." with country ID ".$idCountry." and state id ".$id);
-            # UNCOMMENT WHEN NOT TESTING
-            #$inst = $this->connect()->query("INSERT INTO State (idState, idCountry, name) VALUES ('".$id."','".$idCountry."','".$name."');");
-            return array("id"=>$id, "country"=>$idCountry, "name"=>$name); 
+            #echo("Adding state ".$name." with country ID ".$idCountry." and state id ".$id);
+            $sql = "INSERT INTO state (idState, idCountry, name) 
+                    VALUES ('".$id."', '".$idCountry."','".$name."');";
+            
+            try
+            {
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute();
+                return 0;
+            }
+            catch(PDOException $e)
+            {
+                echo($sql."<br>".$e->getMessage());
+                return 1;
+            }
         }
 
     }

@@ -5,7 +5,7 @@ class Route extends Dbh
 {
     public function listRoutes()
     {
-        $stmt = $this->connect()->query("SELECT * FROM Routes;");
+        $stmt = $this->connect()->query("SELECT * FROM routes;");
         while($row = $stmt->fetch())
         {
             $name = $row['name'];
@@ -19,10 +19,10 @@ class Route extends Dbh
         // Not ready!
         $st = new State;
         $stateID = getStateID($state);
-        $stmt = $this->connect()->query("SELECT name FROM Routes r
-                                         LEFT JOIN Area a
-                                         LEFT JOIN Site si
-                                         LEFT JOIN State s
+        $stmt = $this->connect()->query("SELECT name FROM routes r
+                                         LEFT JOIN area a
+                                         LEFT JOIN site si
+                                         LEFT JOIN state s
                                          WHERE s.idState = ".$stateID.";");
         while($row = $stmt->fetch())
         {
@@ -37,9 +37,9 @@ class Route extends Dbh
     {
         $st = new Site;
         $siteID = getSiteID($site);
-        $stmt = $this->connect()->query("SELECT name FROM Routes r
-                                         LEFT JOIN Area a
-                                         LEFT JOIN Site s
+        $stmt = $this->connect()->query("SELECT name FROM routes r
+                                         LEFT JOIN area a
+                                         LEFT JOIN site s
                                          WHERE s.idSite = ".$siteID.";");
         while($row = $stmt->fetch())
         {
@@ -54,8 +54,8 @@ class Route extends Dbh
     {
         $st = new Area;
         $areaID = getAreaID($area);
-        $stmt = $this->connect()->query("SELECT name FROM Routes r
-                                         LEFT JOIN Area a
+        $stmt = $this->connect()->query("SELECT name FROM routes r
+                                         LEFT JOIN area a
                                          WHERE a.idArea = ".$areaID.";");
         while($row = $stmt->fetch())
         {
@@ -82,7 +82,7 @@ class Route extends Dbh
             return 1;
         }
         // Get current likability and number of votes
-        $stmt = $this->connect()->query("SELECT likability, likeVotes FROM Route
+        $stmt = $this->connect()->query("SELECT likability, likeVotes FROM route
                                          WHERE idRoute = ".$id.";");
         // TODO: if more than one row returned
         $row = $stmt->fetch();
@@ -92,7 +92,7 @@ class Route extends Dbh
         $newLike = (($like * $N) + $vote) / ($N + 1);
         $N++;
         // Update vote and number of likes (+1)
-        $sql = "UPDATE Route SET likability=".$newLike.", likeVotes=".$N."
+        $sql = "UPDATE route SET likability=".$newLike.", likeVotes=".$N."
                 WHERE idRoute = ".$id.";";
         try
         {
@@ -119,7 +119,7 @@ class Route extends Dbh
             return 1;
         }
         // Get current difficulty and number of votes
-        $sql = "SELECT difficulty, diffVotes FROM Route WHERE idRoute = ".$id.";";
+        $sql = "SELECT difficulty, diffVotes FROM route WHERE idRoute = ".$id.";";
         $stmt = $this->connect()->query($sql);
         // TODO: Nothing returned or more than one
         $row = $stmt->fetch();
@@ -128,7 +128,7 @@ class Route extends Dbh
         $newDiff = (($diff * $N) + $vote) / ($N + 1);
         $N++;
         // Update vote 
-        $sql = "UPDATE Route SET difficulty=".$newDiff.", diffVotes=".$N."
+        $sql = "UPDATE route SET difficulty=".$newDiff.", diffVotes=".$N."
                 WHERE idRoute = ".$id.";";
         try
         {
@@ -163,7 +163,7 @@ class Route extends Dbh
         {
             // Does name exist in area already?
             // FIX
-            $stmt = $this->connect()->query("SELECT COUNT(idArea) c FROM Area
+            $stmt = $this->connect()->query("SELECT COUNT(idArea) c FROM area
                                              WHERE name = ".$name.";");
             $check = $stmt->fetch()['c'];
             if ($check > 0)
@@ -187,17 +187,17 @@ class Route extends Dbh
         else // We just require Area, could reorder ifs
         {
             $area = new Area;
-            $stmt = $this->connect()-query("SELECT idSite, idArea FROM Area a
+            $stmt = $this->connect()-query("SELECT idSite, idArea FROM area a
                                             WHERE a.name = ".$name.";");
             $row = $stmt->fetch();
             $siteID = $row['idSite'];
             $areaID = $row['idArea'];
         }
         // Get number of routes 
-        $stmt = $this->connect()->query("SELECT COUNT(idRoute) c FROM Route;");
+        $stmt = $this->connect()->query("SELECT COUNT(idRoute) c FROM route;");
         $id = $stmt->fetch()['c'];
 
-        $sql = "INSERT INTO Route (idRoute,
+        $sql = "INSERT INTO route (idRoute,
                                    type,
                                    numPitches,
                                    approach,

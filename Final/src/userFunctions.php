@@ -3,7 +3,7 @@ class User extends Dbh
 {
     public function listUsers()
     {
-        $stmt = $this->connect()->query("SELECT * FROM Users;");
+        $stmt = $this->connect()->query("SELECT * FROM users;");
         while ($row = $stmt->fetch())
         {
             $name = $row['name'];
@@ -15,7 +15,7 @@ class User extends Dbh
 
     public function getUserName($id)
     {
-        $stmt = $this->connect()->query("SELECT name FROM Users
+        $stmt = $this->connect()->query("SELECT name FROM users
                                          WHERE idUsers = ".$id.";");
         return $stmt->fetch()['name'];
     }

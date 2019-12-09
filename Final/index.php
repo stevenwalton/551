@@ -20,17 +20,11 @@ include_once 'src/countryFunctions.php';
     <br>
     <?php
     $object = new Country;
-    #$object->listCountries();
     $countries = $object->getCountries();
     ?>
     <?php foreach ($countries as $c): ?>
         <a href="/Countries/<?php echo($c); ?>.php"> <?php echo($c) ?></a>
     <?php endforeach; ?>
-    <!--
-    <form action="USA/index.php" method="POST">
-    <input type="text" name="manu"> 
-    <input type="submit" value="submit">
-    -->
     <br>
     Add a country
     <form action="scripts/addCountry.php" method="POST">
@@ -38,6 +32,18 @@ include_once 'src/countryFunctions.php';
     <input type="submit" value="submit">
     </form>
     <br>
+    Add a state 
+    <form action="scripts/addState.php" method="POST">
+    <select name="country">
+        <?php foreach($countries as $c): ?>
+            <option value="<?php echo($c);?>"><?php echo($c);?></option>
+        <?php endforeach; ?>
+    </select>
+    <input type="text" name="stateName">
+    <input type="submit" value="submit">
+    </form>
+    <br>
+    
     Help expand our list! If you would like to add a route 
     <a href="scripts/newRoute.php">click here!</a>
     </body>

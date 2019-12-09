@@ -3,7 +3,7 @@ class Country extends Dbh
 {
     public function listCountries()
     {
-        $stmt = $this->connect()->query("SELECT * FROM Country;");
+        $stmt = $this->connect()->query("SELECT * FROM country;");
         while ($row = $stmt->fetch())
         {
             $name = $row['name'];
@@ -16,7 +16,7 @@ class Country extends Dbh
 
     public function getCountries()
     {
-        $sql = "SELECT * FROM Country;";
+        $sql = "SELECT * FROM country;";
         $stmt = $this->connect()->query($sql);
         $countries = $stmt->fetchAll(PDO::FETCH_COLUMN, 2);
         return $countries;
@@ -24,7 +24,7 @@ class Country extends Dbh
 
     public function getCountryID($name)
     {
-        $stmt = $this->connect()->query("SELECT * FROM Country;");
+        $stmt = $this->connect()->query("SELECT * FROM country;");
         while ($row = $stmt->fetch())
         {
             if($name == $row['name'])
@@ -44,7 +44,7 @@ class Country extends Dbh
     public function getCountryName($id)
     {
         //echo("<br>In func");
-        $stmt = $this->connect()->query("SELECT name FROM Country 
+        $stmt = $this->connect()->query("SELECT name FROM country 
                                          WHERE idCountry = ".$id.";");
         //echo("<br>Finding name for country with ID: ".$id);
         return $stmt->fetch()['name'];
@@ -55,11 +55,11 @@ class Country extends Dbh
         $id = 0;
         $hem = NULL;
         # Check if country exists
-        $stmt = $this->connect()->query("SELECT * FROM Country;");
+        $stmt = $this->connect()->query("SELECT * FROM country;");
         echo("Before check we have name ".$name."<br>");
         if(!(in_array($name,$stmt->fetch(),true)))
         {
-            $stmt = $this->connect()->query("SELECT * FROM Country;");
+            $stmt = $this->connect()->query("SELECT * FROM country;");
             while ($row = $stmt->fetch())
             {
                 if($id == $row['idCountry'])
@@ -74,13 +74,13 @@ class Country extends Dbh
             # UNCOMMENT WHEN NOT TESTING
             if ($hem == NULL)
             {
-                $sql = "INSERT INTO Country (idCountry, hemisphere, name)
+                $sql = "INSERT INTO country (idCountry, hemisphere, name)
                         VALUES ('".$id."',NULL, '".$name."');";
                 echo("<br>Adding country ".$name." with ID ".$id."<br>");
             }
             else
             {
-                $sql = "INSERT INTO Country (idCountry, hemisphere, name)
+                $sql = "INSERT INTO country (idCountry, hemisphere, name)
                         VALUES ('".$id."','".$hem."', '".$name."');";
             }
             try
@@ -110,7 +110,7 @@ class Country extends Dbh
     {
         try
         {
-            $sql = "DELETE FROM Country WHERE name = ".$name.";";
+            $sql = "DELETE FROM country WHERE name = ".$name.";";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute();
             return 0;
@@ -126,7 +126,7 @@ class Country extends Dbh
     {
         try
         {
-            $sql = "DELETE FROM Country WHERE idCountry = ".$id.";";
+            $sql = "DELETE FROM country WHERE idCountry = ".$id.";";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute();
             return 0;

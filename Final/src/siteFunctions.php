@@ -5,7 +5,7 @@ class Site extends Dbh
 {
     public function listSites()
     {
-        $stmt = $this->connect()->query("SELECT * FROM Site;");
+        $stmt = $this->connect()->query("SELECT * FROM site;");
         while ($row = $stmt->fetch())
         {
             $name = $row['name'];
@@ -17,7 +17,7 @@ class Site extends Dbh
 
     public function getSiteID($name)
     {
-        $stmt = $this->connect()->query("SELECT * FROM Site;");
+        $stmt = $this->connect()->query("SELECT * FROM site;");
         while ($row = $stmt->fetch())
         {
             if ($name == $row['name'])
@@ -34,11 +34,11 @@ class Site extends Dbh
         $state = new State;
         $idState = $state->getStateID($state);
 
-        $stmt = $this->connect()->query("SELECT * FROM Site;");
+        $stmt = $this->connect()->query("SELECT * FROM site;");
         # Only do if site doesn't already exist
         if(!(in_array($name,$stmt->fetch(),true)))
         {
-            $stmt = $this->connect()->query("SELECT * FROM Site;");
+            $stmt = $this->connect()->query("SELECT * FROM site;");
             while ($row = $stmt->fetch())
             {
                 if ($id == $row['idSite'])
