@@ -1,11 +1,12 @@
 <!--
-Script adds a state to the database then returns back to the home page.
+Script adds a site to the database then returns back to the home page.
 This is intended for testing.
 -->
 <?php
 include_once '../src/connect.php';
 include_once '../src/countryFunctions.php';
 include_once '../src/stateFunctions.php';
+include_once '../src/siteFunctions.php';
 ?>
 
 <!DOCTYPE HTML>
@@ -19,9 +20,9 @@ include_once '../src/stateFunctions.php';
     </script>
     <body>
     <?php
-    $name= $_POST['stateName'];
+    $name= $_POST['siteName'];
     $country = $_POST['country'];
-    $object = new State;
+    $object = new Site;
     $object->addState($name,$country);
     ?>
     </body>

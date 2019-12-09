@@ -23,7 +23,7 @@ include_once 'src/countryFunctions.php';
     $countries = $object->getCountries();
     ?>
     <?php foreach ($countries as $c): ?>
-        <a href="/Countries/<?php echo($c); ?>.php"> <?php echo($c) ?></a>
+        <a href="/Final/Countries/<?php echo($c); ?>.php"> <?php echo($c) ?></a>
     <?php endforeach; ?>
     <br>
     Add a country
@@ -43,7 +43,6 @@ include_once 'src/countryFunctions.php';
     <input type="submit" value="submit">
     </form>
     <br>
-    
     Help expand our list! If you would like to add a route 
     <a href="scripts/newRoute.php">click here!</a>
     </body>
