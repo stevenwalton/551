@@ -13,6 +13,22 @@ class Area extends Dbh
         return 0;
     }
 
+    public function getAllAreas()
+    {
+        $sql = "SELECT name FROM area;";
+        $stmt = $this->connect()->query($sql);
+        $areas = $stmt->fetchAll(PDO::FETCH_COLUMN,2);
+        return $areas;
+    }
+
+    public function getAreasBySite($siteID)
+    {
+        $sql = "SELECT name FROM area WHERE idSite = ".$siteID.";";
+        $stmt = $this->connect()->query($sql);
+        $areas = $stmt->fetchAll(PDO::FETCH_COLUMN,2);
+        return $areas;
+    }
+
     public function getAreaID($name)
     {
         $stmt = $this->connect()->query("SELECT idArea FROM Area

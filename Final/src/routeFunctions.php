@@ -66,6 +66,30 @@ class Route extends Dbh
         return 0; 
     }
 
+    public function getAllRoutes()
+    {
+        $sql = "SELECT name FROM route;";
+        $stmt = $this->connect()->query($sql);
+        $routes = $stmt->fetchAll();
+        return $routes;
+    }
+
+    public function getRoutesByArea($areaID)
+    {
+        $sql = "SELECT name FROM route WHERE idArea = ".$areaID.";";
+        $stmt = $this->connect()->query($sql);
+        $routes = $stmt->fetchAll();
+        return $routes;
+    }
+
+    public function getRoutesBySite($siteID)
+    {
+        $sql = "SELECT name FROM route WHERE idSite = ".$siteID.";";
+        $stmt = $this->connect()->query($sql);
+        $routes = $stmt->fetchAll();
+        return $routes;
+    }
+
     public function updateLikability($vote, $id)
     {
         // force constraints (0-10)

@@ -15,9 +15,17 @@ class State extends Dbh
         return 0;
     }
 
-    public function getStates()
+    public function getAllStates()
     {
         $sql = "SELECT * FROM state;";
+        $stmt = $this->connect()->query($sql);
+        $states = $stmt->fetchAll(PDO::FETCH_COLUMN,2);
+        return $states;
+    }
+
+    public function getStates($countryID)
+    {
+        $sql = "SELECT * FROM state WHERE idCountry = ".$countryID.";";
         $stmt = $this->connect()->query($sql);
         $states = $stmt->fetchAll(PDO::FETCH_COLUMN,2);
         return $states;
