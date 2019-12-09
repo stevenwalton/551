@@ -148,6 +148,7 @@ class Route extends Dbh
                              $siteName=NULL,
                              $areaName=NULL,
                              $numPitches=1, 
+                             $type=NULL,
                              $approach=NULL, 
                              $description=NULL,
                              $likability=0,

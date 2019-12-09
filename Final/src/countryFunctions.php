@@ -14,6 +14,14 @@ class Country extends Dbh
 
     }
 
+    public function getCountries()
+    {
+        $sql = "SELECT * FROM Country;";
+        $stmt = $this->connect()->query($sql);
+        $countries = $stmt->fetchAll(PDO::FETCH_COLUMN, 2);
+        return $countries;
+    }
+
     public function getCountryID($name)
     {
         $stmt = $this->connect()->query("SELECT * FROM Country;");
@@ -48,6 +56,7 @@ class Country extends Dbh
         $hem = NULL;
         # Check if country exists
         $stmt = $this->connect()->query("SELECT * FROM Country;");
+        echo("Before check we have name ".$name."<br>");
         if(!(in_array($name,$stmt->fetch(),true)))
         {
             $stmt = $this->connect()->query("SELECT * FROM Country;");
@@ -67,6 +76,7 @@ class Country extends Dbh
             {
                 $sql = "INSERT INTO Country (idCountry, hemisphere, name)
                         VALUES ('".$id."',NULL, '".$name."');";
+                echo("<br>Adding country ".$name." with ID ".$id."<br>");
             }
             else
             {
