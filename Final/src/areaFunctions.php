@@ -1,4 +1,6 @@
 <?php
+include_once 'siteFunctions.php';
+
 class Area extends Dbh
 {
     public function listAreas()
@@ -49,10 +51,12 @@ class Area extends Dbh
 
     public function addArea($name, $site)
     {
+        echo("<br>In add area with ".$name." and ".$site);
         $id = 0;
         # Check for matching site
         $_site = new Site;
         $idSite = $_site->getSiteID($site);
+        echo("<br>Got siteID: ".$idSite);
 
         $stmt = $this->connect()->query("SELECT * FROM area;");
         # only if area doesn't exist
@@ -65,6 +69,21 @@ class Area extends Dbh
                 {
                     $id++;
                 }
+            }
+            $sql = "INSERT INTO area (idArea, idSite, name)
+                    VALUES ('".$id."', '".$idSite."', '".$name."');";
+            echo("<br>Running ".$sql);
+            try
+            {
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute();
+                echo("<br>Success");
+                return 0;
+            }
+            catch(PDOException $e)
+            {
+                echo("<br>".$e->getMessage());
+                return 1;
             }
         }
     }

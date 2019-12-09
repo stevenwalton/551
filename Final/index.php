@@ -3,6 +3,8 @@ include_once 'src/connect.php';
 include_once 'src/basicFunctions.php';
 include_once 'src/countryFunctions.php';
 include_once 'src/stateFunctions.php';
+include_once 'src/siteFunctions.php';
+include_once 'src/areaFunctions.php';
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +59,22 @@ include_once 'src/stateFunctions.php';
         <?php endforeach; ?>
     </select>
     <input type="text" name="siteName">
+    <input type="submit" value="submit">
+    </form>
+    <br>
+    Add an area 
+    <br>
+    <?php
+    $si = new Site;
+    $sites= $si->getAllSites();
+    ?>
+    <form action="scripts/addArea.php" method="POST">
+    <select name="site">
+        <?php foreach($sites as $site): ?>
+            <option value="<?php echo($site);?>"><?php echo($site);?></option>
+        <?php endforeach; ?>
+    </select>
+    <input type="text" name="name">
     <input type="submit" value="submit">
     </form>
     <br>

@@ -15,6 +15,13 @@ class Site extends Dbh
 
     }
 
+    public function getAllSites()
+    {
+        $stmt = $this->connect()->query("SELECT * FROM site;");
+        $sites = $stmt->fetchAll(PDO::FETCH_COLUMN,2);
+        return $sites;
+    }
+
     public function getSites($stateID)
     {
         $sql = "SELECT * FROM site WHERE idState = ".$stateID.";";
