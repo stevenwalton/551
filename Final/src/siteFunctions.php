@@ -63,7 +63,7 @@ class Site extends Dbh
         }
     }
 
-    public function addSite($name,$state)
+    public function addSite($name,$state,$country)
     {
         #echo("<fetching site with ".$name." ".$state);
         echo("In addSite");

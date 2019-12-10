@@ -40,11 +40,14 @@ include_once 'src/routeFunctions.php';
     <br>
     Add a state 
     <form action="scripts/addState.php" method="POST">
+    <input type="text" name="country">
+<!--
     <select name="country">
         <?php foreach($countries as $c): ?>
             <option value="<?php echo($c);?>"><?php echo($c);?></option>
         <?php endforeach; ?>
     </select>
+-->
     <input type="text" name="stateName">
     <input type="submit" value="submit">
     </form>
@@ -56,11 +59,15 @@ include_once 'src/routeFunctions.php';
     $states = $s->getAllStates();
     ?>
     <form action="scripts/addSite.php" method="POST">
+    <input type="text" name="country">
+    <input type="text" name="state">
+<!--
     <select name="state">
         <?php foreach($states as $state): ?>
             <option value="<?php echo($state);?>"><?php echo($state);?></option>
         <?php endforeach; ?>
     </select>
+-->
     <input type="text" name="siteName">
     <input type="submit" value="submit">
     </form>
@@ -82,14 +89,14 @@ include_once 'src/routeFunctions.php';
     </form>
     <br>
     <?php
-    $_route = new Route;
-    $sql = "SELECT name FROM routes LEFT JOIN area a LEFT JOIN site si LEFT JOIN state s WHERE s.idState = 0;";
-    $stmt = $_route->connect()->query($sql);
-    while($row = $stmt->fetch())
-    {
-        $name = $row['name'];
-        echo($name."<br>");
-    } 
+    #$_route = new Route;
+    #$sql = "SELECT name FROM routes LEFT JOIN area a LEFT JOIN site si LEFT JOIN state s WHERE s.idState = 0;";
+    #$stmt = $_route->connect()->query($sql);
+    #while($row = $stmt->fetch())
+    #{
+    #    $name = $row['name'];
+    #    echo($name."<br>");
+    #} 
     ?>
     <br>
     Help expand our list! If you would like to add a route 

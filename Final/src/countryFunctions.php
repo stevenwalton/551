@@ -25,19 +25,21 @@ class Country extends Dbh
     public function getCountryID($name)
     {
         $stmt = $this->connect()->query("SELECT * FROM country;");
+        $id = 0;
         while ($row = $stmt->fetch())
         {
             if($name == $row['name'])
             {
                 return $row['idCountry'];
             }
+            $id++;
         }
-        //echo("Adding new country called ".$name);
+        echo("Adding new country called ".$name."<br>");
         $rArray = $this->addCountry($name);
-        $id = $rArray['id'];
+        #$id = $rArray['id'];
         //$hem = $rArray['hemisphere'];
-        $cName = $rArray['name'];
-        //echo("Country id: ".$id." with name ".$cName."<br>");
+        #$cName = $rArray['name'];
+        echo("Country id: ".$id." with name ".$name."<br>");
         return $id;
     }
 

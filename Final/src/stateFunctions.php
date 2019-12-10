@@ -59,8 +59,10 @@ class State extends Dbh
                 return $row['idState'];
             }
         }
-        // TODO:
-        // Do we add a state if it doesn't exist?
+        $rArray = $this->addState($name,$country);
+        $id = $rArray['id'];
+        $sName = $rArray['name'];
+        return $id;
     }
 
     public function getStateName($id)
@@ -76,7 +78,7 @@ class State extends Dbh
         # Check if country exists
         $cnt = new Country;
         $idCountry = $cnt->getCountryID($country);
-        #echo("Country: ".$country." CountryID: ".$idCountry."<br>");
+        echo("Country: ".$country." CountryID: ".$idCountry."<br>");
         $stmt = $this->connect()->query("SELECT * FROM state;");
         if(!(in_array($name,$stmt->fetch(),true)))
         {
