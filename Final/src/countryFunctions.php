@@ -14,7 +14,7 @@ class Country extends Dbh
 
     }
 
-    public function getCountries()
+    public function getAllCountries()
     {
         $sql = "SELECT * FROM country;";
         $stmt = $this->connect()->query($sql);

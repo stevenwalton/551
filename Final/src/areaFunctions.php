@@ -19,7 +19,7 @@ class Area extends Dbh
     {
         $sql = "SELECT name FROM area;";
         $stmt = $this->connect()->query($sql);
-        $areas = $stmt->fetchAll(PDO::FETCH_COLUMN,2);
+        $areas = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
         return $areas;
     }
 

@@ -1,5 +1,9 @@
 <?php
-#include_once 'src/routeFunctions.php';
+include_once '../src/connect.php';
+include_once '../src/countryFunctions.php';
+include_once '../src/stateFunctions.php';
+include_once '../src/siteFunctions.php';
+include_once '../src/areaFunctions.php';
 ?>
 
 <!DOCTYPE html>
@@ -9,15 +13,65 @@
         <title>New Routes</title>
     </head>
     <body>
+    <a href="/Final">
+    <img src="/Final/media/Title.png">
+    </a>
     <br>
     Please enter the information for a new route
     <br>
-    <form action="routeAdded.php", method="POST">
+    
+    <form action="/Final/scripts/addRoute.php", method="POST">
     Name:<input type="text" name="routeName"><br>
 
-    Site:<input type="text" name="siteName"><br>
+    Country:
+    <?php
+    $_country = new Country;
+    $countries = $_country->getAllCountries();
+    ?>
+    <select name="country">
+    <?php foreach ($countries as $country): ?>
+        <option value="<?php echo($country);?>"> <?php echo($country);?></option>
+    <?php endforeach; ?>
+    </select>
+    
+    <br> 
 
-    Area:<input type="text" name="areaName"><br>
+    State:
+    <?php
+    $_state = new State;
+    $states = $_state->getAllStates();
+    ?>
+    <select name="state">
+    <?php foreach ($states as $state): ?>
+        <option value="<?php echo($state);?>"> <?php echo($state);?></option>
+    <?php endforeach; ?>
+    </select>
+    <br>
+
+
+    Site:
+    <?php
+    $_site = new Site;
+    $sites = $_site->getAllSites();
+    ?>
+    <select name="site">
+    <?php foreach ($sites as $site): ?>
+        <option value="<?php echo($site);?>"> <?php echo($site);?></option>
+    <?php endforeach; ?>
+    </select>
+    <br>
+
+    Area:
+    <?php
+    $_area = new Area;
+    $areas = $_area->getAllAreas();
+    ?>
+    <select name="area">
+    <?php foreach ($areas as $area): ?>
+        <option value="<?php echo($area);?>"> <?php echo($area);?></option>
+    <?php endforeach; ?>
+    </select>
+    <br>
 
     Number of Pitches:<!--<input type="text" name="numPitches"><br>-->
     <select name="numPitches" id="npitch">

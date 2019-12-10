@@ -14,7 +14,9 @@ include_once 'src/areaFunctions.php';
         <title>Climbing Project</title>
     </head>
     <body>
+    <a href="/Final">
     <img src="./media/Title.png">
+    </a>
     <br>
     Welcome to Climbing Project. Here you may explore and search for different 
     climbing routes. Remember to climb safe!
@@ -23,7 +25,7 @@ include_once 'src/areaFunctions.php';
     <br>
     <?php
     $object = new Country;
-    $countries = $object->getCountries();
+    $countries = $object->getAllCountries();
     ?>
     <?php foreach ($countries as $c): ?>
         <a href="/Final/Countries/<?php echo($c); ?>.php"> <?php echo($c) ?></a>
@@ -81,19 +83,5 @@ include_once 'src/areaFunctions.php';
     Help expand our list! If you would like to add a route 
     <a href="scripts/newRoute.php">click here!</a>
     </body>
-
-    <footer><font size="1">
-        This webpage is the final project for
-        <a href="https://classes.cs.uoregon.edu/19F/cis451/">
-        UO's CIS 551 (Database Processing)</a>.
-        <br>
-        Year: 2019
-        <br>
-        Work performed by: Steven Walton
-        <br>
-        This project was inspired by <a href="https://www.mountainproject.com/">
-        Mountain Project</a>. Some photos may be taken from there. This project 
-        is not intended for commercial use.
-    </font>
-    </footer>
+    <?php include 'footer.php';?>
 </html>
