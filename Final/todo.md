@@ -2,6 +2,7 @@
 ----------------
 <details>
 <summary>Functions to Add</summary>
+
 + [] Search Functions
     + [] By Country
         + [] Popularity
@@ -30,5 +31,7 @@
 
 <details open>
 <summary>Errors</summary>
+
 + [] Adding state with same name as another state but a different country
+
 </details>
