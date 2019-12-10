@@ -23,11 +23,36 @@ class Area extends Dbh
         return $areas;
     }
 
-    public function getAreasBySite($siteID)
+    public function getAreasInSite($site)
     {
-        $sql = "SELECT name FROM area WHERE idSite = ".$siteID.";";
+        $sql = "SELECT area.name FROM area
+                JOIN site USING(idSite)
+                WHERE site.name = ".$site.";";
         $stmt = $this->connect()->query($sql);
-        $areas = $stmt->fetchAll(PDO::FETCH_COLUMN,2);
+        $areas = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $areas;
+    }
+
+    public function getAreasInState($state)
+    {
+        $sql = "SELECT area.name FROM area
+                JOIN site USING(idSite)
+                JOIN state USING(idState)
+                WHERE state.name = ".$state.";";
+        $stmt = $this->connect()->query($sql);
+        $areas = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $areas;
+    }
+
+    public function getAreasInCountry($country)
+    {
+        $sql = "SELECT area.name FROM area
+                JOIN site USING(idSite)
+                JOIN state USING(idState)
+                JOIN country USING(idCountry)
+                WHERE country.name = ".$country.";";
+        $stmt = $this->connect()->query($sql);
+        $areas = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
         return $areas;
     }
 

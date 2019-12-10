@@ -31,6 +31,22 @@ class State extends Dbh
         return $states;
     }
 
+    public function getStatesInCountry($countryID)
+    {
+        $sql = "SELECT state.name FROM state LEFT JOIN country USING(idCountry);";
+        $stmt = $this->connect()->query($sql);
+        $states = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $states;
+    }
+
+    public function getStatesIDsInCountry($countryID)
+    {
+        $sql = "SELECT idState FROM state LEFT JOIN country USING(idCountry);";
+        $stmt = $this->connect()->query($sql);
+        $states = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $states;
+    }
+
     public function getStateID($name)
     {
         echo("<br>Inside state: ".$name);

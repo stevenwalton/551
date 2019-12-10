@@ -5,6 +5,7 @@ include_once 'src/countryFunctions.php';
 include_once 'src/stateFunctions.php';
 include_once 'src/siteFunctions.php';
 include_once 'src/areaFunctions.php';
+include_once 'src/routeFunctions.php';
 ?>
 
 <!DOCTYPE html>
@@ -79,6 +80,17 @@ include_once 'src/areaFunctions.php';
     <input type="text" name="name">
     <input type="submit" value="submit">
     </form>
+    <br>
+    <?php
+    $_route = new Route;
+    $sql = "SELECT name FROM routes LEFT JOIN area a LEFT JOIN site si LEFT JOIN state s WHERE s.idState = 0;";
+    $stmt = $_route->connect()->query($sql);
+    while($row = $stmt->fetch())
+    {
+        $name = $row['name'];
+        echo($name."<br>");
+    } 
+    ?>
     <br>
     Help expand our list! If you would like to add a route 
     <a href="scripts/newRoute.php">click here!</a>

@@ -22,6 +22,27 @@ class Site extends Dbh
         return $sites;
     }
 
+    public function getAllSitesInState($state)
+    {
+        $sql = "SELECT site.name FROM site 
+                LEFT JOIN state USING(idState)
+                WHERE state.name = ".$state.";";
+        $stmt = $this->connect()->query($sql);
+        $sites = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $sites;
+    }
+
+    public function getAllSitesInCountry($country)
+    {
+        $sql = "SELECT site.name FROM site 
+                LEFT JOIN state USING(idState)
+                LEFT JOIN country USING(idCountry)
+                WHERE country.name = ".$country.";";
+        $stmt = $this->connect()->query($sql);
+        $sites = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $sites;
+    }
+
     public function getSites($stateID)
     {
         $sql = "SELECT * FROM site WHERE idState = ".$stateID.";";

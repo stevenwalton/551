@@ -14,56 +14,47 @@ class Route extends Dbh
         }
     }
 
-    public function listRoutesByState($state)
+    public function getRoutesInArea($site)
     {
-        // Not ready!
-        $st = new State;
-        $stateID = getStateID($state);
-        $stmt = $this->connect()->query("SELECT name FROM routes r
-                                         LEFT JOIN area a
-                                         LEFT JOIN site si
-                                         LEFT JOIN state s
-                                         WHERE s.idState = ".$stateID.";");
-        while($row = $stmt->fetch())
-        {
-           $name = $row['name'];
-           echo($name);
-           echo("<br>");
-        }
-        return 0; 
+        $sql = "SELECT route.name FROM route 
+                JOIN area USING(idSite)
+                WHERE area.name = ".$site.";";
+        $stmt = $this->connect()->query($sql);
+        $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $routes;
     }
 
-    public function listRoutesBySite($site)
+    public function getRoutesInSite($site)
     {
-        $st = new Site;
-        $siteID = getSiteID($site);
-        $stmt = $this->connect()->query("SELECT name FROM routes r
-                                         LEFT JOIN area a
-                                         LEFT JOIN site s
-                                         WHERE s.idSite = ".$siteID.";");
-        while($row = $stmt->fetch())
-        {
-           $name = $row['name'];
-           echo($name);
-           echo("<br>");
-        }
-        return 0; 
+        $sql = "SELECT route.name FROM route 
+                JOIN site USING(idSite)
+                WHERE site.name = ".$site.";";
+        $stmt = $this->connect()->query($sql);
+        $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $routes;
     }
 
-    public function listRoutesByArea($area)
+    public function getRoutesInState($state)
     {
-        $st = new Area;
-        $areaID = getAreaID($area);
-        $stmt = $this->connect()->query("SELECT name FROM routes r
-                                         LEFT JOIN area a
-                                         WHERE a.idArea = ".$areaID.";");
-        while($row = $stmt->fetch())
-        {
-           $name = $row['name'];
-           echo($name);
-           echo("<br>");
-        }
-        return 0; 
+        $sql = "SELECT route.name FROM route 
+                JOIN site USING(idSite)
+                JOIN state USING(idState)
+                WHERE state.name = ".$state.";";
+        $stmt = $this->connect()->query($sql);
+        $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $routes;
+    }
+
+    public function getRoutesInCountry($country)
+    {
+        $sql = "SELECT route.name FROM route 
+                JOIN site USING(idSite)
+                JOIN state USING(idState)
+                JOIN country USING(idCountry)
+                WHERE country.name = ".$country.";";
+        $stmt = $this->connect()->query($sql);
+        $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $routes;
     }
 
     public function getAllRoutes()
