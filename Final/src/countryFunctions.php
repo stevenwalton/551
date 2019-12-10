@@ -24,6 +24,7 @@ class Country extends Dbh
 
     public function getCountryID($name)
     {
+        echo("Inside getCountryID<br>");
         $stmt = $this->connect()->query("SELECT * FROM country;");
         $id = 0;
         while ($row = $stmt->fetch())
@@ -34,11 +35,10 @@ class Country extends Dbh
             }
             $id++;
         }
+        // Add a new country and return the id
         echo("Adding new country called ".$name."<br>");
-        $rArray = $this->addCountry($name);
-        #$id = $rArray['id'];
-        //$hem = $rArray['hemisphere'];
-        #$cName = $rArray['name'];
+        #$rArray = $this->addCountry($name);
+        $this->addCountry($name);
         echo("Country id: ".$id." with name ".$name."<br>");
         return $id;
     }
@@ -58,7 +58,7 @@ class Country extends Dbh
         $hem = NULL;
         # Check if country exists
         $stmt = $this->connect()->query("SELECT * FROM country;");
-        echo("Before check we have name ".$name."<br>");
+        #echo("Before check we have name ".$name."<br>");
         if(!(in_array($name,$stmt->fetch(),true)))
         {
             $stmt = $this->connect()->query("SELECT * FROM country;");
@@ -72,7 +72,7 @@ class Country extends Dbh
             //echo("<br>Adding ".$name." with id ".$id." and hemisphere ".$hem);
             //echo("<br>");
             
-            echo("before insert<br>");
+            #echo("before insert<br>");
             # UNCOMMENT WHEN NOT TESTING
             if ($hem == NULL)
             {
@@ -89,9 +89,9 @@ class Country extends Dbh
             {
                 echo("inserting: ".$sql." <br>");
                 $stmt = $this->connect()->prepare($sql);
-                echo("prepared<br>");
+                #echo("prepared<br>");
                 $stmt->execute();
-                echo("executed<br>");
+                #echo("executed<br>");
                 return 0;
             }
             catch(PDOException $e)

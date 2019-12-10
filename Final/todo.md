@@ -3,6 +3,12 @@
 <details>
 <summary>Functions to Add</summary>
 
++ [ ] Upwards propagation of creation
+    + [x] state creates country
+    + [x] site creates state
+    + [ ] area creates site
+    + [ ] route creates site
+    + [ ] route creates area
 + [ ] Search Functions
     + [ ] By Country
         + [ ] Popularity

@@ -13,19 +13,23 @@ include_once '../src/siteFunctions.php';
 <html lang="en-US">
     <head>
         <meta charset="UTF-8">
+<!--
         <meta http-equiv="refresh" content=0; url="/Final" />
+-->
     </head>
+<!--
     <script type="text/javascript">
         window.location.href = "/Final"
     </script>
+-->
     <body>
     <?php
     $name= $_POST['siteName'];
     $state= $_POST['state'];
-    echo("Got site name: ".$name." and state ".$state."<br>");
+    $country = $_POST['country'];
+    echo("Got site name: ".$name." and state ".$state." in country: ".$country."<br>");
     $object = new Site;
-    echo("Created site object<br>");
-    $object->addSite($name,$state);
+    $object->addSite($name,$state,$country);
     ?>
     </body>
 </html>

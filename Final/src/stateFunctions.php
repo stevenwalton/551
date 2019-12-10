@@ -47,21 +47,28 @@ class State extends Dbh
         return $states;
     }
 
-    public function getStateID($name)
+    public function getStateID($name, $country=NULL)
     {
-        echo("<br>Inside state: ".$name);
+        echo("Inside stateID: ".$name."<br>");
         $stmt = $this->connect()->query("SELECT * FROM state;");
-        echo("<br>looking for ".$name);
+        echo("looking for state with name: ".$name."<br>");
+        $id = 0;
         while ($row = $stmt->fetch())
         {
             if($name == $row['name'])
             {
+                echo("Found state: ".$name." with ID: ".$row['idState']."<br>");
                 return $row['idState'];
             }
+            $id++;
         }
-        $rArray = $this->addState($name,$country);
-        $id = $rArray['id'];
-        $sName = $rArray['name'];
+        echo("Couldn't find state: ".$name."<br>");
+        $_country = new Country;
+        $countryID = $_country->getCountryID($country);
+        $country = $_country->getCountryName($countryID);
+        #$rArray = $this->addState($name,$country);
+        echo("Adding state: ".$name." with ID: ".$id." in country: ".$country."<br>");
+        $this->addState($name,$country);
         return $id;
     }
 
@@ -74,6 +81,7 @@ class State extends Dbh
 
     public function addState($name,$country="Test")
     {
+        echo("In addState<br>");
         $id = 0;
         # Check if country exists
         $cnt = new Country;
@@ -82,6 +90,7 @@ class State extends Dbh
         $stmt = $this->connect()->query("SELECT * FROM state;");
         if(!(in_array($name,$stmt->fetch(),true)))
         {
+            echo("Country: ".$country." was found<br>");
             $stmt = $this->connect()->query("SELECT * FROM state;");
             while ($row = $stmt->fetch())
             {
@@ -94,6 +103,7 @@ class State extends Dbh
             $sql = "INSERT INTO state (idState, idCountry, name) 
                     VALUES ('".$id."', '".$idCountry."','".$name."');";
             
+            echo("Inserting: ".$sql."<br>");
             try
             {
                 $stmt = $this->connect()->prepare($sql);

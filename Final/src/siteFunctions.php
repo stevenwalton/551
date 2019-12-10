@@ -66,12 +66,12 @@ class Site extends Dbh
     public function addSite($name,$state,$country)
     {
         #echo("<fetching site with ".$name." ".$state);
-        echo("In addSite");
+        echo("In addSite have name: ".$name." state: ".$state." country: ".$country."<br>");
         $id = 0;
         # Check if state exists
         $s = new State;
-        #echo("<br>Fetching state ID for ".$state);
-        $idState = $s->getStateID($state);
+        echo("Fetching state ID for ".$state."<br>");
+        $idState = $s->getStateID($state, $country);
 
         $stmt = $this->connect()->query("SELECT * FROM site;");
         # Only do if site doesn't already exist

@@ -40,7 +40,7 @@ include_once 'src/routeFunctions.php';
     <br>
     Add a state 
     <form action="scripts/addState.php" method="POST">
-    <input type="text" name="country">
+    Country:<input type="text" name="country">
 <!--
     <select name="country">
         <?php foreach($countries as $c): ?>
@@ -48,7 +48,7 @@ include_once 'src/routeFunctions.php';
         <?php endforeach; ?>
     </select>
 -->
-    <input type="text" name="stateName">
+    State:<input type="text" name="stateName">
     <input type="submit" value="submit">
     </form>
     <br>
@@ -59,8 +59,8 @@ include_once 'src/routeFunctions.php';
     $states = $s->getAllStates();
     ?>
     <form action="scripts/addSite.php" method="POST">
-    <input type="text" name="country">
-    <input type="text" name="state">
+    Country:<input type="text" name="country">
+    State:<input type="text" name="state">
 <!--
     <select name="state">
         <?php foreach($states as $state): ?>
@@ -68,7 +68,7 @@ include_once 'src/routeFunctions.php';
         <?php endforeach; ?>
     </select>
 -->
-    <input type="text" name="siteName">
+    Site:<input type="text" name="siteName">
     <input type="submit" value="submit">
     </form>
     <br>
