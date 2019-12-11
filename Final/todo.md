@@ -32,6 +32,15 @@
     + [ ] Sites
     + [ ] Areas
     + [ ] Routes
++ [ ] Create
+    + [x] Country
+    + [x] State
+    + [x] Site
+    + [x] Area
+    + [x] Route
+    + [ ] Pitch
+    + [ ] User
+    + [ ] Picture
 
 </details>
 

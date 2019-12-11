@@ -21,7 +21,7 @@ include_once '../src/areaFunctions.php';
     <br>
     
     <form action="/Final/scripts/addRoute.php", method="POST">
-    Name:<input type="text" name="routeName"><br>
+    Route Name:<input type="text" name="routeName"><br>
 
     Country:
     <?php
@@ -102,12 +102,12 @@ include_once '../src/areaFunctions.php';
         <?php endfor; ?>
     </select>
     </select>
-    <select name="diff_sub" id="sub">
+    <select name="diff_min" id="sub">
         <option value="">--</option>
-        <option value="0">a</option>
-        <option value="0.25">b</option>
-        <option value="0.5">c</option>
-        <option value="0.75">d</option>
+        <option value="a">a</option>
+        <option value="b">b</option>
+        <option value="c">c</option>
+        <option value="d">d</option>
     </select><br>
 
     <input type="submit" value="submit">

@@ -4,6 +4,7 @@ This is intended for testing.
 -->
 <?php
 include_once '../src/connect.php';
+include_once '../src/basicFunctions.php';
 include_once '../src/routeFunctions.php';
 ?>
 
@@ -22,22 +23,31 @@ include_once '../src/routeFunctions.php';
 -->
     <body>
     <?php
-    $name = $_POST['name'];
+    $name = $_POST['routeName'];
     $country = $_POST['country'];
     $state = $_POST['state'];
     $site = $_POST['site'];
     $area = $_POST['area'];
-    $nPitch = $_POST['npitch'];
+    $nPitch = $_POST['numPitches'];
     $type = $_POST['type'];
     $app = $_POST['approach'];
     $des = $_POST['description'];
     $like = $_POST['likability'];
     $diff_maj = $_POST['diff_maj'];
     $diff_min = $_POST['diff_min'];
-    echo("Got area name: ".$name." and site ".$site." and area ".$area."<br>");
+    echo("Got Route name: ".$name." in country: ".$country." in state: ".$state.
+         " in site: ".$site." in area: ".$area." with nPitches: ".$nPitch.
+         " type: ".$type." approach: ".$app." description: ".$des." like: ".$like.
+         " and difficulty: ".$diff_maj.":".$diff_min."<br>");
+        
+    $object = new Basic;
+    echo("Got difficulty ".$diff_maj."".$diff_min."<br>");
+    $diff = $object->difficultyToNumber($diff_maj, $diff_min);
+    echo("Converted difficulty to ".$diff."<br>");
     $object = new Route;
     echo("Created site object<br>");
-    $object->addRoute($name,$site,$area);
+    $object->addRoute($name, $country, $state, $site, $area, $nPitch, $type,
+                      $app, $des, $like, $diff);
     ?>
     </body>
 </html>

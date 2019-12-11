@@ -1,5 +1,8 @@
 <?php
+include_once "basicFunctions.php";
 include_once "stateFunctions.php";
+include_once "siteFunctions.php";
+include_once "areaFunctions.php";
 
 class Route extends Dbh
 {
@@ -160,8 +163,10 @@ class Route extends Dbh
     }
 
     public function addRoute($name, 
-                             $siteName=NULL,
-                             $areaName=NULL,
+                             $country,
+                             $state,
+                             $site=NULL,
+                             $area=NULL,
                              $numPitches=1, 
                              $type=NULL,
                              $approach=NULL, 
@@ -169,85 +174,77 @@ class Route extends Dbh
                              $likability=0,
                              $difficulty=0.0)
     {
-        // Check that route name isn't used in the area or site
-        if ($siteName == NULL and $areaName == NULL)
+        echo("In addRoute<br>");
+        $id = 0;
+        // Check site/Area
+        if ($site == NULL and $area == NULL)
         {
+            echo("ERROR: At minimum need a site or area<br>");
             return 1;
         }
-        elseif ($siteName == NULL)
+        elseif ($area == NULL)
         {
-            // Does name exist in area already?
-            // FIX
-            $stmt = $this->connect()->query("SELECT COUNT(idArea) c FROM area
-                                             WHERE name = ".$name.";");
-            $check = $stmt->fetch()['c'];
-            if ($check > 0)
+            $_site = new Site;
+            $idSite = $_site->getSiteID($site, $state, $country);
+            $_area = new Area;
+            $idArea = $_area->getAreaID($area, $site, $state, $country);
+        }
+        else // site can be null because we'll get a new one
+        {
+            $_area = new Area;
+            $idArea = $_area->getAreaID($area, $site, $state, $country);
+            $_site = new Site;
+            $idSite = $_site->getSiteID($site, $state, $country);
+        }
+        echo("Have country: ".$country." in state: ".$state." at site: ".$site."
+              in area ".$area." with route name: ".$name."<br>");
+        $stmt = $this->connect()->query("SELECT * FROM route;");
+        var_dump($stmt);
+        if(!(in_array($name,$stmt->fetch(),true)))
+        {
+            $stmt = $this->connect()->query("SELECT count(idRoute) c FROM route;");
+            $id = $stmt->fetch()['c'];
+            echo("New method to grab id gives: ".$id."<br>");
+
+            $sql = "INSERT INTO route (idRoute,
+                                       type,
+                                       numPitches,
+                                       approach,
+                                       description,
+                                       name,
+                                       idSite,
+                                       idArea,
+                                       difficulty,
+                                       likability,
+                                       likeVotes,
+                                       diffVotes)
+                                       VALUES ('".$id."',
+                                               '".$type."',
+                                               '".$numPitches."',
+                                               '".$approach."',
+                                               '".$description."',
+                                               '".$name."',
+                                               '".$idSite."',
+                                               '".$idArea."',
+                                               '".$difficulty."',
+                                               '".$likability."',
+                                               '0','0');";
+            echo("Inserting: <br>".$sql."<br>");
+            try
             {
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute();
+                return 0;
+            }
+            catch(PDOException $e)
+            {
+                echo($sql."<br>".$e->getMessage());
                 return 1;
             }
-            $a = new Area;
-            $areaID = $a.getAreaID($areaName);
-            $rArr = $a.getSite($areaName);
-            $siteID = $rArr['id'];
-            $siteName = $rArr['name'];
-             
-            // TODO: 
-            // Handle no return
-            
-        }
-        else if ($areaName == NULL)
-        {
-            // Get Area
-        }
-        else // We just require Area, could reorder ifs
-        {
-            $area = new Area;
-            $stmt = $this->connect()-query("SELECT idSite, idArea FROM area a
-                                            WHERE a.name = ".$name.";");
-            $row = $stmt->fetch();
-            $siteID = $row['idSite'];
-            $areaID = $row['idArea'];
-        }
-        // Get number of routes 
-        $stmt = $this->connect()->query("SELECT COUNT(idRoute) c FROM route;");
-        $id = $stmt->fetch()['c'];
-
-        $sql = "INSERT INTO route (idRoute,
-                                   type,
-                                   numPitches,
-                                   approach,
-                                   description,
-                                   name,
-                                   idSite,
-                                   idArea,
-                                   difficulty,
-                                   likability,
-                                   likeVotes,
-                                   diffVotes)
-                                   VALUES ('".$id."',
-                                           '".$type."',
-                                           '".$numPitches."',
-                                           '".$approach."',
-                                           '".$description."',
-                                           '".$name."',
-                                           '".$siteID."',
-                                           '".$areaID."',
-                                           '".$difficulty."',
-                                           '".$likability."',
-                                           '0','0');";
-        try
-        {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
             return 0;
         }
-        catch(PDOException $e)
-        {
-            echo($sql."<br>".$e->getMessage());
-            return 1;
-        }
-        return 0;
 
     }
+
 }
 ?>

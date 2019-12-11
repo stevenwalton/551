@@ -56,11 +56,27 @@ class Area extends Dbh
         return $areas;
     }
 
-    public function getAreaID($name)
+    public function getAreaID($name, $site=NULL, $state=NULL, $country=NULL)
     {
-        $stmt = $this->connect()->query("SELECT idArea FROM Area
-                                         WHERE name = ".$name.";");
-        return $stmt->fetch()['idArea'];
+        echo("getArea ID<br>");
+        $id = 0;
+        $stmt = $this->connect()->query("SELECT * FROM area;");
+        while ($row = $stmt->fetch())
+        {
+            if ($name == $row['name'])
+            {
+                return $row['idArea'];
+            }
+            $id++;
+        }
+        echo("Couldn't find area: ".$name."<br>");
+        $_site = new Site;
+        $siteID = $_site->getSiteID($site, $state, $country);
+        $site = $_site->getSiteName($site);
+        echo("Adding area: ".$name." with ID: ".$id." in site: ".$site."
+              in state: ".$state." in country ".$country."<br>");
+        $this->addArea($name, $site, $state, $country);
+        return $id;
     }
 
     public function getSite($name)

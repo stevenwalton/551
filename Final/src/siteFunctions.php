@@ -73,6 +73,13 @@ class Site extends Dbh
         return $id;
     }
 
+    public function getSiteName($id)
+    {
+        $stmt = $this->connect()->query("SELECT name FROM site
+                                         WHERE idSite = ".$id.";");
+        return $stmt->fetch()['name'];
+    }
+
     public function addSite($name,$state,$country)
     {
         #echo("<fetching site with ".$name." ".$state);
