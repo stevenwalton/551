@@ -13,19 +13,25 @@ include_once '../src/areaFunctions.php';
 <html lang="en-US">
     <head>
         <meta charset="UTF-8">
+<!--
         <meta http-equiv="refresh" content=0; url="/Final" />
+-->
     </head>
+<!--
     <script type="text/javascript">
         window.location.href = "/Final"
     </script>
+-->
     <body>
     <?php
     $name= $_POST['name'];
     $site= $_POST['site'];
+    $state = $_POST['state'];
+    $country = $_POST['country'];
     echo("Got area name: ".$name." and site ".$site."<br>");
     $object = new Area;
     echo("Created site object<br>");
-    $object->addArea($name,$site);
+    $object->addArea($name,$site, $state, $country);
     ?>
     </body>
 </html>

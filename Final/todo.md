@@ -6,7 +6,7 @@
 + [ ] Upwards propagation of creation
     + [x] state creates country
     + [x] site creates state
-    + [ ] area creates site
+    + [x] area creates site
     + [ ] route creates site
     + [ ] route creates area
 + [ ] Search Functions

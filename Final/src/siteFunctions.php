@@ -51,8 +51,10 @@ class Site extends Dbh
         return $sites;
     }
 
-    public function getSiteID($name)
+    public function getSiteID($name, $state=NULL, $country=NULL)
     {
+        echo("Inside siteID: ".$name." with state ".$state." and country ".$country."<br>");
+        $id = 0;
         $stmt = $this->connect()->query("SELECT * FROM site;");
         while ($row = $stmt->fetch())
         {
@@ -60,7 +62,15 @@ class Site extends Dbh
             {
                 return $row['idSite'];
             }
+            $id++;
         }
+        echo("Couldn't find site: ".$name."<br>");
+        $_state = new State;
+        $stateID = $_state->getStateID($state, $country);
+        $state = $_state->getStateName($stateID);
+        echo("Adding site: ".$name." with ID: ".$id." in state ".$state." in country ".$country."<br>");
+        $this->addSite($name, $state, $country);
+        return $id;
     }
 
     public function addSite($name,$state,$country)

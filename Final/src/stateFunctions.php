@@ -79,7 +79,7 @@ class State extends Dbh
         return $stmt->fetch()['name'];
     }
 
-    public function addState($name,$country="Test")
+    public function addState($name,$country=NULL)
     {
         echo("In addState<br>");
         $id = 0;

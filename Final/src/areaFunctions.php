@@ -74,13 +74,13 @@ class Area extends Dbh
         return array("id"=>$idSite, "name"=>$siteName);
     }
 
-    public function addArea($name, $site)
+    public function addArea($name, $site, $state=NULL, $country=NULL)
     {
-        echo("<br>In add area with ".$name." and ".$site);
+        echo("<br>In add area with ".$name." and ".$site." in state ".$state." in country ".$country."<br>");
         $id = 0;
         # Check for matching site
         $_site = new Site;
-        $idSite = $_site->getSiteID($site);
+        $idSite = $_site->getSiteID($site, $state, $country);
         echo("<br>Got siteID: ".$idSite);
 
         $stmt = $this->connect()->query("SELECT * FROM area;");

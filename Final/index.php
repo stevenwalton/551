@@ -79,11 +79,16 @@ include_once 'src/routeFunctions.php';
     $sites= $si->getAllSites();
     ?>
     <form action="scripts/addArea.php" method="POST">
+    Country:<input type="text" name="country">
+    State: <input type="text" name="state">
+    Site: <input type="text" name="site">
+<!--
     <select name="site">
         <?php foreach($sites as $site): ?>
             <option value="<?php echo($site);?>"><?php echo($site);?></option>
         <?php endforeach; ?>
     </select>
+-->
     <input type="text" name="name">
     <input type="submit" value="submit">
     </form>
