@@ -50,3 +50,10 @@
 + [ ] Adding state with same name as another state but a different country
 
 </details>
+
+<details open>
+<summary>Unintended Consequences AKA:Bugs or Features?</summary>
+
++ [F] Generating a php site for a non-existent country adds that country to the
+database.
+</details>

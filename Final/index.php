@@ -29,7 +29,7 @@ include_once 'src/routeFunctions.php';
     $countries = $object->getAllCountries();
     ?>
     <?php foreach ($countries as $c): ?>
-        <a href="/Final/Countries/<?php echo($c); ?>.php"> <?php echo($c) ?></a>
+        <a href="/Final/Countries/<?php echo($c); ?>"> <?php echo($c) ?></a>
     <?php endforeach; ?>
     <br>
     Add a country

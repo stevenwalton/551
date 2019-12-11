@@ -31,11 +31,22 @@ class State extends Dbh
         return $states;
     }
 
-    public function getStatesInCountry($countryID)
+    public function getStatesInCountryID($countryID)
     {
-        $sql = "SELECT state.name FROM state LEFT JOIN country USING(idCountry);";
+        $sql = "SELECT state.name FROM state 
+                LEFT JOIN country USING(idCountry)
+                WHERE country.idCountry = ".$countryID.";";
         $stmt = $this->connect()->query($sql);
         $states = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $states;
+    }
+
+    public function getStatesInCountryNamed($country)
+    {
+        $_country = new Country;
+        $idCountry = $_country->getCountryID($country);
+        #echo("Got country ID: ".$idCountry." for country: ".$country."<br>");
+        $states = $this->getStatesInCountryID($idCountry);
         return $states;
     }
 

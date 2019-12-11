@@ -24,7 +24,7 @@ class Country extends Dbh
 
     public function getCountryID($name)
     {
-        echo("Inside getCountryID<br>");
+        #echo("Inside getCountryID<br>");
         $stmt = $this->connect()->query("SELECT * FROM country;");
         $id = 0;
         while ($row = $stmt->fetch())
@@ -36,10 +36,10 @@ class Country extends Dbh
             $id++;
         }
         // Add a new country and return the id
-        echo("Adding new country called ".$name."<br>");
+        #echo("Adding new country called ".$name."<br>");
         #$rArray = $this->addCountry($name);
         $this->addCountry($name);
-        echo("Country id: ".$id." with name ".$name."<br>");
+        #echo("Country id: ".$id." with name ".$name."<br>");
         return $id;
     }
 
@@ -78,7 +78,7 @@ class Country extends Dbh
             {
                 $sql = "INSERT INTO country (idCountry, hemisphere, name)
                         VALUES ('".$id."',NULL, '".$name."');";
-                echo("<br>Adding country ".$name." with ID ".$id."<br>");
+                #echo("<br>Adding country ".$name." with ID ".$id."<br>");
             }
             else
             {
@@ -87,11 +87,11 @@ class Country extends Dbh
             }
             try
             {
-                echo("inserting: ".$sql." <br>");
+                #echo("inserting: ".$sql." <br>");
                 $stmt = $this->connect()->prepare($sql);
                 #echo("prepared<br>");
                 $stmt->execute();
-                #echo("executed<br>");
+                $ret = system("python ../skel/makeCountry.py -c ".$name, $retval);
                 return 0;
             }
             catch(PDOException $e)
@@ -103,7 +103,7 @@ class Country extends Dbh
             #return array("id"=>$id, "hemisphere"=>$hem, "name"=>$name);
             return 0;
         }
-        echo("Country: ".$name." already exists.");
+        #echo("Country: ".$name." already exists.");
         return 1;
 
     }
