@@ -23,8 +23,17 @@ include_once '../src/routeFunctions.php';
     <body>
     <?php
     $name = $_POST['name'];
+    $country = $_POST['country'];
+    $state = $_POST['state'];
     $site = $_POST['site'];
     $area = $_POST['area'];
+    $nPitch = $_POST['npitch'];
+    $type = $_POST['type'];
+    $app = $_POST['approach'];
+    $des = $_POST['description'];
+    $like = $_POST['likability'];
+    $diff_maj = $_POST['diff_maj'];
+    $diff_min = $_POST['diff_min'];
     echo("Got area name: ".$name." and site ".$site." and area ".$area."<br>");
     $object = new Route;
     echo("Created site object<br>");
