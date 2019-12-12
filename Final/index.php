@@ -108,6 +108,8 @@ include_once 'src/stateFunctions.php';
     #} 
     ?>
     <br>
+    See all routes <a href='scripts/routeList.php'>here</a>, sorted by popularity.
+    <br>
     Help expand our list! If you would like to add a route 
     <a href="scripts/newRoute.php">click here!</a>
     </body>

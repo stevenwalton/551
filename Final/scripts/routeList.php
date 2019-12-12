@@ -1,6 +1,7 @@
 <?php
 include_once '../src/connect.php';
-include_once '../src/userFunctions.php';
+include_once '../src/routeFunctions.php';
+
 ?>
 
 <!DOCTYPE HTML>
@@ -14,11 +15,11 @@ include_once '../src/userFunctions.php';
     </a>
     <br>
     <?php
-    $_user = new User;
-    $users = $_user->getAllUserNames();
-    foreach($users as $user):
+    $_route = new Route;
+    $routes = $_route->getAllRoutesByPop();
+    foreach($routes as $route):
     {
-        echo($user."<br>");
+        echo($route."<br>");
     }
     endforeach;
 ?>

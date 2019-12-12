@@ -17,6 +17,23 @@ class Route extends Dbh
         }
     }
 
+    public function getAllRoutes()
+    {
+        $sql = "SELECT name FROM route;";
+        $stmt = $this->connect()->query($sql);
+        $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $routes;
+    }
+
+    public function getAllRoutesByPop()
+    {
+        $sql = "SELECT name FROM route
+                ORDER BY likability DESC;";
+        $stmt = $this->connect()->query($sql);
+        $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $routes;
+    }
+
     public function getRoutesInArea($site)
     {
         $sql = "SELECT route.name FROM route 
@@ -65,14 +82,6 @@ class Route extends Dbh
                 WHERE country.name = ".$country.";";
         $stmt = $this->connect()->query($sql);
         $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
-        return $routes;
-    }
-
-    public function getAllRoutes()
-    {
-        $sql = "SELECT name FROM route;";
-        $stmt = $this->connect()->query($sql);
-        $routes = $stmt->fetchAll();
         return $routes;
     }
 
