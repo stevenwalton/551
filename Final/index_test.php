@@ -22,6 +22,76 @@ include_once 'src/routeFunctions.php';
     Welcome to Climbing Project. Here you may explore and search for different 
     climbing routes. Remember to climb safe!
     <br>
+    Available Countries
+    <br>
+    <?php
+    $object = new Country;
+    $countries = $object->getAllCountries();
+    ?>
+    <?php foreach ($countries as $c): ?>
+        <a href="/~swalton2/551/Final/Countries/<?php echo($c); ?>"> <?php echo($c) ?></a>
+    <?php endforeach; ?>
+    <br>
+    Add a country
+    <form action="scripts/addCountry.php" method="POST">
+    <input type="text" name="name">
+    <input type="submit" value="submit">
+    </form>
+    <br>
+    Add a state 
+    <form action="scripts/addState.php" method="POST">
+    Country:<input type="text" name="country">
+<!--
+    <select name="country">
+        <?php foreach($countries as $c): ?>
+            <option value="<?php echo($c);?>"><?php echo($c);?></option>
+        <?php endforeach; ?>
+    </select>
+-->
+    State:<input type="text" name="stateName">
+    <input type="submit" value="submit">
+    </form>
+    <br>
+    Add a site
+    <br>
+    <?php
+    $s = new State;
+    $states = $s->getAllStates();
+    ?>
+    <form action="scripts/addSite.php" method="POST">
+    Country:<input type="text" name="country">
+    State:<input type="text" name="state">
+<!--
+    <select name="state">
+        <?php foreach($states as $state): ?>
+            <option value="<?php echo($state);?>"><?php echo($state);?></option>
+        <?php endforeach; ?>
+    </select>
+-->
+    Site:<input type="text" name="siteName">
+    <input type="submit" value="submit">
+    </form>
+    <br>
+    Add an area 
+    <br>
+    <?php
+    #$si = new Site;
+    #$sites= $si->getAllSites();
+    ?>
+    <form action="scripts/addArea.php" method="POST">
+    Country:<input type="text" name="country">
+    State: <input type="text" name="state">
+    Site: <input type="text" name="site">
+<!--
+    <select name="site">
+        <?php foreach($sites as $site): ?>
+            <option value="<?php echo($site);?>"><?php echo($site);?></option>
+        <?php endforeach; ?>
+    </select>
+-->
+    <input type="text" name="name">
+    <input type="submit" value="submit">
+    </form>
     <br>
     Search routes (don't need all parameters):
     <form action="/~swalton2/551/Final/scripts/routeInfo.php", method="POST">
