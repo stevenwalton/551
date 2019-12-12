@@ -60,54 +60,38 @@ include_once '../src/userFunctions.php';
 
     $_pitch = new Pitch;
     $pitches = $_pitch->pitchesInRoute($id);
-    if($pitches)
-    {
-        echo("<table border='1' style='border-collapse: collapse; border-color: black;'>");
-        echo("<tr style='font-weight: bold;'>");
-        echo("<td width='50' align='center'>Pitch</td>");
-        echo("<td width='50' align='center'>Length</td>");
-        echo("<td width='50' align='center'>Difficulty</td>");
-        echo("<td wdith='50' align='center'>Likability</td>");
-        echo("<tr>");
-        foreach($pitches as $pitch):
-        {
-            echo("<td width='50' align='center'>".$pitch['pitchNum']."</td>");
-            echo("<td width='50' align='center'>".$pitch['length']."</td>");
+    if($pitches):
+?>
+        <table border='1' style='border-collapse: collapse; border-color: black;'>
+        <tr style='font-weight: bold;'>
+        <td width='50' align='center'>Pitch</td>
+        <td width='50' align='center'>Length</td>
+        <td width='50' align='center'>Difficulty</td>
+        <td wdith='50' align='center'>Likability</td>
+        <tr>
+        <?php foreach($pitches as $pitch): ?>
+        <td width='50' align='center'><?php echo($pitch['pitchNum']); ?></td>
+            <td width='50' align='center'><?php echo($pitch['length']); ?></td>
+            <?php
             $d = $_basic->difficultyToYDS($info['difficulty']);
-            echo("<td width='50' align='center'>".$d."</td>");
-            echo("<td width='50' align='center'>".$pitch['rating']."</td>");
-        }
-        endforeach;
-    }
+            ?>
+            <td width='50' align='center'><?php echo($d); ?></td>
+            <td width='50' align='center'><?php echo($pitch['rating']); ?></td>
+        <?php endforeach; 
+    endif; 
     $_pic = new Picture;
     $url = $_pic->getPicturesInRouteID($id);
-    if($url)
-    {
+    if($url):
         $_user = new User;
-        echo("Pictures in route:<br>");
-        #var_dump($url);
-        foreach($url as $pic):
-        {
-            #var_dump($pic);
-            #echo("Done");
-            #echo("<img src='".$pic['pictureURL']."'>");
-            ?>
-                <img src="<?php print_r($pic['pictureURL']); ?>">
-            <?php
-            /*
-                if($pic['uploadedBy'])
-                {
-                    echo("Uploaded By:<br>");
-                    print_r($pic['uploadedBy']);
-                    echo("After");
-                    #$uname = print_r($pic['uploadedBy']);
-                    $username = $_user->getUserName($pic['uploadedBy']);
-                    print_r($username);
-                }
-             */
-        }
-        endforeach;
-    }
+        ?>
+        Pictures in route:<br>
+        <?php foreach($url as $pic): ?>
+
+            <?php if($pic): ?>
+            <img src='<?php print_r($pic); ?>' height="400" width="600">
+            <?php endif; ?>
+<?php endforeach;
+    endif; 
 ?>
     <br>
     </body>
