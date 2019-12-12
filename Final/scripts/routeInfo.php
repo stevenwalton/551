@@ -95,6 +95,7 @@ include_once '../src/routeFunctions.php';
         <input type="hidden" name="idRoute" value="<?php echo($route['idRoute']); ?>">
         <td width='250' align=center>
         <input type="submit" value="<?php echo($route['route_name']); ?>">
+        </form>
         </td>
         <?php
         #echo("<td width='250' align=center>".$route['route_name']."</td>");

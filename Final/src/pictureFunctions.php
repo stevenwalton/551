@@ -24,7 +24,8 @@ class Picture extends Dbh
     {
         $sql = "SELECT pictureURL, uploadedBy FROM pictures p
                 JOIN route_has_pictures rp ON p.idPictures = rp.Pictures_idPictures
-                LEFT JOIN route r ON r.idRoute = rp.Route_idRoute;";
+                LEFT JOIN route r ON r.idRoute = rp.Route_idRoute
+                WHERE r.idRoute = ".$idRoute.";";
         #echo("<br>".$sql."<BR>");
         $stmt = $this->connect()->query($sql);
         $pictures = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
