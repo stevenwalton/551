@@ -12,21 +12,17 @@ def arglist():
                         help="country we wish to make a php file for")
     return parser.parse_args()
 
-def main():
-    args = arglist()
-    if(args.country):
-        country_var = args.country
-
-        pathname = '../Countries'
+def makeCountry(country_var):
+    pathname = 'Countries'
+    print(f"Checking for {pathname}")
+    i = 0
+    while(not os.path.exists(pathname)):
+        pathname = "../" + pathname
         print(f"Checking for {pathname}")
-        i = 0
-        while(not os.path.exists(pathname)):
-            pathname = "../" + pathname
-            print(f"Checking for {pathname}")
-            i += 1
-            if (i > 10):
-                exit(1)
-        skel = f'''
+        i += 1
+        if (i > 10):
+            exit(1)
+    skel = f'''
 <?php
 include_once '../../src/connect.php';
 include_once '../../src/basicFunctions.php';
@@ -57,19 +53,17 @@ include_once '../../src/stateFunctions.php';
     }}
     ?>
     <?php foreach ($states as $state): ?>
-        <a href="./{country_var}/<?php echo($state); ?>"> <?php echo($state); ?></a>
+        <a href="./<?php echo($state); ?>"> <?php echo($state); ?></a>
     <?php endforeach; ?>
     <?php include '../../footer.php';?>    
 </html>
-        '''
-        #print(skel)
-        
-        print(f"Making file {pathname}/{country_var}/index.php")
-        os.mkdir(pathname + "/" + country_var)
-        with open(pathname + "/" + country_var+"/index.php",'w') as f:
-            f.write(skel)
-    else:
-        print("Failed to create country file")
+    '''
+    
+    print(f"Making file {pathname}/{country_var}/index.php")
+    os.mkdir(pathname + "/" + country_var)
+    with open(pathname + "/" + country_var+"/index.php",'w') as f:
+        f.write(skel)
 
 if __name__ == '__main__':
-    main()
+    args = arglist()
+    makeCountry(args.country)

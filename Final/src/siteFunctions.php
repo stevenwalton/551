@@ -22,6 +22,30 @@ class Site extends Dbh
         return $sites;
     }
 
+    public function getSiteID($site,$state)
+    {
+    }
+
+    public function getSitesInStateID($idState)
+    {
+        $sql = "SELECT site.name FROM site
+                LEFT JOIN state using(idState)
+                LEFT JOIN country using(idCountry)
+                WHERE state.idState = ".$idState.";";
+        $stmt = $this->connect()->query($sql);
+        $sites = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $sites;
+    }
+
+    public function getSitesInStateNamed($state, $country)
+    {
+        $_state = new State;
+        $idState = $_state->getStateID($state, $country);
+        #echo("Got state ID: ".$idState."<br>");
+        $sites = $this->getSitesInStateID($idState);
+        return $sites;
+    }
+
     public function getAllSitesInState($state)
     {
         $sql = "SELECT site.name FROM site 
@@ -110,6 +134,7 @@ class Site extends Dbh
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->execute();
                 echo("<br>Success");
+                $ret = system("python3 ../scripts/makeSiteFS.py --country ".$country." --state ".$state." --site ".$name, $retval);
                 return 0;
             }
             catch(PDOException $e)

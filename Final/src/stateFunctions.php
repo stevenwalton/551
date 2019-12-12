@@ -60,15 +60,15 @@ class State extends Dbh
 
     public function getStateID($name, $country=NULL)
     {
-        echo("Inside stateID: ".$name."<br>");
+        #echo("Inside stateID: ".$name."<br>");
         $stmt = $this->connect()->query("SELECT * FROM state;");
-        echo("looking for state with name: ".$name."<br>");
+        #echo("looking for state with name: ".$name."<br>");
         $id = 0;
         while ($row = $stmt->fetch())
         {
             if($name == $row['name'])
             {
-                echo("Found state: ".$name." with ID: ".$row['idState']."<br>");
+                #echo("Found state: ".$name." with ID: ".$row['idState']."<br>");
                 return $row['idState'];
             }
             $id++;
@@ -119,6 +119,7 @@ class State extends Dbh
             {
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->execute();
+                $ret = system("python3 ../scripts/makeStateFS.py -c ".$country." -s ".$name, $retval);
                 return 0;
             }
             catch(PDOException $e)
