@@ -4,6 +4,7 @@ include_once '../src/countryFunctions.php';
 include_once '../src/stateFunctions.php';
 include_once '../src/siteFunctions.php';
 include_once '../src/areaFunctions.php';
+include_once '../src/userFunctions.php';
 ?>
 
 <!DOCTYPE html>
@@ -126,7 +127,16 @@ TODO: 10+ pitches
         <option value="d">d</option>
     </select><br>
     Picture URL: <input type="text" name="picture">
-    User <input type="text" name="username">
+    User :<!--<input type="text" name="username">-->
+    <?php
+    $_user = new User;
+    $usernames = $_user->getAllUserNames();
+    ?>
+    <select name="username" id="username">
+        <option value="">--</option>
+    <?php foreach($usernames as $user): ?>
+        <option value="<?php echo($user);?>"><?php echo($user); ?> </option>
+    <?php endforeach; ?>
 
     <input type="submit" value="submit">
     <br>
