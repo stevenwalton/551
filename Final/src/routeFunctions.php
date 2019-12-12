@@ -28,10 +28,36 @@ class Route extends Dbh
     public function getAllRoutesByPop()
     {
         $sql = "SELECT name FROM route
-                ORDER BY likability DESC;";
+                ORDER BY likability DESC,
+                difficulty ASC;";
         $stmt = $this->connect()->query($sql);
         $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
         return $routes;
+    }
+
+    public function getRoutePop($idRoute)
+    {
+        $sql = "SELECT likability FROM route WHERE idRoute = ".$idRoute.";";
+        $stmt = $this->connect()->query($sql);
+        $like = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $like;
+    }
+
+    public function getRouteDifficulty($idRoute)
+    {
+        $sql = "SELECT difficulty FROM route where idRoute = ".$idRoute.";";
+        $stmt = $this->connect()->query($sql);
+        $diff = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $diff;
+    }
+
+    public function getRouteID($name)
+    {
+        $sql = "SELECT route.idRoute FROM route
+                WHERE route.name = '".$name."';";
+        $stmt = $this->connect()->query($sql);
+        $id = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $id;
     }
 
     public function getRoutesInArea($site)

@@ -61,7 +61,7 @@ class Basic extends Dbh
     {
         if ($difficulty < 10)
         {
-            echo("flooring<br>");
+            #echo("flooring<br>");
             return array("major"=>floor($difficulty),"minor"=>NULL);
         }
         $diff_major = floor($difficulty);
@@ -85,9 +85,9 @@ class Basic extends Dbh
                 return 1;
         }
         $maj = floor($diff_major);
-        echo("Major: ".$maj);
+        #echo("Major: ".$maj);
         $min = $diff_minor;
-        echo("Minor: ".$min);
+        #echo("Minor: ".$min);
         return array("major"=>$maj, "minor"=>$min);
     }
 }
