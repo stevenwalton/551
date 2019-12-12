@@ -96,6 +96,7 @@ class Site extends Dbh
 
     public function getSiteName($id)
     {
+        #echo("given site id: ".$id."<br>");
         $stmt = $this->connect()->query("SELECT name FROM site
                                          WHERE idSite = ".$id.";");
         return $stmt->fetch()['name'];

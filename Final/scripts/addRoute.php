@@ -14,9 +14,13 @@ include_once '../src/userFunctions.php';
     <?php
     $name = $_POST['routeName'];
     $country = $_POST['country'];
+    if($country == NULL) $country = $_POST['new_country'];
     $state = $_POST['state'];
+    if($state == NULL) $state = $_POST['new_state'];
     $site = $_POST['site'];
+    if($site == NULL) $site = $_POST['new_site'];
     $area = $_POST['area'];
+    if($area == NULL) $area = $_POST['new_area'];
     $nPitch = $_POST['numPitches'];
     $type = $_POST['type'];
     $app = $_POST['approach'];

@@ -24,11 +24,12 @@ include_once '../src/routeFunctions.php';
     $diff_min = $_POST['diff_min'];
     $type = $_POST['type'];
     $nPitch = $_POST['nPitch'];
+    $_basic = new Basic;
     if ($diff_maj != NULL)
     {
-        $_basic = new Basic;
         $diff = $_basic->difficultyToNumber($diff_maj, $diff_min);
     }
+    else $diff = "";
     ?>
     Searching for routes where:<br>
     <?php
@@ -60,6 +61,8 @@ include_once '../src/routeFunctions.php';
     if ($routes == NULL )
     {
         echo("Sorry, there are no routes with this criteria.<br>");
+        echo("Displaying all routes instead.<br>");
+        $routes = $_route->searchRoutes();
     }
     #var_dump($routes[0]);
     $i = 0;
@@ -69,46 +72,29 @@ include_once '../src/routeFunctions.php';
         if ($i == 0)
         {
             echo("<tr style='font-weight: bold;'>");
+            echo("<td width='50' align='center'>Country Name</td>");
+            echo("<td width='50' align='center'>State Name</td>");
+            echo("<td width='150' align='center'>Site Name</td>");
+            echo("<td width='150' align='center'>Area Name</td>");
             echo("<td width='250' align='center'>Route Name</td>");
-            if($route[0]['type']) 
-            {
-                echo("<td width='150' align='center'>Type</td>");
-            }
-            if($route[0]['numPitches']) 
-            {
-                echo("<td width='150' align='center'>Number of Pitches</td>");
-            }
-            if($route[0]['difficulty']) 
-            {
-                echo("<td width='150' align='center'>Difficulty</td>");
-            }
-            if($route[0]['likability']) 
-            {
-                echo("<td width='150' align='center'>Likability</td>");
-            }
+            echo("<td width='150' align='center'>Type</td>");
+            echo("<td width='50' align='center'>Number of Pitches</td>");
+            echo("<td width='150' align='center'>Difficulty</td>");
+            echo("<td width='50' align='center'>Likability</td>");
             echo("</tr>");
             $i++;
         }
-        #$id = $_route->getRouteID($route)[0];
-        #echo($route."<br>");
+        $d = $_basic->difficultyToYDS($route['difficulty']);
         echo("<tr>");
-        echo("<td width='250' align=center>".$route['name']."</td>");
-        if($route['type']) 
-        {
-            echo("<td width='150' align='center'>".$route['type']."</td>");
-        }
-        if($route['numPitches']) 
-        {
-            echo("<td width='150' align='center'>".$route['numPitches']."</td>");
-        }
-        if($route['difficulty']) 
-        {
-            echo("<td width='150' align='center'>".$route['difficulty']."</td>");
-        }
-        if($route['likability']) 
-        {
-            echo("<td width='150' align='center'>".$route['likability']."</td>");
-        }
+        echo("<td width='50' align='center'>".$route['country_name']."</td>");
+        echo("<td width='50' align='center'>".$route['state_name']."</td>");
+        echo("<td width='150' align='center'>".$route['site_name']."</td>");
+        echo("<td width='150' align='center'>".$route['area_name']."</td>");
+        echo("<td width='250' align=center>".$route['route_name']."</td>");
+        echo("<td width='150' align='center'>".$route['type']."</td>");
+        echo("<td width='50' align='center'>".$route['numPitches']."</td>");
+        echo("<td width='150' align='center'>5.".$d['major'].$d['minor']."</td>");
+        echo("<td width='50' align='center'>".$route['likability']."</td>");
         echo("</tr>");
     }
     endforeach;

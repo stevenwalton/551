@@ -53,7 +53,15 @@ class Route extends Dbh
                                  $type=NULL,
                                  $nPitch=NULL)
     {
-        $get = "route.name name, route.type, route.numPitches, route.difficulty, route.likability";
+        $get = "route.name route_name, 
+                route.type, 
+                route.numPitches, 
+                route.difficulty, 
+                route.likability,
+                country.name country_name,
+                state.name state_name,
+                site.name site_name,
+                area.name area_name";
         $sql = "SELECT ".$get." FROM route
                 LEFT JOIN area USING(idArea)
                 LEFT JOIN site ON route.idSite = site.idSite
@@ -114,6 +122,7 @@ class Route extends Dbh
                 }
             }
         }
+        $sql = $sql."ORDER BY route.likability DESC, route.difficulty ASC";
         $sql = $sql.";";
         #echo($sql."<BR>");
         $stmt = $this->connect()->query($sql);
@@ -304,6 +313,13 @@ class Route extends Dbh
             echo("ERROR: At minimum need a site or area<br>");
             return 1;
         }
+        if($area == NULL) $area = "unincorporated";
+        if($site == NULL) $site = $state;
+        $_site = new Site;
+        $idSite = $_site->getSiteID($site, $state, $country);
+        $_area = new Area;
+        $idArea = $_area->getAreaID($area, $site, $state, $country);
+        /*
         elseif ($area == NULL)
         {
             $_site = new Site;
@@ -318,6 +334,7 @@ class Route extends Dbh
             $_site = new Site;
             $idSite = $_site->getSiteID($site, $state, $country);
         }
+         */
         /*
         echo("Have country: ".$country." in state: ".$state." at site: ".$site."
               in area ".$area." with route name: ".$name."<br>");

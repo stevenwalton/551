@@ -29,10 +29,13 @@ include_once '../src/areaFunctions.php';
     $countries = $_country->getAllCountries();
     ?>
     <select name="country">
+        <option value="">--</option>
     <?php foreach ($countries as $country): ?>
         <option value="<?php echo($country);?>"> <?php echo($country);?></option>
     <?php endforeach; ?>
     </select>
+    Add a new Country:
+    <input type="text" name="new_country">
     
     <br> 
 
@@ -42,10 +45,13 @@ include_once '../src/areaFunctions.php';
     $states = $_state->getAllStates();
     ?>
     <select name="state">
+        <option value="">--</option>
     <?php foreach ($states as $state): ?>
         <option value="<?php echo($state);?>"> <?php echo($state);?></option>
     <?php endforeach; ?>
     </select>
+    Add a new State:
+    <input type="text" name="new_state">
     <br>
     Site:
     <?php
@@ -53,10 +59,13 @@ include_once '../src/areaFunctions.php';
     $sites = $_site->getAllSites();
     ?>
     <select name="site">
+        <option value="">--</option>
     <?php foreach ($sites as $site): ?>
         <option value="<?php echo($site);?>"> <?php echo($site);?></option>
     <?php endforeach; ?>
     </select>
+    Add a new Site:
+    <input type="text" name="new_site">
     <br>
 
     Area:
@@ -65,10 +74,13 @@ include_once '../src/areaFunctions.php';
     $areas = $_area->getAllAreas();
     ?>
     <select name="area">
+        <option value="">--</option>
     <?php foreach ($areas as $area): ?>
         <option value="<?php echo($area);?>"> <?php echo($area);?></option>
     <?php endforeach; ?>
     </select>
+    Add a new Area:
+    <input type="text" name="new_area">
     <br>
 
     Number of Pitches:<!--<input type="text" name="numPitches"><br>-->
