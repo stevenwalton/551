@@ -40,8 +40,16 @@ class Picture extends Dbh
         $id = 0;
         $stmt = $this->connect()->query("SELECT count(idPictures) c FROM pictures;");
         $id = $stmt->fetch()['c'];
+        if($by)
+        {
         $sql_pic = "INSERT INTO pictures (idPictures, pictureURL, uploadedBy)
                     VALUES ('".$id."', '".$url."', '".$by."');";
+        }
+        else
+        {
+        $sql_pic = "INSERT INTO pictures (idPictures, pictureURL, uploadedBy)
+                    VALUES ('".$id."', '".$url."',NULL);";
+        }
         $sql_bridge = "INSERT INTO route_has_pictures (Route_idRoute, Pictures_idPictures)
                        VALUES ('".$idRoute."', '".$id."');";
         try

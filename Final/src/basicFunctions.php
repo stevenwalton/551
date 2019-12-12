@@ -14,6 +14,7 @@ class Basic extends Dbh
 
     public function difficultyToNumber($diff_major, $diff_minor)
     {
+        if($diff_minor == NULL) $diff_minor = 'a';
         if ($diff_major < 10)
         {
             switch($diff_minor)

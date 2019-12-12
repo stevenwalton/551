@@ -26,15 +26,23 @@ include_once '../src/userFunctions.php';
     $diff_min = $_POST['diff_min'];
     $picture_url = $_POST['picture'];
     $username = $_POST['username'];
-    if($nPitch == 1) $redirect = "/~swalton2/551/Final/";
-    else $redirect = "/~swalton2/551/Final/scripts/addPitch.php";
+    if($nPitch == 1) 
+    {
+        $redirect = "/~swalton2/551/Final/";
+        $finish = "finish";
+    }
+    else 
+    {
+        $redirect = "/~swalton2/551/Final/scripts/addPitch.php";
+        $finish = "add pitch";
+    }
 ?>
 <html lang="en-US">
     <head>
         <meta charset="UTF-8">
-<!--
-        <meta http-equiv="refresh" content=0; url="<?php echo($redirect) ?>" />
--->
+        <?php if($nPitch == 1): ?>
+        <meta http-equiv="refresh" content=0; url="<?php echo($redirect); ?>" />
+        <?php endif; ?>
     </head>
     <body>
 <?php
@@ -54,22 +62,29 @@ include_once '../src/userFunctions.php';
     $object->addRoute($name, $country, $state, $site, $area, $nPitch, $type,
                       $app, $des, $like, $diff);
     $idRoute = $object->getRouteID($name)[0];
-    $_user = new User;
-    $idUser = $_user->getUserID($username)[0];
+    if($username)
+    {
+        $_user = new User;
+        $idUser = $_user->getUserID($username)[0];
+    }
+    else
+    {
+        $idUser= NULL;
+    }
     $_picture = new Picture;
     $_picture->addPicture($idRoute, $picture_url, $idUser);
     ?>
-    Will redirect to <?php echo($redirect); ?> <BR>
     <form action="<?php echo($redirect); ?>", method="POST">
     <input type="hidden" name="routeName" value="<?php echo($name); ?>">
+    <input type="hidden" name="idRoute" value="<?php echo($idRoute); ?>">
     <input type="hidden" name="totalPitches" value="<?php echo($nPitch); ?>">
-    <input type="hidden" name="pNum" value="1">
-    <input type="submit" value="finish">
+    <input type="hidden" name="pNum" value="0">
+    <input type="submit" value="<?php echo($finish); ?>">
     </form>
-<!--
+    <?php if($nPitch == 1): ?>
     <script type="text/javascript">
         window.location.href="<?php echo($redirect) ?>"
     </script>
--->
+    <?php endif; ?>
     </body>
 </html>

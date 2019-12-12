@@ -89,7 +89,7 @@ class Site extends Dbh
         $_state = new State;
         $stateID = $_state->getStateID($state, $country);
         $state = $_state->getStateName($stateID);
-        echo("Adding site: ".$name." with ID: ".$id." in state ".$state." in country ".$country."<br>");
+        #echo("Adding site: ".$name." with ID: ".$id." in state ".$state." in country ".$country."<br>");
         $this->addSite($name, $state, $country);
         return $id;
     }

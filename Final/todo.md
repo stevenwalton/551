@@ -41,8 +41,8 @@
     + [x] Area
     + [x] Route
     + [x] Route has pictures
-    + [ ] Pitch
-    + [ ] Route has pitch
+    + [x] Pitch
+    + [x] Route has pitch
     + [x] User
     + [x] Picture
     + [ ] Route information page (single route)

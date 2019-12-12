@@ -288,13 +288,13 @@ class Route extends Dbh
                              $site=NULL,
                              $area=NULL,
                              $numPitches=1, 
-                             $type=NULL,
+                             $type="trad",
                              $approach=NULL, 
                              $description=NULL,
                              $likability=0,
                              $difficulty=0.0)
     {
-        echo("In addRoute<br>");
+        #echo("In addRoute<br>");
         $id = 0;
         // Check site/Area
         if ($site == NULL and $area == NULL)
@@ -316,15 +316,16 @@ class Route extends Dbh
             $_site = new Site;
             $idSite = $_site->getSiteID($site, $state, $country);
         }
+        /*
         echo("Have country: ".$country." in state: ".$state." at site: ".$site."
               in area ".$area." with route name: ".$name."<br>");
+         */
         $stmt = $this->connect()->query("SELECT * FROM route;");
-        var_dump($stmt);
         if(!(in_array($name,$stmt->fetch(),true)))
         {
             $stmt = $this->connect()->query("SELECT count(idRoute) c FROM route;");
             $id = $stmt->fetch()['c'];
-            echo("New method to grab id gives: ".$id."<br>");
+            #echo("New method to grab id gives: ".$id."<br>");
 
             $sql = "INSERT INTO route (idRoute,
                                        type,
@@ -349,7 +350,7 @@ class Route extends Dbh
                                                '".$difficulty."',
                                                '".$likability."',
                                                '1','1');";
-            echo("Inserting: <br>".$sql."<br>");
+            #echo("Inserting: <br>".$sql."<br>");
             try
             {
                 $stmt = $this->connect()->prepare($sql);

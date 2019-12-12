@@ -78,7 +78,7 @@ class Area extends Dbh
 
     public function getAreaID($name, $site=NULL, $state=NULL, $country=NULL)
     {
-        echo("getArea ID<br>");
+        #echo("getArea ID<br>");
         $id = 0;
         $stmt = $this->connect()->query("SELECT * FROM area;");
         while ($row = $stmt->fetch())
@@ -89,12 +89,12 @@ class Area extends Dbh
             }
             $id++;
         }
-        echo("Couldn't find area: ".$name."<br>");
+        #echo("Couldn't find area: ".$name."<br>");
         $_site = new Site;
         $siteID = $_site->getSiteID($site, $state, $country);
         $site = $_site->getSiteName($site);
-        echo("Adding area: ".$name." with ID: ".$id." in site: ".$site."
-              in state: ".$state." in country ".$country."<br>");
+        #echo("Adding area: ".$name." with ID: ".$id." in site: ".$site."
+        #      in state: ".$state." in country ".$country."<br>");
         $this->addArea($name, $site, $state, $country);
         return $id;
     }
@@ -112,12 +112,12 @@ class Area extends Dbh
 
     public function addArea($name, $site, $state=NULL, $country=NULL)
     {
-        echo("<br>In add area with ".$name." and ".$site." in state ".$state." in country ".$country."<br>");
+        #echo("<br>In add area with ".$name." and ".$site." in state ".$state." in country ".$country."<br>");
         $id = 0;
         # Check for matching site
         $_site = new Site;
         $idSite = $_site->getSiteID($site, $state, $country);
-        echo("<br>Got siteID: ".$idSite);
+        #echo("<br>Got siteID: ".$idSite);
 
         $stmt = $this->connect()->query("SELECT * FROM area;");
         # only if area doesn't exist
@@ -133,12 +133,12 @@ class Area extends Dbh
             }
             $sql = "INSERT INTO area (idArea, idSite, name)
                     VALUES ('".$id."', '".$idSite."', '".$name."');";
-            echo("<br>Running ".$sql);
+            #echo("<br>Running ".$sql);
             try
             {
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->execute();
-                echo("<br>Success");
+                #echo("<br>Success");
                 return 0;
             }
             catch(PDOException $e)

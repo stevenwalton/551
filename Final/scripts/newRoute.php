@@ -85,7 +85,7 @@ TODO: 10+ pitches
     </select><br>
 
     Type: <br>sport<input type="radio" name="type" value="sport">
-    trad<input type="radio" name="type" value="trad">
+    trad<input type="radio" name="type" value="trad" checked>
     top-rope<input type="radio" name="type" value="top-rope"><br>
 
     Approach: <input type="text" name="approach"><br>
