@@ -61,13 +61,60 @@ include_once '../src/routeFunctions.php';
     {
         echo("Sorry, there are no routes with this criteria.<br>");
     }
+    #var_dump($routes[0]);
+    $i = 0;
+    echo("<table border='1' style='border-collapse: collapse; border-color: black;'>");
     foreach($routes as $route):
     {
-        $id = $_route->getRouteID($route)[0];
-        echo($route."<br>");
+        if ($i == 0)
+        {
+            echo("<tr style='font-weight: bold;'>");
+            echo("<td width='250' align='center'>Route Name</td>");
+            if($route[0]['type']) 
+            {
+                echo("<td width='150' align='center'>Type</td>");
+            }
+            if($route[0]['numPitches']) 
+            {
+                echo("<td width='150' align='center'>Number of Pitches</td>");
+            }
+            if($route[0]['difficulty']) 
+            {
+                echo("<td width='150' align='center'>Difficulty</td>");
+            }
+            if($route[0]['likability']) 
+            {
+                echo("<td width='150' align='center'>Likability</td>");
+            }
+            echo("</tr>");
+            $i++;
+        }
+        #$id = $_route->getRouteID($route)[0];
+        #echo($route."<br>");
+        echo("<tr>");
+        echo("<td width='250' align=center>".$route['name']."</td>");
+        if($route['type']) 
+        {
+            echo("<td width='150' align='center'>".$route['type']."</td>");
+        }
+        if($route['numPitches']) 
+        {
+            echo("<td width='150' align='center'>".$route['numPitches']."</td>");
+        }
+        if($route['difficulty']) 
+        {
+            echo("<td width='150' align='center'>".$route['difficulty']."</td>");
+        }
+        if($route['likability']) 
+        {
+            echo("<td width='150' align='center'>".$route['likability']."</td>");
+        }
+        echo("</tr>");
     }
     endforeach;
     ?>
-    </body>
+<!--
     <?php include '../footer.php'; ?>
+    -->
+    </body>
 </html>

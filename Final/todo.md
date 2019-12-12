@@ -55,6 +55,7 @@
 + [ ] Adding state with same name as another state but a different country
 + [ ] States have to have unique names
 + [ ] can't have commas or spaces?
++ [ ] Route can have difficulty different than most difficult pitch
 
 </details>
 

@@ -53,7 +53,8 @@ class Route extends Dbh
                                  $type=NULL,
                                  $nPitch=NULL)
     {
-        $sql = "SELECT route.name FROM route
+        $get = "route.name name, route.type, route.numPitches, route.difficulty, route.likability";
+        $sql = "SELECT ".$get." FROM route
                 LEFT JOIN area USING(idArea)
                 LEFT JOIN site ON route.idSite = site.idSite
                 LEFT JOIN state USING(idState)
@@ -114,9 +115,10 @@ class Route extends Dbh
             }
         }
         $sql = $sql.";";
-        echo($sql."<BR>");
+        #echo($sql."<BR>");
         $stmt = $this->connect()->query($sql);
-        $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        #$routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        $routes = $stmt->fetchAll();
         return $routes;
     }
 
