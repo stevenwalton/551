@@ -17,12 +17,15 @@ def main():
     if(args.country):
         country_var = args.country
 
-        pathname = '/home/steven/Programming/UO/Classes/551/Final/Countries'
+        pathname = '../Countries'
         print(f"Checking for {pathname}")
+        i = 0
         while(not os.path.exists(pathname)):
             pathname = "../" + pathname
             print(f"Checking for {pathname}")
-            time.sleep(1)
+            i += 1
+            if (i > 10):
+                exit(1)
         skel = f'''
 <?php
 include_once '../../src/connect.php';
@@ -37,8 +40,8 @@ include_once '../../src/stateFunctions.php';
         <title>Climbing Project</title>
     </head>
     <body>
-    <a href="/Final">
-    <img src="/Final/media/Title.png">
+    <a href="/~swalton2/551/Final">
+    <img src="/~swalton2/551/Final/media/Title.png">
     </a>
     <br>
     Country: {country_var}

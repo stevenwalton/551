@@ -15,8 +15,8 @@ include_once 'src/routeFunctions.php';
         <title>Climbing Project</title>
     </head>
     <body>
-    <a href="/Final">
-    <img src="./media/Title.png">
+    <a href="/~swalton2/551/Final">
+    <img src="/~swalton2/551/Final/media/Title.png">
     </a>
     <br>
     Welcome to Climbing Project. Here you may explore and search for different 
@@ -29,7 +29,7 @@ include_once 'src/routeFunctions.php';
     $countries = $object->getAllCountries();
     ?>
     <?php foreach ($countries as $c): ?>
-        <a href="/Final/Countries/<?php echo($c); ?>"> <?php echo($c) ?></a>
+        <a href="/~swalton2/551/Final/Countries/<?php echo($c); ?>"> <?php echo($c) ?></a>
     <?php endforeach; ?>
     <br>
     Add a country

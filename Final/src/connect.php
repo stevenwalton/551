@@ -10,10 +10,10 @@ class Dbh
 
     public function connect()
     {
-        $this->servername = "localhost";
+        $this->servername = "ix.cs.uoregon.edu:3875";
         $this->dbname = "climbing";
-        $this->username = "steven";
-        $this->passwd = "toor";
+        $this->username = "guest";
+        $this->passwd = "";
         $this->charset = "utf8mb4";
 
         try

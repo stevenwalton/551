@@ -91,7 +91,7 @@ class Country extends Dbh
                 $stmt = $this->connect()->prepare($sql);
                 #echo("prepared<br>");
                 $stmt->execute();
-                $ret = system("python ../skel/makeCountry.py -c ".$name, $retval);
+                $ret = system("python3 ../scripts/makeCountryFS.py -c ".$name, $retval);
                 return 0;
             }
             catch(PDOException $e)
