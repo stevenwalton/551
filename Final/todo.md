@@ -45,6 +45,7 @@
     + [ ] Route has pitch
     + [x] User
     + [x] Picture
+    + [ ] Route information page (single route)
 
 </details>
 

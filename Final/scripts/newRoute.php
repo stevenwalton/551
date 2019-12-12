@@ -72,10 +72,16 @@ include_once '../src/areaFunctions.php';
     <br>
 
     Number of Pitches:<!--<input type="text" name="numPitches"><br>-->
+<!--
+TODO: 10+ pitches
+-->
     <select name="numPitches" id="npitch">
-        <?php for($i = 0; $i <= 10; $i++) :?>
+        <?php for($i = 1; $i <= 10; $i++) :?>
             <option value="<?php echo($i);?>"><?php echo($i);?></option>
         <?php endfor; ?>
+    <!--
+            <option value="10">10+</option>
+-->
     </select><br>
 
     Type: <br>sport<input type="radio" name="type" value="sport">

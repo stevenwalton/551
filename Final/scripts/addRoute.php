@@ -11,14 +11,6 @@ include_once '../src/userFunctions.php';
 ?>
 
 <!DOCTYPE HTML>
-<html lang="en-US">
-    <head>
-        <meta charset="UTF-8">
-<!--
-        <meta http-equiv="refresh" content=0; url="/~swalton2/551/Final" />
--->
-    </head>
-    <body>
     <?php
     $name = $_POST['routeName'];
     $country = $_POST['country'];
@@ -34,6 +26,18 @@ include_once '../src/userFunctions.php';
     $diff_min = $_POST['diff_min'];
     $picture_url = $_POST['picture'];
     $username = $_POST['username'];
+    if($nPitch == 1) $redirect = "/~swalton2/551/Final/";
+    else $redirect = "/~swalton2/551/Final/scripts/addPitch.php";
+?>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+<!--
+        <meta http-equiv="refresh" content=0; url="<?php echo($redirect) ?>" />
+-->
+    </head>
+    <body>
+<?php
     /*
     echo("Got Route name: ".$name." in country: ".$country." in state: ".$state.
          " in site: ".$site." in area: ".$area." with nPitches: ".$nPitch.
@@ -55,12 +59,17 @@ include_once '../src/userFunctions.php';
     $_picture = new Picture;
     $_picture->addPicture($idRoute, $picture_url, $idUser);
     ?>
+    Will redirect to <?php echo($redirect); ?> <BR>
+    <form action="<?php echo($redirect); ?>", method="POST">
+    <input type="hidden" name="routeName" value="<?php echo($name); ?>">
+    <input type="hidden" name="totalPitches" value="<?php echo($nPitch); ?>">
+    <input type="hidden" name="pNum" value="1">
+    <input type="submit" value="finish">
+    </form>
+<!--
     <script type="text/javascript">
-        <?php if(nPitch == 1): ?>
-        window.location.href = "/~swalton2/551/Final"
-        <?php else: ?>
-        window.location.href = "/~swalton2/551/Final/addPitch"
-        <?php endif; ?>
+        window.location.href="<?php echo($redirect) ?>"
     </script>
+-->
     </body>
 </html>
