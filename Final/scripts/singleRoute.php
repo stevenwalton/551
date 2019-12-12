@@ -77,6 +77,7 @@ include_once '../src/userFunctions.php';
             ?>
             <td width='50' align='center'><?php echo($d); ?></td>
             <td width='50' align='center'><?php echo($pitch['rating']); ?></td>
+        </tr>
         <?php endforeach; 
     endif; 
     $_pic = new Picture;
