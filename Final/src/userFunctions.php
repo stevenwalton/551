@@ -31,9 +31,14 @@ class User extends Dbh
 
     public function getUserName($id)
     {
-        $stmt = $this->connect()->query("SELECT name FROM users
-                                         WHERE idUsers = ".$id.";");
-        return $stmt->fetch()['name'];
+        $sql=  "SELECT name FROM users
+                WHERE idUsers = ".$id.";";
+        echo("<BR>".$sql."<BR>");
+        $stmt = $this->connect()->query($sql);
+        #return $stmt->fetch()['name'];
+
+        $name = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $name;
     }
 
     public function getUserID($name)

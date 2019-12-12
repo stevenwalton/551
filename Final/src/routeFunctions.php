@@ -44,6 +44,33 @@ class Route extends Dbh
         return $like;
     }
 
+    public function getRouteInfo($id)
+    {
+        $sql = "SELECT route.name route_name,
+                       route.type type,
+                       route.numPitches nPitch,
+                       route.approach approach,
+                       route.description description,
+                       route.difficulty difficulty,
+                       route.likability likability,
+                       route.likeVotes likeVotes,
+                       route.diffVotes diffVotes,
+                       state.name state_name,
+                       area.name area_name,
+                       site.name site_name,
+                       country.name country_name
+                 FROM route
+                 LEFT JOIN area USING(idArea)
+                 LEFT JOIN site ON route.idSite = site.idSite
+                 LEFT JOIN state USING(idState)
+                 LEFT JOIN country USING(idCountry)
+                 WHERE route.idRoute = ".$id.";";
+        #echo("<BR>".$sql."<BR>");
+        $stmt = $this->connect()->query($sql);
+        $info = $stmt->fetchAll();
+        return $info;
+    }
+
     public function searchRoutes($country=NULL,
                                  $state=NULL,
                                  $site=NULL,
@@ -58,6 +85,7 @@ class Route extends Dbh
                 route.numPitches, 
                 route.difficulty, 
                 route.likability,
+                route.idRoute,
                 country.name country_name,
                 state.name state_name,
                 site.name site_name,

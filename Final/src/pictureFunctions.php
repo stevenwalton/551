@@ -8,6 +8,7 @@ class Picture extends Dbh
         return $pictures;
     }
 
+    /*
     public function getPicturesInRouteID($idRoute)
     {
         $sql = "SELECT pictureURL FROM pictures p
@@ -16,6 +17,30 @@ class Picture extends Dbh
         $stmt = $this->connect()->query($sql);
         $pictures = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
         return $pictures;
+    }
+     */
+
+    public function getPicturesInRouteID($idRoute)
+    {
+        $sql = "SELECT pictureURL, uploadedBy FROM pictures p
+                JOIN route_has_pictures rp ON p.idPictures = rp.Pictures_idPictures
+                LEFT JOIN route r ON r.idRoute = rp.Route_idRoute;";
+        #echo("<br>".$sql."<BR>");
+        $stmt = $this->connect()->query($sql);
+        $pictures = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $pictures;
+    }
+
+    public function getRandomPictureInRouteID($idRoute)
+    {
+        $sql = "SELECT pictureURL FROM pictures p
+                JOIN route_has_pictures rp ON p.idPictures = rp.Pictures_idPictures
+                LEFT JOIN route r ON r.idRoute = rp.Route_idRoute;";
+        $stmt = $this->connect()->query($sql);
+        $urls = $stmt->fetchall(pdo::fetch_column,0);
+        $rand_key = array_rand($urls,1);
+        $url = $urls[$rand_key];
+        return $url;
     }
 
     public function getPicturesByUserID($idUser)
@@ -39,7 +64,7 @@ class Picture extends Dbh
     {
         $sql = "SELECT pictureURL FROM pictures;";
         $stmt = $this->connect()->query($sql);
-        $urls = $stmt->fetchALL(PDO::FETCH_COLUMN,0);
+        $urls = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
         $rand_key = array_rand($urls,1);
         $url = $urls[$rand_key];
         return $url;

@@ -90,7 +90,14 @@ include_once '../src/routeFunctions.php';
         echo("<td width='50' align='center'>".$route['state_name']."</td>");
         echo("<td width='150' align='center'>".$route['site_name']."</td>");
         echo("<td width='150' align='center'>".$route['area_name']."</td>");
-        echo("<td width='250' align=center>".$route['route_name']."</td>");
+        ?>
+        <form action = "/~swalton2/551/Final/scripts/singleRoute.php", method="POST">
+        <input type="hidden" name="idRoute" value="<?php echo($route['idRoute']); ?>">
+        <td width='250' align=center>
+        <input type="submit" value="<?php echo($route['route_name']); ?>">
+        </td>
+        <?php
+        #echo("<td width='250' align=center>".$route['route_name']."</td>");
         echo("<td width='150' align='center'>".$route['type']."</td>");
         echo("<td width='50' align='center'>".$route['numPitches']."</td>");
         echo("<td width='150' align='center'>5.".$d['major'].$d['minor']."</td>");

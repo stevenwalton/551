@@ -1,6 +1,17 @@
 <?php
 class Pitch extends Dbh
 {
+    public function pitchesInRoute($id)
+    {
+        $sql = "SELECT * FROM pitch
+                LEFT JOIN route_has_pitch r ON r.Route_idRoute = idRoute
+                WHERE idRoute = ".$id.";";
+        #echo("<BR>".$sql."<BR>");
+        $stmt = $this->connect()->query($sql);
+        $pitches = $stmt->fetchAll();
+        return $pitches;
+    }
+
     public function addPitch($num, $idRoute, $length, $diff, $rating)
     {
         $id = 0;
