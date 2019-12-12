@@ -6,6 +6,7 @@ include_once 'src/stateFunctions.php';
 include_once 'src/siteFunctions.php';
 include_once 'src/areaFunctions.php';
 include_once 'src/routeFunctions.php';
+include_once 'src/pictureFunctions.php';
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +23,11 @@ include_once 'src/routeFunctions.php';
     Welcome to Climbing Project. Here you may explore and search for different 
     climbing routes. Remember to climb safe!
     <br>
+    <?php
+    $_pic = new Picture;
+    $picURL = $_pic->getRandomPicture();
+    ?>
+        <img src="<?php echo($picURL);?>">
     <br>
     Search routes (don't need all parameters):
     <form action="/~swalton2/551/Final/scripts/routeInfo.php", method="POST">

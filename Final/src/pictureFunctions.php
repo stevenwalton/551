@@ -35,6 +35,16 @@ class Picture extends Dbh
         return $urls;
     }
 
+    public function getRandomPicture()
+    {
+        $sql = "SELECT pictureURL FROM pictures;";
+        $stmt = $this->connect()->query($sql);
+        $urls = $stmt->fetchALL(PDO::FETCH_COLUMN,0);
+        $rand_key = array_rand($urls,1);
+        $url = $urls[$rand_key];
+        return $url;
+    }
+
     public function addPicture($idRoute, $url, $by=NULL)
     {
         $id = 0;
