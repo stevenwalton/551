@@ -28,6 +28,15 @@ class User extends Dbh
         return $stmt->fetch()['name'];
     }
 
+    public function getUserID($name)
+    {
+        $sql = "SELECT idUsers FROM users
+                WHERE name = '".$name."';";
+        $stmt = $this->connect()->query($sql);
+        $id = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $id;
+    }
+
     public function addUser($name, $about)
     {
         $id = 0;

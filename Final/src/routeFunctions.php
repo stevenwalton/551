@@ -3,6 +3,7 @@ include_once "basicFunctions.php";
 include_once "stateFunctions.php";
 include_once "siteFunctions.php";
 include_once "areaFunctions.php";
+include_once "pictureFunctions.php";
 
 class Route extends Dbh
 {
@@ -347,7 +348,7 @@ class Route extends Dbh
                                                '".$idArea."',
                                                '".$difficulty."',
                                                '".$likability."',
-                                               '0','0');";
+                                               '1','1');";
             echo("Inserting: <br>".$sql."<br>");
             try
             {

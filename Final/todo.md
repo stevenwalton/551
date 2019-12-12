@@ -40,9 +40,11 @@
     + [x] Site
     + [x] Area
     + [x] Route
+    + [x] Route has pictures
     + [ ] Pitch
+    + [ ] Route has pitch
     + [x] User
-    + [ ] Picture
+    + [x] Picture
 
 </details>
 

@@ -107,6 +107,8 @@ include_once '../src/areaFunctions.php';
         <option value="c">c</option>
         <option value="d">d</option>
     </select><br>
+    Picture URL: <input type="text" name="picture">
+    User <input type="text" name="username">
 
     <input type="submit" value="submit">
     <br>
