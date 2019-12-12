@@ -346,7 +346,7 @@ class Route extends Dbh
             $id = $stmt->fetch()['c'];
             #echo("New method to grab id gives: ".$id."<br>");
 
-            $sql = "INSERT INTO route (idRoute,
+            $sql = 'INSERT INTO route (idRoute,
                                        type,
                                        numPitches,
                                        approach,
@@ -358,17 +358,17 @@ class Route extends Dbh
                                        likability,
                                        likeVotes,
                                        diffVotes)
-                                       VALUES ('".$id."',
-                                               '".$type."',
-                                               '".$numPitches."',
-                                               '".$approach."',
-                                               '".$description."',
-                                               '".$name."',
-                                               '".$idSite."',
-                                               '".$idArea."',
-                                               '".$difficulty."',
-                                               '".$likability."',
-                                               '1','1');";
+                                       VALUES ("'.$id.'",
+                                               "'.$type.'",
+                                               "'.$numPitches.'",
+                                               "'.$approach.'",
+                                               "'.$description.'",
+                                               "'.$name.'",
+                                               "'.$idSite.'",
+                                               "'.$idArea.'",
+                                               "'.$difficulty.'",
+                                               "'.$likability.'",
+                                               "1","1");';
             #echo("Inserting: <br>".$sql."<br>");
             try
             {

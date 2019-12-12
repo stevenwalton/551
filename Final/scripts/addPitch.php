@@ -54,9 +54,8 @@ include_once '../src/pictureFunctions.php';
     Pitch:<?php echo($pitch); ?><br>
     <form action="<?php echo($redirect); ?>", method="POST">
     <select name="length">
-        <option value="">--</option>
         <option value="20">20m</option>
-        <option value="30">30m</option>
+        <option value="30" selected="selected">30m</option>
         <option value="35">35m</option>
     </select>
     <br>
@@ -78,7 +77,6 @@ include_once '../src/pictureFunctions.php';
     <br>
     Likability:
     <select name="like" id="like">
-            <option value="">--</option>
         <?php for($i = 0; $i <= 10; $i++) :?>
             <option value="<?php echo($i);?>"><?php echo($i);?></option>
         <?php endfor; ?>
