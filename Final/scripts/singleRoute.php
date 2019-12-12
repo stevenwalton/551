@@ -61,6 +61,7 @@ include_once '../src/userFunctions.php';
     $_pitch = new Pitch;
     $pitches = $_pitch->pitchesInRoute($id);
     if($pitches):
+    $i = 0;
 ?>
         <table border='1' style='border-collapse: collapse; border-color: black;'>
         <tr style='font-weight: bold;'>
@@ -70,15 +71,18 @@ include_once '../src/userFunctions.php';
         <td wdith='50' align='center'>Likability</td>
         <tr>
         <?php foreach($pitches as $pitch): ?>
+        <?php 
+        if (!($pitch['pitchNum'] == $i)) :
+        ?>
         <td width='50' align='center'><?php echo($pitch['pitchNum']); ?></td>
             <td width='50' align='center'><?php echo($pitch['length']); ?></td>
             <?php
-            $d = $_basic->difficultyToYDS($info['difficulty']);
+            $d = $_basic->difficultyToYDS($pitch['difficulty']);
             ?>
-            <td width='50' align='center'><?php echo($d); ?></td>
+            <td width='50' align='center'><?php echo("5.".$d['major'].$d['minor']); ?></td>
             <td width='50' align='center'><?php echo($pitch['rating']); ?></td>
         </tr>
-        <?php endforeach; 
+        <?php $i = $pitch['pitchNum']; endif; endforeach; 
     endif; 
     $_pic = new Picture;
     $url = $_pic->getPicturesInRouteID($id);
