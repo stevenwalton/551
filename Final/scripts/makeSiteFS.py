@@ -57,12 +57,27 @@ include_once '../../../../src/routeFunctions.php';
     $areas = $_area->getAreasInSiteNamed({site},{state},{country});
     if ($areas == NULL)
     {{
-        echo("Sorry, there are no sites listed for this state");
+        echo("Sorry, there are no areas listed for this site");
     }}
     ?>
     <?php foreach ($areas as $area): ?>
         <a href="./<?php echo($area); ?>"> <?php echo($area); ?></a>
     <?php endforeach; ?>
+    <br>
+    Available Routes
+    <br>
+    <?php
+    $_route = new Route;
+    $routes = $_route->getRoutesInSiteNamed({site},{state},{country});
+    if ($routes == NULL)
+    {{
+        echo("Sorry, there are no routes in this site");
+    }}
+    ?>
+    <?php foreach ($routes as $route): ?>
+        <a href="."> <?php echo($route); ?> </a>
+    <?php endforeach; ?>
+    <br>
     <?php include '../../../../footer.php';?>    
 </html>
     '''

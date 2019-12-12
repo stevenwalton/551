@@ -27,14 +27,22 @@ class Route extends Dbh
         return $routes;
     }
 
-    public function getRoutesInSite($site)
+    public function getRoutesInSiteNamed($site, $state, $country)
     {
+        /*
         $sql = "SELECT route.name FROM route 
                 JOIN site USING(idSite)
                 WHERE site.name = ".$site.";";
-        $stmt = $this->connect()->query($sql);
-        $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+         */
+        $_site = new site;
+        $idSite = $_site->getSiteID($site, $state, $country);
+        $routes = $this->getRoutesInSiteID($idSite);
         return $routes;
+    }
+
+    public function getRoutesInSiteID($idSite)
+    {
+        // TODO
     }
 
     public function getRoutesInState($state)

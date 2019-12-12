@@ -13,14 +13,14 @@ include_once '../src/areaFunctions.php';
         <title>New Routes</title>
     </head>
     <body>
-    <a href="/Final">
-    <img src="/Final/media/Title.png">
+    <a href="/~swalton2/551/Final">
+    <img src="/~swalton2/551/Final/media/Title.png">
     </a>
     <br>
     Please enter the information for a new route
     <br>
     
-    <form action="/Final/scripts/addRoute.php", method="POST">
+    <form action="/~swalton2/551/Final/scripts/addRoute.php", method="POST">
     Route Name:<input type="text" name="routeName"><br>
 
     Country:

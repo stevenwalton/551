@@ -13,6 +13,14 @@ class User extends Dbh
         return 0;
     }
 
+    public function getAllUserNames()
+    {
+        $sql = "SELECT * FROM users;";
+        $stmt = $this->connect()->query($sql);
+        $userNames = $stmt->fetchAll(PDO::FETCH_COLUMN,1);
+        return $userNames;
+    }
+
     public function getUserName($id)
     {
         $stmt = $this->connect()->query("SELECT name FROM users
@@ -20,15 +28,24 @@ class User extends Dbh
         return $stmt->fetch()['name'];
     }
 
-    public function addUser($name)
+    public function addUser($name, $about)
     {
         $id = 0;
-        $state = NULL;
-        // TODO:
-        // get state
-
-        // TODO:
-        //
+        $stmt = $this->connect()->query("SELECT count(idUsers) c FROM users;");
+        $id = $stmt->fetch()['c'];
+        $sql = "INSERT INTO users (idUsers, name, bib)
+                VALUES('".$id."','".$name."', '".$about."');";
+        try
+        {
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute();
+            return 0;
+        }
+        catch(PDOException $e)
+        {
+            echo($sql."<br>".$e->getMessage());
+            return 1;
+        }
     }
 }
 ?>

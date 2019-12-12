@@ -93,6 +93,10 @@ include_once 'src/stateFunctions.php';
     <input type="submit" value="submit">
     </form>
     <br>
+    New User? Add Yourself <a href="scripts/newUser.php">here</a>
+    <br>
+    Or Find Other Users <a href="scripts/allUsers.php">here</a>
+    <br>
     <?php
     #$_route = new Route;
     #$sql = "SELECT name FROM routes LEFT JOIN area a LEFT JOIN site si LEFT JOIN state s WHERE s.idState = 0;";

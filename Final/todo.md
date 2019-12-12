@@ -26,6 +26,7 @@
         + [ ] Popularity
         + [ ] Difficulty
         + [ ] Type
+    + [x] Show all users
 + [ ] Auto make files
     + [x] Countries
     + [x] States
@@ -39,7 +40,7 @@
     + [x] Area
     + [x] Route
     + [ ] Pitch
-    + [ ] User
+    + [x] User
     + [ ] Picture
 
 </details>
@@ -49,6 +50,7 @@
 
 + [ ] Adding state with same name as another state but a different country
 + [ ] States have to have unique names
++ [ ] can't have commas or spaces?
 
 </details>
 
