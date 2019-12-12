@@ -27,7 +27,7 @@ include_once 'src/pictureFunctions.php';
     $_pic = new Picture;
     $picURL = $_pic->getRandomPicture();
     ?>
-        <img src="<?php echo($picURL);?>">
+        <img src="<?php echo($picURL);?>" height="400" width="600">
     <br>
     Search routes (don't need all parameters):
     <form action="/~swalton2/551/Final/scripts/routeInfo.php", method="POST">
