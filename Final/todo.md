@@ -26,9 +26,9 @@
         + [ ] Popularity
         + [ ] Difficulty
         + [ ] Type
-+ [ ] Auto get files
-    + [ ] Countries
-    + [ ] States
++ [ ] Auto make files
+    + [x] Countries
+    + [x] States
     + [ ] Sites
     + [ ] Areas
     + [ ] Routes
@@ -48,6 +48,7 @@
 <summary>Errors</summary>
 
 + [ ] Adding state with same name as another state but a different country
++ [ ] States have to have unique names
 
 </details>
 
