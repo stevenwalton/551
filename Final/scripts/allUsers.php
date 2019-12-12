@@ -15,8 +15,10 @@ include_once '../src/userFunctions.php';
     <br>
     <?php
     $_user = new User;
-    $users = $_user->getAllUserNames();
+    $users = $_user->getAllUsers();
     $i = 0;
+    echo("User: ".$users['name']);
+
     echo("<table border='1' style='border-collapse: collapse; border-color: black;'>");
     foreach($users as $user):
     {
@@ -26,6 +28,7 @@ include_once '../src/userFunctions.php';
             echo("<td width='150' align='center'>Name</td>");
             echo("<td width='350' align='center'>Description</td>");
             echo("</tr>");
+            $i++;
         }
         echo("<tr>");
         echo("<td width='150' align='center'>".$user['name']."</td>");
@@ -35,9 +38,6 @@ include_once '../src/userFunctions.php';
     endforeach;
 ?>
 
-
-
-<?php include '../footer.php'; ?>
 </body>
 
 </html>
