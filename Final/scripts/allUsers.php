@@ -16,9 +16,21 @@ include_once '../src/userFunctions.php';
     <?php
     $_user = new User;
     $users = $_user->getAllUserNames();
+    $i = 0;
+    echo("<table border='1' style='border-collapse: collapse; border-color: black;'>");
     foreach($users as $user):
     {
-        echo($user."<br>");
+        if ($i == 0)
+        {
+            echo("<tr style='font-weight: bold;'>");
+            echo("<td width='150' align='center'>Name</td>");
+            echo("<td width='350' align='center'>Description</td>");
+            echo("</tr>");
+        }
+        echo("<tr>");
+        echo("<td width='150' align='center'>".$user['name']."</td>");
+        echo("<td width='350' align='center'>".$user['bib']."</td>");
+
     }
     endforeach;
 ?>

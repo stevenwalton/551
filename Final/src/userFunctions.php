@@ -13,11 +13,19 @@ class User extends Dbh
         return 0;
     }
 
-    public function getAllUserNames()
+    public function getAllUsers()
     {
         $sql = "SELECT * FROM users;";
         $stmt = $this->connect()->query($sql);
-        $userNames = $stmt->fetchAll(PDO::FETCH_COLUMN,1);
+        $users = $stmt->fetchAll();
+        return $users;
+    }
+
+    public function getAllUserNames()
+    {
+        $sql = "SELECT name FROM users;";
+        $stmt = $this->connect()->query($sql);
+        $userNames = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
         return $userNames;
     }
 
