@@ -90,5 +90,13 @@ class Basic extends Dbh
         #echo("Minor: ".$min);
         return array("major"=>$maj, "minor"=>$min);
     }
+
+    /*
+    public function endswith($string, $end)
+    {
+        $len = strlen($end);
+        return (substr($string, 0, $
+    }
+     */
 }
 ?>

@@ -27,6 +27,7 @@
         + [ ] Difficulty
         + [ ] Type
     + [x] Show all users
+    + [x] General route search
 + [ ] Auto make files
     + [x] Countries
     + [x] States

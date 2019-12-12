@@ -47,8 +47,6 @@ include_once '../src/areaFunctions.php';
     <?php endforeach; ?>
     </select>
     <br>
-
-
     Site:
     <?php
     $_site = new Site;

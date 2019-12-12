@@ -43,6 +43,82 @@ class Route extends Dbh
         return $like;
     }
 
+    public function searchRoutes($country=NULL,
+                                 $state=NULL,
+                                 $site=NULL,
+                                 $area=NULL,
+                                 $like=NULL,
+                                 $diff=NULL,
+                                 $type=NULL,
+                                 $nPitch=NULL)
+    {
+        $sql = "SELECT route.name FROM route
+                LEFT JOIN area USING(idArea)
+                LEFT JOIN site ON route.idSite = site.idSite
+                LEFT JOIN state USING(idState)
+                LEFT JOIN country USING(idCountry)";
+/*
+        $arr = array("country"=>NULL,
+                     "state"=>NULL,
+                     "site"=>NULL,
+                     "area"=>NULL,
+                     "like"=>NULL,
+                     "diff"=>NULL,
+                     "type"=>NULL,
+                     "nPitch"=>NULL);
+ */
+
+        if($country) $arr['country'] = "country.name = '".$country."'";
+        if($state) $arr['state'] = "state.name = '".$state."'";
+        if($site) $arr['site'] = "site.name = '".$site."'";
+        if($area) $arr['area'] = "area.name = '".$area."'";
+        if($like)
+        {
+            if($like < 10)
+            {
+                $arr['like'] = "route.likability = ".$like;
+            }
+            else
+            {
+                $arr['like'] = "route.likability >= 10";
+            }
+        }
+        if($diff) $arr['diff'] = "route.difficulty = ".$diff;
+        if($type) $arr['type'] = "route.type = '".$type."'";
+        if($nPitch)
+        {
+            if($nPitch < 10)
+            {
+                $arr['nPitch'] = "route.numPitches = ".$nPitch;
+            }
+            else
+            {
+                $arr['nPitch'] = "route.numPitches >= 10";
+            }
+        }
+        $i = 0;
+        foreach($arr as $a)
+        {
+            if($a)
+            {
+                if($i == 0)
+                {
+                    $sql = $sql." WHERE ".$a;
+                    $i++;
+                }
+                else
+                {
+                    $sql = $sql." AND ".$a;
+                }
+            }
+        }
+        $sql = $sql.";";
+        echo($sql."<BR>");
+        $stmt = $this->connect()->query($sql);
+        $routes = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+        return $routes;
+    }
+
     public function getRouteDifficulty($idRoute)
     {
         $sql = "SELECT difficulty FROM route where idRoute = ".$idRoute.";";
