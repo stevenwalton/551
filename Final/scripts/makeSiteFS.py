@@ -53,15 +53,15 @@ include_once '../../../../src/routeFunctions.php';
     Available Areas
     <br>
     <?php
-    $_site = new Site;
-    $sites = $_site->getSitesInStateNamed("{state}","{country}");
-    if ($sites == NULL)
+    $_area = new Area;
+    $areas = $_area->getAreasInSiteNamed({site},{state},{country});
+    if ($areas == NULL)
     {{
         echo("Sorry, there are no sites listed for this state");
     }}
     ?>
-    <?php foreach ($sites as $site): ?>
-        <a href="./{site}/<?php echo($site); ?>"> <?php echo($site); ?></a>
+    <?php foreach ($areas as $area): ?>
+        <a href="./<?php echo($area); ?>"> <?php echo($area); ?></a>
     <?php endforeach; ?>
     <?php include '../../../../footer.php';?>    
 </html>

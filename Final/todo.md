@@ -29,7 +29,7 @@
 + [ ] Auto make files
     + [x] Countries
     + [x] States
-    + [ ] Sites
+    + [x] Sites
     + [ ] Areas
     + [ ] Routes
 + [ ] Create

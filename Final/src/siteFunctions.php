@@ -22,9 +22,6 @@ class Site extends Dbh
         return $sites;
     }
 
-    public function getSiteID($site,$state)
-    {
-    }
 
     public function getSitesInStateID($idState)
     {
@@ -77,7 +74,7 @@ class Site extends Dbh
 
     public function getSiteID($name, $state=NULL, $country=NULL)
     {
-        echo("Inside siteID: ".$name." with state ".$state." and country ".$country."<br>");
+        #echo("Inside siteID: ".$name." with state ".$state." and country ".$country."<br>");
         $id = 0;
         $stmt = $this->connect()->query("SELECT * FROM site;");
         while ($row = $stmt->fetch())
@@ -88,7 +85,7 @@ class Site extends Dbh
             }
             $id++;
         }
-        echo("Couldn't find site: ".$name."<br>");
+        #echo("Couldn't find site: ".$name."<br>");
         $_state = new State;
         $stateID = $_state->getStateID($state, $country);
         $state = $_state->getStateName($stateID);
@@ -107,11 +104,11 @@ class Site extends Dbh
     public function addSite($name,$state,$country)
     {
         #echo("<fetching site with ".$name." ".$state);
-        echo("In addSite have name: ".$name." state: ".$state." country: ".$country."<br>");
+        #echo("In addSite have name: ".$name." state: ".$state." country: ".$country."<br>");
         $id = 0;
         # Check if state exists
         $s = new State;
-        echo("Fetching state ID for ".$state."<br>");
+        ##echo("Fetching state ID for ".$state."<br>");
         $idState = $s->getStateID($state, $country);
 
         $stmt = $this->connect()->query("SELECT * FROM site;");
@@ -128,12 +125,12 @@ class Site extends Dbh
             }
             $sql = "INSERT INTO site (idSite, idState, name)
                     VALUES ('".$id."', '".$idState."', '".$name."');";
-            echo("Running: ".$sql."<br>");
+            #echo("Running: ".$sql."<br>");
             try
             {
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->execute();
-                echo("<br>Success");
+                #echo("<br>Success");
                 $ret = system("python3 ../scripts/makeSiteFS.py --country ".$country." --state ".$state." --site ".$name, $retval);
                 return 0;
             }

@@ -3,9 +3,9 @@ include_once 'src/connect.php';
 include_once 'src/basicFunctions.php';
 include_once 'src/countryFunctions.php';
 include_once 'src/stateFunctions.php';
-include_once 'src/siteFunctions.php';
-include_once 'src/areaFunctions.php';
-include_once 'src/routeFunctions.php';
+#include_once 'src/siteFunctions.php';
+#include_once 'src/areaFunctions.php';
+#include_once 'src/routeFunctions.php';
 ?>
 
 <!DOCTYPE html>
@@ -75,8 +75,8 @@ include_once 'src/routeFunctions.php';
     Add an area 
     <br>
     <?php
-    $si = new Site;
-    $sites= $si->getAllSites();
+    #$si = new Site;
+    #$sites= $si->getAllSites();
     ?>
     <form action="scripts/addArea.php" method="POST">
     Country:<input type="text" name="country">

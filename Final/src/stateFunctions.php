@@ -73,12 +73,12 @@ class State extends Dbh
             }
             $id++;
         }
-        echo("Couldn't find state: ".$name."<br>");
+        #echo("Couldn't find state: ".$name."<br>");
         $_country = new Country;
         $countryID = $_country->getCountryID($country);
         $country = $_country->getCountryName($countryID);
         #$rArray = $this->addState($name,$country);
-        echo("Adding state: ".$name." with ID: ".$id." in country: ".$country."<br>");
+        #echo("Adding state: ".$name." with ID: ".$id." in country: ".$country."<br>");
         $this->addState($name,$country);
         return $id;
     }
@@ -92,16 +92,16 @@ class State extends Dbh
 
     public function addState($name,$country=NULL)
     {
-        echo("In addState<br>");
+        #echo("In addState<br>");
         $id = 0;
         # Check if country exists
         $cnt = new Country;
         $idCountry = $cnt->getCountryID($country);
-        echo("Country: ".$country." CountryID: ".$idCountry."<br>");
+        #echo("Country: ".$country." CountryID: ".$idCountry."<br>");
         $stmt = $this->connect()->query("SELECT * FROM state;");
         if(!(in_array($name,$stmt->fetch(),true)))
         {
-            echo("Country: ".$country." was found<br>");
+            #echo("Country: ".$country." was found<br>");
             $stmt = $this->connect()->query("SELECT * FROM state;");
             while ($row = $stmt->fetch())
             {
@@ -114,7 +114,7 @@ class State extends Dbh
             $sql = "INSERT INTO state (idState, idCountry, name) 
                     VALUES ('".$id."', '".$idCountry."','".$name."');";
             
-            echo("Inserting: ".$sql."<br>");
+            #echo("Inserting: ".$sql."<br>");
             try
             {
                 $stmt = $this->connect()->prepare($sql);
