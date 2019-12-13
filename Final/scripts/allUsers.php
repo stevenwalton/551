@@ -39,7 +39,6 @@ include_once '../src/userFunctions.php';
         </form>
         </td>
         <td width='350' align='center'><?php echo($user['bib']); ?></td>
-        <?php echo("Bloop: ".$user['idUsers']); ?>
 <?php
 
     }

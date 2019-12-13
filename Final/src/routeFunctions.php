@@ -259,8 +259,9 @@ class Route extends Dbh
             return 1;
         }
         // Get current likability and number of votes
-        $stmt = $this->connect()->query("SELECT likability, likeVotes FROM route
-                                         WHERE idRoute = ".$id.";");
+        $sql = "SELECT likability, likeVotes FROM route WHERE idRoute = ".$id.";";
+        #echo($sql);
+        $stmt = $this->connect()->query($sql);
         // TODO: if more than one row returned
         $row = $stmt->fetch();
         $N = $row['likeVotes'];
@@ -271,9 +272,10 @@ class Route extends Dbh
         // Update vote and number of likes (+1)
         $sql = "UPDATE route SET likability=".$newLike.", likeVotes=".$N."
                 WHERE idRoute = ".$id.";";
+        #echo($sql);
         try
         {
-            $stmt = $conn->prepare($sql);
+            $stmt = $this->connect()->prepare($sql);
             $stmt->execute();
             return 0;
         }
@@ -309,7 +311,7 @@ class Route extends Dbh
                 WHERE idRoute = ".$id.";";
         try
         {
-            $stmt = $conn->prepare($sql);
+            $stmt = $this->connect()->prepare($sql);
             $stmt->execute();
             return 0;
         }

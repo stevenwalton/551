@@ -53,6 +53,34 @@ include_once '../src/userFunctions.php';
     echo("<td width='250' align='center'>".$info['description']."</td>");
     echo("<td width='250' align='center'>".$info['approach']."</td>");
     echo("</tr>");
+    echo("<br>");
+?>
+    Vote on Difficulty: 5.
+    <form action="/~swalton2/551/Final/scripts/updateVotes.php", method="POST">
+    <select name="diff_maj" id="maj">
+            <option value="">--</option>
+        <?php for($i = 0; $i <= 15; $i++) :?>
+            <option value="<?php echo($i);?>" <?php if($i == $d['major']) echo("selected='selected'"); ?>><?php echo($i);?></option>
+        <?php endfor; ?>
+    </select>
+    <select name="diff_min" id="sub">
+        <option value="">--</option>
+        <option value="a" <?php if ("a" == $d['minor']) echo("selected='selected'"); ?>>a</option>
+        <option value="b" <?php if ("b" == $d['minor']) echo("selected='selected'"); ?>>b</option>
+        <option value="c" <?php if ("c" == $d['minor']) echo("selected='selected'"); ?>>c</option>
+        <option value="d" <?php if ("d" == $d['minor']) echo("selected='selected'"); ?>>d</option>
+    </select>
+    and Likability:
+    <select name="like" id="like">
+            <option value="">--</option>
+        <?php for($i = 0; $i <= 10; $i++) :?>
+            <option value="<?php echo($i);?>" <?php if ($i == $info['likability']) echo("selected='selected'"); ?>><?php echo($i);?></option>
+        <?php endfor; ?>
+    </select>
+        <input type="hidden" name="idRoute" value="<?php echo($id); ?>">
+    <input type="submit" value="VOTE!">
+    </form>
+<?php
 
     $_pitch = new Pitch;
     $pitches = $_pitch->pitchesInRoute($id);
