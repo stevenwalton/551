@@ -99,6 +99,7 @@ a description, and what photos they have submitted to the site.
     \item User Directory
     \item Route Directory
     \item Random Picture Display on Landing Page
+    \item API
 \end{itemize}
 
 \section{User's Guide}
@@ -127,13 +128,78 @@ directory we can see the name and description of the user. The name is a button
 which will generate a page that shows the same information and the images that
 the user has submitted.
 
+\subsection{API}
+In the \textit{/sec} folder we find all the class based object and we can thus
+use these API calls for testing and breaking things. In this section we
+highlight some of these functions.
+
+\subsubsection{connect.php}
+This is root function and all other functions will call from it. This just
+handles the connection information and only has one function ``connect".
+
+\subsubsection{countryFunctions.php, stateFunctions.php, siteFunctions.php,
+areaFunctions.php}
+This file has functions related to the country table. Many of these are useful
+for testing and others are used within the website. One can either just print
+out all countries with ``listCountries()'' or receive back an array with them
+with ``getAllCountries()". Functions also exist to get the name or ID of the
+country, add a new one, or delete by name or ID. The same functions exist for
+states, sites, and areas. 
+
+It should also be noted that there is a recursive process here. There is a
+hierarchy within these files: country > state > site > area. If one creates an
+area then a site, state, and country will also be created (country, then state,
+then site, then finally area). Dynamically creating objects like this ensures
+that we have a consistent and logical database. All add statements are done with
+PDO::prepare. The execute statements are then in try-catch blocks to preserve
+consistency.
+
+\subsubsection{routeFunctions.php}
+The route function is the top of the hierarchy in the above chain. Creating a
+route will force the creation of all other elements if they are not already
+created. It also has similar functions to the above table APIs. 
+
+Route also has some other unique functions to it. These include searching
+through routes with any combination of: ``country", ``state", ``site", ``area",
+``likability", ``difficulty", ``type", or ``number of pitches". Additionally,
+one can just call functions such as ``getRoutesIn\{Country,State,Area,etc.\}.
+The Route API also allows the user to update the likability with
+``updateLikability(int vote, int idRoute)" and difficulty with
+``updateDifficulty(float vote, int idRoute)". These functions also count each
+time they were called, and average the inputs given. 
+
+\subsubsection{pitchFunctions.php}
+This API only allows for a user to access the pitches in a route or to add a new
+pitch, supplying the route ID. 
+
+\subsubsection{pictureFunctions.php}
+This API has similar functions as the others. What is unique in here is that we
+can grab a random picture either from the entire set of pictures or from a
+route. We can also easily obtain pictures that are uploaded by a single user.
+Users can also upload pictures that are not connected to routes (this won't show
+on the landing page).
+
+This API also handles the bridge table operations. (See ER diagram)
+
+\subsubsection{userFunctions.php}
+This has similar calls to the rest of the API functions. 
+
+\subsubsection{basicFunctions.php}
+The Basic API handles 2 things. The first is to print all the tables. This is
+for testing and investigation purposes only. The other part is that this handles
+the conversion back and forth between the floating point value for difficulty
+that is stored within the route table and the Yosemite Decimal System. The use
+of these functions allows us to talk in a language that climbers understand.
+
+
 \section{Contents of Tables}
 
 \section{Implementation of Code}
 All code is available on GitHub at
 \href{https://github.com/stevenwalton/551/tree/master/Final}{https://github.com/stevenwalton/551/tree/master/Final}
 
-Functions for relevant tables are located in the \textit{/src} directory. Other
+Functions for relevant tables are located in the \textit{/src} directory. All
+API calls will be located within these files. Other
 functions are located in the \textit{/scripts} directory, as most of these are
 single time use pages and display different things based on user input. Some of
 them are just helper pages and will redirect back to the relevant location.
