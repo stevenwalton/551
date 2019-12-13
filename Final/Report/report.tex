@@ -1,0 +1,145 @@
+\documentclass[12pt,letter]{article}
+\usepackage{geometry}\geometry{top=0.75in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{xcolor} % Color words
+\usepackage{cancel} % Crossing parts of equations out
+\usepackage{tikz}       % Drawing 
+\usepackage{pgfplots}   % Other plotting
+\usepgfplotslibrary{colormaps,fillbetween}
+\usepackage{placeins}   % Float barrier
+\usepackage{hyperref}   % Links
+\usepackage{tikz-qtree} % Trees
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{graphicx}   % For graphics
+\usepackage{parcolumns}
+\usepackage{listings}   % lstlisting
+\usepackage{pdfpages}
+
+\begin{document}
+\title{CIS 551: Databases Final Project\\
+\large Database of Climbing Routes}
+\author{Steven Walton}
+\maketitle
+
+\section*{}
+\begin{align*}
+    &\text{Port number: }3875 \\
+    &\text{Username: guest. No password}\\
+    &\text{Database Name: climbing}\\
+    &\text{URL:
+    \href{https://ix.cs.uoregon.edu/~swalton2/551/Final/}{https://ix.cs.uoregon.edu/~swalton2/551/Final/}}\\
+\end{align*}
+\newpage
+\section{Table of Contents}
+
+\section{Summary}
+In this project I created a website similar to that of Mountain Project (links
+on site). The purpose of this site is so that rock climbers can create a list of
+routes. These routes will have the information necessary for them to know if
+they can climb them and what to prepare for. Being community driven, users are
+encouraged to add to routes and vote on the difficulty and likability of routes. 
+They are also able to find pictures that have been taken. 
+
+There are many applications that are within the program. The main applications
+for the users are that they can search routes, see the entire listings, and
+investigate individual routes. Users are also able to submit new routes. They
+can even submit routes in countries, states, sites, etc that do not yet exist in
+the database. If they call the submit route function then it will generate those
+as well. Additionally, if a user specifies that a route has more than one pitch,
+then the route page will automatically take them through the process of
+specifying each pitch, then will bring them to the landing page as they submit
+the last pitch. 
+
+When searching a route or listing all of them, the route names are clickable
+links. This will take the user to the respective route page and display the
+relevant information for them, including any pictures. Additionally on this page
+users are able to vote on the likability and difficulty of a particular route.
+
+Users are also able to generate their own profiles. Their usernames are also
+clickable links within the user listing directory. Their page shows their name,
+a description, and what photos they have submitted to the site. 
+
+\section{Logical Design}
+\includegraphics[width=\textwidth]{ER.png}
+
+\section{List of Applications}
+
+\begin{itemize}
+    \item Submissions
+        \begin{itemize}
+            \item Country
+            \item State
+            \item Site
+            \item Area
+            \item Route
+            \item Pitch
+            \item User
+            \item Picture
+        \end{itemize}
+    \item Update Information
+        \begin{itemize}
+            \item Route Difficulty
+            \item Route Likability
+        \end{itemize}
+    \item User Pages
+    \item Route Pages
+    \item Search
+        \begin{itemize}
+            \item By Country
+            \item By State
+            \item By Site
+            \item By Area
+            \item By Route
+            \item Or by combination
+        \end{itemize}
+    \item User Directory
+    \item Route Directory
+    \item Random Picture Display on Landing Page
+\end{itemize}
+
+\section{User's Guide}
+This website was designed to make things easy on the user, and thus is expected
+to not need much guidance. 
+
+On the landing page the user is presented with the ability to search, add a
+user, see the user directory, see the route directory (sorted by popularity and
+then difficulty), and able to add new routes. The landing page also shows a
+random picture from the database.
+
+In searching and the route directory listing users are presented with the
+country, state, site, area, route, type, number of pitches, difficulty, and
+likability of routes. The route names are buttons which will bring them to the
+specific route page. 
+
+On the route page they are presented with the same information, but additionally
+with a description of the route and the approach. Users are also able to vote on
+the difficulty and likability of the route. These values default to the already
+established values. Both are averages based on the number of times that users
+have voted on a route. Pictures from the route are also displayed. If a route
+has multiple pitches, then these pitches are also displayed to the user.
+
+A user is also able to add themselves with a short description. In the user
+directory we can see the name and description of the user. The name is a button
+which will generate a page that shows the same information and the images that
+the user has submitted.
+
+\section{Contents of Tables}
+
+\section{Implementation of Code}
+All code is available on GitHub at
+\href{https://github.com/stevenwalton/551/tree/master/Final}{https://github.com/stevenwalton/551/tree/master/Final}
+
+Functions for relevant tables are located in the \textit{/src} directory. Other
+functions are located in the \textit{/scripts} directory, as most of these are
+single time use pages and display different things based on user input. Some of
+them are just helper pages and will redirect back to the relevant location.
+
+The database and MySQL Workbench files are located in \textit{/database}.
+
+\section{Conclusion}
+
+\end{document}
