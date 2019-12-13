@@ -135,4 +135,5 @@ include_once 'src/pictureFunctions.php';
     <a href="scripts/newRoute.php">click here!</a>
     </body>
     <?php include 'footer.php';?>
+    The report can be found <a href="/~swalton2/551/Final/Report/report.pdf">here</a>
 </html>

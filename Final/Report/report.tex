@@ -35,8 +35,16 @@
 \end{align*}
 \newpage
 \section{Table of Contents}
+\ref{sec:sum} Summary page      \hspace*{\fill}Page:\pageref{sec:sum}\\
+\ref{sec:ld} Logical Design     \hspace*{\fill}Page:\pageref{sec:ld}\\
+\ref{sec:apps} Applications     \hspace*{\fill}Page:\pageref{sec:apps}\\
+\ref{sec:ug} User Guide         \hspace*{\fill}Page:\pageref{sec:ug}\\
+\ref{sec:cot} Content of Tables \hspace*{\fill}Page:\pageref{sec:cot}\\
+\ref{sec:imp} Implementations   \hspace*{\fill}Page:\pageref{sec:imp}\\
+\ref{sec:con} Conclusion        \hspace*{\fill}Page:\pageref{sec:con}
 
-\section{Summary}
+\section{Summary}\label{sec:sum}
+
 In this project I created a website similar to that of Mountain Project (links
 on site). The purpose of this site is so that rock climbers can create a list of
 routes. These routes will have the information necessary for them to know if
@@ -63,10 +71,10 @@ Users are also able to generate their own profiles. Their usernames are also
 clickable links within the user listing directory. Their page shows their name,
 a description, and what photos they have submitted to the site. 
 
-\section{Logical Design}
+\section{Logical Design}\label{sec:ld}
 \includegraphics[width=\textwidth]{ER.png}
 
-\section{List of Applications}
+\section{List of Applications}\label{sec:apps}
 
 \begin{itemize}
     \item Submissions
@@ -102,7 +110,8 @@ a description, and what photos they have submitted to the site.
     \item API
 \end{itemize}
 
-\section{User's Guide}
+\section{User's Guide}\label{sec:ug}
+
 This website was designed to make things easy on the user, and thus is expected
 to not need much guidance. 
 
@@ -127,6 +136,9 @@ A user is also able to add themselves with a short description. In the user
 directory we can see the name and description of the user. The name is a button
 which will generate a page that shows the same information and the images that
 the user has submitted.
+
+Note: there is a backup of the database. If anything goes wrong, please resource
+this one.
 
 \subsection{API}
 In the \textit{/sec} folder we find all the class based object and we can thus
@@ -191,10 +203,51 @@ the conversion back and forth between the floating point value for difficulty
 that is stored within the route table and the Yosemite Decimal System. The use
 of these functions allows us to talk in a language that climbers understand.
 
+\section{Contents of Tables}\label{sec:cot}
+\FloatBarrier
 
-\section{Contents of Tables}
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{../media/country.png}
+\end{figure}
+%
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{../media/state.png}
+\end{figure}
+%
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{../media/site.png}
+\end{figure}
+%
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{../media/area.png}
+\end{figure}
+%
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{../media/route.png}
+\end{figure}
+%
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{../media/routeHasPics.png}
+\end{figure}
+%
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{../media/routeHasPitch.png}
+\end{figure}
+%
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{../media/pitch.png}
+\end{figure}
+%
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{../media/users.png}
+\end{figure}
+%
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{../media/pictures.png}
+\end{figure}
+\FloatBarrier
 
-\section{Implementation of Code}
+\section{Implementation of Code}\label{sec:imp}
 All code is available on GitHub at
 \href{https://github.com/stevenwalton/551/tree/master/Final}{https://github.com/stevenwalton/551/tree/master/Final}
 
@@ -206,6 +259,17 @@ them are just helper pages and will redirect back to the relevant location.
 
 The database and MySQL Workbench files are located in \textit{/database}.
 
-\section{Conclusion}
+\section{Conclusion}\label{sec:con}
+I believe that this is a workable database and would represent a state of the
+art system! If it were 1995. Overall, I believe that there is a lot of utility
+in the user generated system and having users be able to contribute to a
+database freely. This site accomplishes these goals.
+
+If I had more time, I would have locked some things down in the database. It is
+completely unprotected at this point. This means that someone can come in and
+drop all the tables. Luckily everything is not important and everything is
+backed up (both the tables and the code). Given more time I could have created
+API calls and a cron job to automatically backup in a given time window. This
+would be done if it was not just a school project. 
 
 \end{document}
