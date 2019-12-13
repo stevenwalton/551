@@ -48,4 +48,12 @@ include_once '../src/userFunctions.php';
         <img src="<?php echo($pic); ?>" alt="<?php echo($pic);?>" height="400" width="600">
     <?php $prev = $pic; endif; endforeach; endif;
 ?>
+    <BR>
+    Upload Photos (URL):
+    <form action="/~swalton2/551/Final/scripts/addPhoto.php", method="POST">
+    <input type="text" name="url">
+    <input type="hidden" name="id" value="<?php echo($id); ?>">
+    <input type="submit" value="submit">
+    </form>
+    
 </html>

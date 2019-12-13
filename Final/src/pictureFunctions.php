@@ -36,7 +36,8 @@ class Picture extends Dbh
     {
         $sql = "SELECT pictureURL FROM pictures p
                 JOIN route_has_pictures rp ON p.idPictures = rp.Pictures_idPictures
-                LEFT JOIN route r ON r.idRoute = rp.Route_idRoute;";
+                LEFT JOIN route r ON r.idRoute = rp.Route_idRoute
+                WHERE r.idRoute = ".$idRoute.";";
         $stmt = $this->connect()->query($sql);
         $urls = $stmt->fetchall(pdo::fetch_column,0);
         $rand_key = array_rand($urls,1);
@@ -47,7 +48,8 @@ class Picture extends Dbh
     public function getPicturesByUserID($idUser)
     {
         $sql = "SELECT pictureURL FROM pictures p
-                LEFT JOIN users u ON p.uploadedBY = u.idUsers;";
+                LEFT JOIN users u ON p.uploadedBY = u.idUsers
+                WHERE u.idUsers = ".$idUser.";";
         $stmt = $this->connect()->query($sql);
         $pictures = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
         return $pictures;
@@ -63,12 +65,50 @@ class Picture extends Dbh
 
     public function getRandomPicture()
     {
-        $sql = "SELECT pictureURL FROM pictures;";
+        $sql = "SELECT pictureURL FROM pictures p
+                RIGHT JOIN route_has_pictures rp ON p.idPictures = rp.Pictures_idPictures
+                RIGHT JOIN route r ON r.idRoute = rp.Route_idRoute;";
         $stmt = $this->connect()->query($sql);
         $urls = $stmt->fetchAll(PDO::FETCH_COLUMN,0);
         $rand_key = array_rand($urls,1);
         $url = $urls[$rand_key];
         return $url;
+    }
+
+    public function uploadByUser($url, $by)
+    {
+        $stmt = $this->connect()->query("SELECT count(idPictures) c FROM pictures;");
+        $id = $stmt->fetch()['c'];
+        $sql = "INSERT INTO pictures (idPictures, pictureURL, uploadedBy)
+                    VALUES ('".$id."', '".$url."', '".$by."');";
+        try
+        {
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute();
+        }
+        catch(PDOException $e)
+        {
+            echo($sql."<br>".$e->getMessage());
+            return 1;
+        }
+    }
+
+    public function uploadPicture($url)
+    {
+        $stmt = $this->connect()->query("SELECT count(idPictures) c FROM pictures;");
+        $id = $stmt->fetch()['c'];
+        $sql = "INSERT INTO pictures (idPictures, pictureURL, uploadedBy)
+                    VALUES ('".$id."', '".$url."', NULL );";
+        try
+        {
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute();
+        }
+        catch(PDOException $e)
+        {
+            echo($sql."<br>".$e->getMessage());
+            return 1;
+        }
     }
 
     public function addPicture($idRoute, $url, $by=NULL)

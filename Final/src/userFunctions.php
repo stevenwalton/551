@@ -63,8 +63,8 @@ class User extends Dbh
         $id = 0;
         $stmt = $this->connect()->query("SELECT count(idUsers) c FROM users;");
         $id = $stmt->fetch()['c'];
-        $sql = "INSERT INTO users (idUsers, name, bib)
-                VALUES('".$id."','".$name."', '".$about."');";
+        $sql = 'INSERT INTO users (idUsers, name, bib)
+                VALUES("'.$id.'","'.$name.'", "'.$about.'");';
         try
         {
             $stmt = $this->connect()->prepare($sql);
