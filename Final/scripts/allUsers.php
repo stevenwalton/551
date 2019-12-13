@@ -17,7 +17,7 @@ include_once '../src/userFunctions.php';
     $_user = new User;
     $users = $_user->getAllUsers();
     $i = 0;
-    echo("User: ".$users['name']);
+    #echo("User: ".$users['name']);
 
     echo("<table border='1' style='border-collapse: collapse; border-color: black;'>");
     foreach($users as $user):
@@ -30,9 +30,17 @@ include_once '../src/userFunctions.php';
             echo("</tr>");
             $i++;
         }
-        echo("<tr>");
-        echo("<td width='150' align='center'>".$user['name']."</td>");
-        echo("<td width='350' align='center'>".$user['bib']."</td>");
+?>
+        <tr>
+        <form action="/~swalton2/551/Final/scripts/singleUser.php", method="POST">
+        <input type="hidden" name="idUsers" value="<?php echo($user['idUsers']); ?>">
+        <td width='150' align='center'>
+        <input type="submit" value="<?php echo($user['name']); ?>">
+        </form>
+        </td>
+        <td width='350' align='center'><?php echo($user['bib']); ?></td>
+        <?php echo("Bloop: ".$user['idUsers']); ?>
+<?php
 
     }
     endforeach;

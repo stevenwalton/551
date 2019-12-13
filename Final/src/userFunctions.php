@@ -50,6 +50,14 @@ class User extends Dbh
         return $id;
     }
 
+    public function getUser($id)
+    {
+        $sql = "SELECT * FROM users WHERE idUsers = ".$id.";";
+        $stmt = $this->connect()->query($sql);
+        $user = $stmt->fetchAll();
+        return $user;
+    }
+
     public function addUser($name, $about)
     {
         $id = 0;

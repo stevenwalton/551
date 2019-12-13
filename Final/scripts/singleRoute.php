@@ -1,10 +1,6 @@
 <?php
 include_once '../src/connect.php';
 include_once '../src/basicFunctions.php';
-#include_once '../src/countryFunctions.php';
-#include_once '../src/stateFunctions.php';
-#include_once '../src/siteFunctions.php';
-#include_once '../src/areaFunctions.php';
 include_once '../src/routeFunctions.php';
 include_once '../src/pictureFunctions.php';
 include_once '../src/pitchFunctions.php';
